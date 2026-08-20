@@ -1,0 +1,103 @@
+.fluid-carousel{
+	position: relative;
+	overflow: hidden;
+	padding: 0;
+}
+
+.fluid-carousel .fluid-wrapper{
+    margin: 0 auto;
+    padding: 20px 0;
+    max-width: 2000px;
+    overflow: hidden;
+    display: flex;
+	width: 2000px;
+}
+
+.fluid-carousel .fluid-row{
+    display: flex;
+    gap: 0;
+	flex: 0 0 100%;
+	will-change: transform;
+    animation: fluidscroll 40s linear infinite;
+}
+
+.fluid-carousel .item{  
+    display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 15px !important;
+	width: auto;
+	border-radius: 20px;
+}
+
+.fluid-carousel .item .inner{
+	display: block;
+	padding: 35px;
+	width: 100%;
+}
+
+@keyframes fluidscroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+}
+
+@keyframes fluidscroll2 {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+}
+
+.fluid-carousel::before{
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 200px;
+	background-image: linear-gradient(to right,rgba(255,255,255,1),rgba(255,255,255,0));
+	z-index: 2;
+}
+
+.fluid-carousel::after{
+	content: "";
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	width: 200px;
+	background-image: linear-gradient(to left,rgba(255,255,255,1),rgba(255,255,255,0));
+	z-index: 2;
+}
+
+.fluid-carousel h2{
+	text-align: center;
+}
+
+
+.fluid-carousel .title{
+	font-weight: bold;
+}
+
+@media screen and (max-width: 1023px){
+	
+	.fluid-carousel::before,
+	.fluid-carousel::after{
+		width: 75px;
+	}
+	
+	.fluid-carousel::before{
+		left: -10px;
+	}
+	
+	.fluid-carousel::after{
+		right: -10px;
+	}
+	
+}
