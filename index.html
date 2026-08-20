@@ -326,14 +326,16 @@
   gap: 7px;
   background: var(--sv-purple);
   color: #fff;
+  /* the border is there at rest too, so the box does not grow on hover */
+  border: 1px solid var(--sv-purple);
   border-radius: 5px;
   font-family: 'Montserrat', sans-serif;
   font-size: 13px;
   font-weight: 700;
-  padding: 9px 15px;
+  padding: 8px 14px;
   align-self: flex-start;
   text-align: center;
-  transition: background 0.16s ease;
+  transition: background 0.16s ease, color 0.16s ease;
 }
 .sv-btn::after {
   content: '';
@@ -344,9 +346,9 @@
   transform: rotate(45deg);
   transition: transform 0.16s ease;
 }
-/* purple at rest, brand blue on hover */
+/* filled purple at rest, empties to a purple outline on hover */
 .sv-btn:hover,
-.sv-btn:focus-visible { background: var(--sv-blue); }
+.sv-btn:focus-visible { background: #fff; color: var(--sv-purple); }
 .sv-btn:hover::after { transform: rotate(45deg) translate(2px, -2px); }
 
 .sv-rail-links { margin-top: 14px; }
