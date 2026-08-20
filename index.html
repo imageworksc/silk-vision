@@ -48,15 +48,18 @@
 #sv-header-wrap *,
 #sv-header-wrap *::before,
 #sv-header-wrap *::after { box-sizing: border-box; }
-#sv-header-wrap a { text-decoration: none; }
+/* :where() drops these resets to zero specificity, so every .sv-* rule below
+   can set its own margins. As plain `#id p` rules they carried ID weight and
+   silently overrode every margin in the panels. */
+:where(#sv-header-wrap) a { text-decoration: none; }
 /* Only links with no colour of their own inherit. A blanket `#id a { color:
    inherit }` outranks every .sv-* colour below it — that is what was stripping
    the white type off the buttons. */
 #sv-header-wrap .sv-utility-left a,
 #sv-header-wrap .sv-list a { color: inherit; }
 #sv-header-wrap button { font-family: inherit; }
-#sv-header-wrap p { margin: 0; }
-#sv-header-wrap ul { list-style: none; margin: 0; padding: 0; }
+:where(#sv-header-wrap) p { margin: 0; }
+:where(#sv-header-wrap) ul { list-style: none; margin: 0; padding: 0; }
 #sv-header-wrap :focus-visible {
   outline: 2px solid var(--sv-blue);
   outline-offset: 3px;
@@ -233,11 +236,11 @@
 .sv-trigger--wide .sv-panel { top: 100%; left: auto; right: 0; }
 
 /* Rows — the blue edge grows as you point at one */
-.sv-list li + li { margin-top: 2px; }
+.sv-list li + li { margin-top: 5px; }
 .sv-list a {
   position: relative;
   display: block;
-  padding: 10px 12px 11px 15px;
+  padding: 11px 12px 12px 15px;
   border-radius: 7px;
   transition: background 0.14s ease;
 }
@@ -314,7 +317,7 @@
   font-size: 14px;
   line-height: 1.6;
   color: var(--sv-body);
-  margin: 0 0 72px;
+  margin: 0 0 44px;
 }
 .sv-btn {
   display: inline-flex;
@@ -344,7 +347,7 @@
 .sv-btn:hover { background: var(--sv-purple-deep); }
 .sv-btn:hover::after { transform: rotate(45deg) translate(2px, -2px); }
 
-.sv-rail-links { margin-top: 72px; }
+.sv-rail-links { margin-top: 44px; }
 .sv-rail-links li + li { margin-top: 14px; }
 .sv-rail-links a {
   font-size: 13.5px;
