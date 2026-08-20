@@ -1,13 +1,9 @@
-# Silk Vision — Navigation Redesign
+# Silk Vision — Navigation
 
 Mega-menu navigation for [silkvision.net](https://www.silkvision.net/), rebuilt in the
-production design language and published with GitHub Pages.
+production design language. The published page is the menu and the logo, nothing else.
 
-| Page | What it shows |
-| --- | --- |
-| [`index.html`](./index.html) | The live homepage with the redesigned navigation dropped in, replacing the legacy Drupal header. |
-| [`menu.html`](./menu.html) | The navigation on its own, with the design tokens it was built from. |
-| [`nav-prototype.html`](./nav-prototype.html) | The original `silk vision menu 08-19` comp, kept for reference. |
+**Live:** https://imageworksc.github.io/silk-vision/
 
 ## Design tokens (pulled from the production stylesheet)
 
@@ -36,6 +32,10 @@ Four dropdowns, all wired to live silkvision.net URLs:
 - Click also toggles, `Escape` and outside-click close, `aria-expanded` tracked on every trigger
 - Below 1024px the bar collapses to a hamburger and the panels become accordions
 - Header is sticky; honours `prefers-reduced-motion`
-- All CSS is scoped to `#sv-header-wrap` / `.sv-*` so it never collides with the legacy theme
+- All CSS is scoped to `#sv-header-wrap` / `.sv-*`, so the block can be dropped into the live
+  theme without colliding with it
 
-`assets/` holds the mirrored homepage files (images, CSS, JS) needed by `index.html`.
+## Files
+
+- `index.html` — the whole component: markup, scoped CSS and script in one file
+- `assets/logo.png` — the site logo
