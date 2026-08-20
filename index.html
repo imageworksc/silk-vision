@@ -344,7 +344,9 @@
   transform: rotate(45deg);
   transition: transform 0.16s ease;
 }
-.sv-btn:hover { background: var(--sv-purple-deep); }
+/* purple at rest, brand blue on hover */
+.sv-btn:hover,
+.sv-btn:focus-visible { background: var(--sv-blue); }
 .sv-btn:hover::after { transform: rotate(45deg) translate(2px, -2px); }
 
 .sv-rail-links { margin-top: 14px; }
