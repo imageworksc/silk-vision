@@ -48,7 +48,12 @@
 #sv-header-wrap *,
 #sv-header-wrap *::before,
 #sv-header-wrap *::after { box-sizing: border-box; }
-#sv-header-wrap a { text-decoration: none; color: inherit; }
+#sv-header-wrap a { text-decoration: none; }
+/* Only links with no colour of their own inherit. A blanket `#id a { color:
+   inherit }` outranks every .sv-* colour below it — that is what was stripping
+   the white type off the buttons. */
+#sv-header-wrap .sv-utility-left a,
+#sv-header-wrap .sv-list a { color: inherit; }
 #sv-header-wrap button { font-family: inherit; }
 #sv-header-wrap p { margin: 0; }
 #sv-header-wrap ul { list-style: none; margin: 0; padding: 0; }
@@ -315,14 +320,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
+  gap: 7px;
   background: var(--sv-purple);
   color: #fff;
-  border-radius: 6px;
+  border-radius: 5px;
   font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
-  padding: 14px 20px;
+  padding: 9px 15px;
+  align-self: flex-start;
   text-align: center;
   transition: background 0.16s ease;
 }
@@ -356,7 +362,7 @@
   padding-top: 14px;
   border-top: 1px solid var(--sv-line);
 }
-.sv-panel-foot .sv-btn { width: 100%; }
+.sv-panel-foot .sv-btn { width: auto; }
 
 /* --- Mobile -------------------------------------------------------------- */
 .sv-burger {
@@ -463,7 +469,7 @@
   .sv-panel-foot { margin: 12px 0 16px; border-top: none; padding-top: 0; }
 
   .sv-contact { display: block; text-align: center; margin-top: 22px; }
-  .sv-nav .sv-btn.sv-mobile-only { display: flex; margin-top: 12px; }
+  .sv-nav .sv-btn.sv-mobile-only { display: flex; align-self: stretch; margin-top: 12px; }
 }
 
 @media screen and (max-width: 600px) {
@@ -773,6 +779,5 @@
 })();
 </script>
 <!-- =================== end Silk Vision navigation =================== -->
-
 </body>
 </html>
