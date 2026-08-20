@@ -7,39 +7,35 @@
 <link rel="icon" type="image/png" sizes="32x32" href="https://www.silkvision.net/favicon-32x32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style id="sv-navbar-styles">
 /* ==========================================================================
-   Silk Vision — mega menu
+   Silk Vision — navigation
 
-   Every value below is lifted from the production stylesheet at
-   silkvision.net, including the way the dropdowns themselves are drawn:
+   The job of this menu: someone who cannot tell LASIK from ICL from RLE has
+   to find the page that matches their eyes. So every procedure row carries
+   the one fact that separates it from the row above, procedures are kept
+   apart from decision-support links, and each mega panel ends in a tinted
+   rail that offers the next step instead of another list.
 
-     panels     flat white, hairlined #45575b on all four sides, no radius,
-                no shadow, with a small pointer tab centred above them
-                (#header ul.menu ul.menu)
-     list rows  16px #005895, padded 10px 5%, filled #8b9da1 with white text
-                on hover (#header ul.menu ul.menu li.menu-item:hover > a)
-     mega cols  600px panel split into padded 15px 5% 25px columns, no inner
-                rules (#header li.menu-item .megamenu + ul.menu)
-     col heads  bold, inline-block so the #ccc underline hugs the text
-                (.megamenu-column-parent)
-     mega links plain #005895, underline on hover
-     buttons    a.cta-btn / a.cta-btn.purple — #800080, 5px radius, bold 16px
-     type       Montserrat (nav) + Poppins (body)  |  container 1400px / 93%
-
-   All selectors are scoped to #sv-header-wrap / .sv-* so nothing leaks out.
+   Palette      #005894 brand blue · #00365d ink · #800080 purple (actions
+                only, never decoration) · #f2f7fb mist · #dbe7f1 hairline
+   Type         Montserrat 600/700 for navigation, headings and the small
+                uppercase eyebrows · Poppins 400/500 for item names and notes
+   Signature    a blue edge that grows down the left of a row as you point at
+                it, the way a line on an eye chart gets singled out
+   Scoped to #sv-header-wrap / .sv-* so nothing leaks into the host page.
    ========================================================================== */
 #sv-header-wrap {
   --sv-blue: #005894;
-  --sv-blue-alt: #005895;
-  --sv-blue-top: #106096;
+  --sv-blue-deep: #00446f;
+  --sv-ink: #00365d;
+  --sv-body: #4a5b6b;
   --sv-purple: #800080;
-  --sv-purple-dark: #5f005f;
-  --sv-body: #45575b;
-  --sv-slate: #8b9da1;
-  --sv-rule: #ccc;
-  --sv-rule-soft: #bcc4c6;
+  --sv-purple-deep: #5f005f;
+  --sv-mist: #f2f7fb;
+  --sv-line: #dbe7f1;
+  --sv-line-soft: #eaf1f7;
 
   position: -webkit-sticky;
   position: sticky;
@@ -52,234 +48,309 @@
 #sv-header-wrap *,
 #sv-header-wrap *::before,
 #sv-header-wrap *::after { box-sizing: border-box; }
-#sv-header-wrap a { text-decoration: none; }
+#sv-header-wrap a { text-decoration: none; color: inherit; }
 #sv-header-wrap button { font-family: inherit; }
 #sv-header-wrap p { margin: 0; }
+#sv-header-wrap ul { list-style: none; margin: 0; padding: 0; }
+#sv-header-wrap :focus-visible {
+  outline: 2px solid var(--sv-blue);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
 .sv-inner {
   width: 1400px;
   max-width: 93%;
   margin: 0 auto;
 }
 
-/* --- Top utility bar ----------------------------------------------------- */
+/* --- Utility bar --------------------------------------------------------- */
 .sv-utility {
-  background: #fff;
-  color: var(--sv-blue-top);
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  padding: 8px 0 6px;
+  background: var(--sv-mist);
+  border-bottom: 1px solid var(--sv-line);
+  color: var(--sv-blue-deep);
+  font-size: 13.5px;
 }
 .sv-utility .sv-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+  min-height: 44px;
 }
-.sv-utility-left { display: flex; align-items: center; }
-.sv-utility a { color: var(--sv-blue-top); }
-.sv-utility a:hover { text-decoration: underline; }
-.sv-divide {
-  display: inline-block;
-  padding: 0 15px;
-  border-left: 1px solid var(--sv-rule-soft);
-}
-.sv-divide:first-child { padding-left: 0; border-left: none; }
-
-.sv-utility-right { display: flex; align-items: center; gap: 15px; }
-.sv-utility-phone { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
-.sv-utility-phone svg { width: 15px; height: 15px; fill: currentColor; flex-shrink: 0; }
-.sv-utility-phone a { font-weight: 600; }
-.sv-top-cta {
-  display: inline-block;
-  padding: 10px 15px;
-  background-image: linear-gradient(#800080, #5f005f);
-  color: #fff !important;
-  font-weight: 700;
-  font-size: 14px;
+.sv-utility-left { display: flex; align-items: center; gap: 22px; }
+.sv-utility-left a:hover { color: var(--sv-blue); text-decoration: underline; text-underline-offset: 3px; }
+.sv-utility-right { display: flex; align-items: center; gap: 22px; }
+.sv-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
   white-space: nowrap;
 }
-.sv-top-cta:hover { background-image: linear-gradient(#5f005f, #4a004a); text-decoration: none !important; }
+.sv-phone svg { width: 14px; height: 14px; fill: var(--sv-blue); flex-shrink: 0; }
+.sv-phone a { font-family: 'Montserrat', sans-serif; font-weight: 600; color: var(--sv-blue); }
+.sv-phone a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.sv-book {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sv-purple);
+  white-space: nowrap;
+}
+.sv-book::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-top: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.16s ease;
+}
+.sv-book:hover { color: var(--sv-purple-deep); }
+.sv-book:hover::after { transform: rotate(45deg) translate(2px, -2px); }
 
 /* --- Header row ---------------------------------------------------------- */
-.sv-header {
-  background: #fff;
-  border-bottom: 1px solid var(--sv-rule);
-  padding: 10px 0 15px;
-}
+.sv-header { background: #fff; border-bottom: 1px solid var(--sv-line); }
 .sv-header .sv-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
+  gap: 32px;
   position: relative;
+  padding: 18px 0;
 }
 .sv-logo { display: block; line-height: 0; flex-shrink: 0; }
 .sv-logo img { display: block; width: 200px; height: 50px; max-width: 100%; }
 
-.sv-nav { display: flex; align-items: center; gap: 25px; }
+.sv-nav { display: flex; align-items: center; gap: 30px; }
 .sv-trigger { position: relative; }
-/* invisible bridge so the pointer survives the gap down to the panel */
-.sv-trigger::after {
+/* invisible bridge so the pointer survives the gap down to a list panel;
+   wide panels sit flush under the header rule and need none */
+.sv-trigger:not(.sv-trigger--wide)::after {
   content: '';
   position: absolute;
   top: 100%;
   left: -60px;
   right: -60px;
-  height: 26px;
+  height: 20px;
 }
 .sv-nav-btn {
+  position: relative;
   border: none;
   background: none;
-  padding: 4px 0;
+  padding: 6px 0;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
-  font-size: 20px;
-  font-weight: 500;
-  color: var(--sv-blue-alt);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--sv-ink);
   display: flex;
   align-items: center;
   gap: 7px;
   white-space: nowrap;
+  transition: color 0.16s ease;
 }
-.sv-nav-btn:hover { text-decoration: underline; }
-.sv-chevron { font-size: 11px; line-height: 1; transition: transform 0.2s ease; }
-.sv-trigger.sv-open .sv-chevron { transform: rotate(180deg); }
+.sv-nav-btn::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: var(--sv-blue);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.18s ease;
+}
+.sv-nav-btn:hover { color: var(--sv-blue); }
+.sv-nav-btn:hover::after,
+.sv-trigger.sv-open .sv-nav-btn::after { transform: scaleX(1); }
+.sv-trigger.sv-open .sv-nav-btn { color: var(--sv-blue); }
+.sv-chevron {
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.sv-trigger.sv-open .sv-chevron { transform: translateY(1px) rotate(-135deg); }
 
-.sv-contact-btn {
+.sv-contact {
   display: inline-block;
-  background: #fff;
-  color: var(--sv-blue-alt);
-  border: 1px solid var(--sv-blue-alt);
-  border-radius: 5px;
+  background: var(--sv-blue);
+  color: #fff;
+  border: 1px solid var(--sv-blue);
+  border-radius: 6px;
   font-family: 'Montserrat', sans-serif;
-  font-size: 20px;
-  font-weight: 500;
-  padding: 8px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 22px;
   white-space: nowrap;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.16s ease, border-color 0.16s ease;
 }
-.sv-contact-btn:hover { background: var(--sv-blue-alt); color: #fff; }
+.sv-contact:hover { background: var(--sv-blue-deep); border-color: var(--sv-blue-deep); }
 
-/* --- Dropdown panels ----------------------------------------------------
-   Flat white box, hairline #45575b on all four sides, pointer tab above.
-   No radius and no shadow — the site draws its submenus this way.        */
+/* --- Panels -------------------------------------------------------------- */
 .sv-panel {
   position: absolute;
-  top: calc(100% + 22px);
-  left: 50%;
-  transform: translate(-50%, -6px);
+  top: calc(100% + 18px);
+  left: -26px;
   background: #fff;
-  border: 1px solid var(--sv-body);
+  border: 1px solid var(--sv-line);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(0, 54, 93, 0.06), 0 16px 34px -8px rgba(0, 54, 93, 0.18);
+  overflow: hidden;
   z-index: 10;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  transform: translateY(-6px);
   transition: opacity 0.16s ease, transform 0.16s ease;
-}
-/* CSS stand-in for the site's dd-tab.png pointer */
-.sv-panel::before {
-  content: '';
-  position: absolute;
-  top: -7px;
-  left: 50%;
-  margin-left: -6px;
-  width: 12px;
-  height: 12px;
-  background: #fff;
-  border-left: 1px solid var(--sv-body);
-  border-top: 1px solid var(--sv-body);
-  transform: rotate(45deg);
 }
 .sv-trigger.sv-open .sv-panel {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translate(-50%, 0);
+  transform: translateY(0);
 }
-/* right-aligned variant keeps the last panel inside the viewport;
-   the tab stays under its trigger */
-.sv-panel--right { left: auto; right: 0; transform: translate(0, -6px); }
-.sv-panel--right::before { left: auto; right: 34px; margin-left: 0; }
-.sv-trigger.sv-open .sv-panel--right { transform: translate(0, 0); }
+.sv-panel--right { left: auto; right: -26px; }
+/* Wide panels hang off the header row, not off their trigger, so they always
+   land flush under the rule and can never run past the edge of the viewport. */
+.sv-trigger--wide { position: static; }
+.sv-trigger--wide .sv-panel { top: 100%; left: auto; right: 0; }
 
-/* Simple list panel — 250/270px, full-bleed rows, slate hover fill */
-.sv-panel--list { width: 270px; }
-.sv-panel--list.sv-panel--narrow { width: 250px; }
-.sv-panel--list .sv-link-list li + li { border-top: 1px solid var(--sv-rule); }
-.sv-panel--list .sv-link-list a {
+/* Rows — the blue edge grows as you point at one */
+.sv-list a {
+  position: relative;
   display: block;
-  padding: 10px 5%;
-  font-size: 16px;
-  line-height: 1.35;
-  color: var(--sv-blue-alt);
+  padding: 9px 12px 9px 15px;
+  border-radius: 7px;
+  transition: background 0.14s ease;
 }
-.sv-panel--list .sv-link-list a:hover { background: var(--sv-slate); color: #fff; }
-.sv-panel--list .sv-link-list a:hover .sv-tagline { color: #fff; }
-
-/* Mega panel — 600px split into padded columns, no inner rules */
-.sv-panel--mega { width: 600px; }
-.sv-mega-cols { display: flex; }
-.sv-mega-col { width: 50%; padding: 15px 5% 25px; }
-.sv-mega-heading {
-  display: inline-block;
+.sv-list a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  bottom: 7px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--sv-blue);
+  transform: scaleY(0);
+  transition: transform 0.16s ease;
+}
+.sv-list a:hover,
+.sv-list a:focus-visible { background: var(--sv-mist); }
+.sv-list a:hover::before,
+.sv-list a:focus-visible::before { transform: scaleY(1); }
+.sv-item {
+  display: block;
   font-family: 'Poppins', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--sv-blue-alt);
-  margin: 0 0 7px;
-  padding: 0 0 5px;
-  border-bottom: 1px solid var(--sv-rule);
-}
-.sv-mega-col .sv-link-list a {
-  display: block;
-  padding: 0;
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 500;
   line-height: 1.35;
-  color: var(--sv-blue-alt);
+  color: var(--sv-ink);
 }
-.sv-mega-col .sv-link-list a:hover { text-decoration: underline; }
-.sv-mega-col .sv-link-list li { margin-bottom: 3px; }
-
-.sv-link-list { list-style: none; margin: 0; padding: 0; }
-.sv-link-list li { margin: 0; padding: 0; }
-.sv-tagline {
+.sv-note {
   display: block;
-  font-size: 13px;
-  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 1.4;
   color: var(--sv-body);
-  line-height: 1.3;
-  margin-top: 1px;
+  margin-top: 2px;
 }
-.sv-mega-col .sv-link-list a:hover .sv-tagline { text-decoration: none; }
 
-/* Panel footer — the site's a.cta-btn.purple, sized for a dropdown */
-.sv-panel-foot {
-  border-top: 1px solid var(--sv-rule);
-  padding: 15px 5% 18px;
+.sv-eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--sv-blue);
+  margin: 0 0 12px;
+  padding-left: 15px;
+}
+
+/* Wide panel: two columns of procedures + a tinted rail with the next step */
+.sv-panel--wide { width: 790px; max-width: calc(100vw - 48px); }
+.sv-panel-grid { display: grid; grid-template-columns: 1fr 1fr 268px; }
+.sv-col { padding: 24px 16px 26px; }
+.sv-col:first-child { padding-left: 24px; }
+
+.sv-rail {
+  background: var(--sv-mist);
+  border-left: 1px solid var(--sv-line);
+  padding: 24px 24px 26px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+}
+.sv-rail .sv-eyebrow { padding-left: 0; margin-bottom: 8px; color: var(--sv-purple); }
+.sv-rail-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--sv-ink);
+  margin: 0 0 6px;
+}
+.sv-rail-body {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--sv-body);
+  margin: 0 0 16px;
+}
+.sv-btn {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  font-size: 15px;
-  color: var(--sv-body);
-  text-align: center;
-}
-.sv-panel-foot a {
-  display: inline-block;
+  gap: 9px;
   background: var(--sv-purple);
-  border: 1px solid var(--sv-purple);
-  border-radius: 5px;
-  color: #fff !important;
-  font-size: 16px;
+  color: #fff;
+  border-radius: 6px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
   font-weight: 700;
-  padding: 11px 24px;
-  white-space: nowrap;
-  transition: background 0.15s ease, color 0.15s ease;
+  padding: 12px 18px;
+  text-align: center;
+  transition: background 0.16s ease;
 }
-.sv-panel-foot a:hover { background: #fff; color: var(--sv-purple) !important; }
+.sv-btn::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-top: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.16s ease;
+}
+.sv-btn:hover { background: var(--sv-purple-deep); }
+.sv-btn:hover::after { transform: rotate(45deg) translate(2px, -2px); }
 
-/* --- Mobile trigger ------------------------------------------------------ */
+.sv-rail-links { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--sv-line); }
+.sv-rail-links li + li { margin-top: 9px; }
+.sv-rail-links a {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--sv-blue);
+  line-height: 1.35;
+}
+.sv-rail-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* List panel: one column, for sections that are simply a set of pages */
+.sv-panel--list { width: 306px; padding: 18px 14px; }
+.sv-panel--list .sv-eyebrow { padding-left: 15px; }
+.sv-panel-foot {
+  margin: 14px 4px 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--sv-line);
+}
+.sv-panel-foot .sv-btn { width: 100%; }
+
+/* --- Mobile -------------------------------------------------------------- */
 .sv-burger {
   display: none;
   border: none;
@@ -290,30 +361,35 @@
 }
 .sv-burger span {
   display: block;
-  width: 28px;
-  height: 3px;
-  background: var(--sv-blue);
+  width: 26px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--sv-ink);
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
-.sv-burger span + span { margin-top: 5px; }
+.sv-burger span + span { margin-top: 6px; }
 .sv-burger.sv-open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .sv-burger.sv-open span:nth-child(2) { opacity: 0; }
 .sv-burger.sv-open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 .sv-mobile-only { display: none; }
 
-/* --- Breakpoints --------------------------------------------------------- */
-@media screen and (max-width: 1240px) {
-  .sv-nav { gap: 18px; }
-  .sv-nav-btn, .sv-contact-btn { font-size: 17px; }
-  .sv-contact-btn { padding: 8px 16px; }
-  .sv-logo img { width: 170px; height: auto; }
+@media screen and (max-width: 1300px) {
+  .sv-nav { gap: 22px; }
+  .sv-nav-btn { font-size: 15px; }
+  .sv-contact { font-size: 14px; padding: 9px 18px; }
+  .sv-logo img { width: 176px; height: auto; }
+}
+
+@media screen and (max-width: 1120px) {
+  .sv-panel--wide { width: 700px; }
+  .sv-panel-grid { grid-template-columns: 1fr 1fr 230px; }
 }
 
 @media screen and (max-width: 1023px) {
   .sv-utility-left { display: none; }
-  .sv-utility .sv-inner { justify-content: center; }
+  .sv-utility .sv-inner { justify-content: space-between; min-height: 40px; }
   .sv-burger { display: block; }
-  .sv-header { padding: 10px 0; }
+  .sv-header .sv-inner { padding: 14px 0; }
 
   .sv-nav {
     display: none;
@@ -321,14 +397,14 @@
     top: 100%;
     left: 0;
     right: 0;
-    margin-top: 10px;
+    margin-top: 14px;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
     background: #fff;
-    border-top: 1px solid var(--sv-body);
-    padding: 0 0 20px;
-    max-height: calc(100vh - 140px);
+    border-top: 1px solid var(--sv-line);
+    padding: 6px 0 24px;
+    max-height: calc(100vh - 150px);
     overflow-y: auto;
   }
   .sv-nav.sv-nav-open { display: flex; }
@@ -338,45 +414,57 @@
   .sv-nav-btn {
     width: 100%;
     justify-content: space-between;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--sv-rule);
-    font-size: 18px;
+    padding: 16px 2px;
+    border-bottom: 1px solid var(--sv-line-soft);
+    font-size: 16px;
   }
-  .sv-nav-btn:hover { text-decoration: none; }
+  .sv-nav-btn::after { display: none; }
 
   .sv-panel {
     position: static;
     display: none;
     width: auto !important;
+    max-width: none;
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
     transform: none !important;
     border: none;
-    padding: 6px 0 12px;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    overflow: visible;
   }
-  .sv-panel::before { display: none; }
   .sv-trigger.sv-open .sv-panel { display: block; }
 
-  .sv-mega-cols { flex-direction: column; }
-  .sv-mega-col { width: 100%; padding: 8px 0 14px; }
-  .sv-panel--list .sv-link-list a { padding: 10px 0; }
-  .sv-panel--list .sv-link-list li + li { border-top: none; }
-  .sv-panel-foot { padding: 14px 0 0; }
+  .sv-panel-grid { grid-template-columns: 1fr; }
+  .sv-col { padding: 16px 0 6px; }
+  .sv-col:first-child { padding-left: 0; }
+  .sv-rail {
+    border-left: none;
+    border-radius: 8px;
+    margin: 12px 0 18px;
+    padding: 20px;
+  }
+  .sv-panel--list { padding: 8px 0 16px; }
+  .sv-panel--list .sv-eyebrow,
+  .sv-eyebrow { padding-left: 15px; }
+  .sv-panel-foot { margin: 12px 0 16px; border-top: none; padding-top: 0; }
 
-  .sv-contact-btn { display: block; text-align: center; margin-top: 20px; }
-  .sv-mobile-only { display: block; }
-  .sv-nav .sv-top-cta.sv-mobile-only { text-align: center; margin-top: 12px; }
+  .sv-contact { display: block; text-align: center; margin-top: 22px; }
+  .sv-nav .sv-btn.sv-mobile-only { display: flex; margin-top: 12px; }
 }
 
 @media screen and (max-width: 600px) {
-  .sv-utility { font-size: 14px; }
-  .sv-top-cta { font-size: 12px; padding: 8px 12px; }
-  .sv-logo img { width: 150px; }
+  .sv-utility { font-size: 12.5px; }
+  .sv-book { font-size: 12px; }
+  .sv-logo img { width: 152px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #sv-header-wrap * { transition: none !important; }
+  #sv-header-wrap *,
+  #sv-header-wrap *::before,
+  #sv-header-wrap *::after { transition: none !important; }
 }
 </style>
 <style>
@@ -386,20 +474,20 @@
 </head>
 <body>
 
-<!-- ================= Silk Vision mega menu (site-styled) ================= -->
+<!-- ===================== Silk Vision navigation ===================== -->
 <div id="sv-header-wrap">
 	<div class="sv-utility">
 		<div class="sv-inner">
 			<div class="sv-utility-left">
-				<a class="sv-divide" href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL" target="_blank" rel="noopener">Pay Bill Online</a>
-				<a class="sv-divide" href="https://www.silkvision.net/special-offers">Special Offers</a>
+				<a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL" target="_blank" rel="noopener">Pay bill online</a>
+				<a href="https://www.silkvision.net/special-offers">Special offers</a>
 			</div>
 			<div class="sv-utility-right">
-				<span class="sv-utility-phone">
+				<span class="sv-phone">
 					<svg viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"></path></svg>
-					Call or Text: <a href="tel:7038769700">(703) 876-9700</a>
+					Call or text <a href="tel:7038769700">(703) 876-9700</a>
 				</span>
-				<a class="sv-top-cta" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344" target="_blank" rel="noopener">Book Your Free LASIK, EVO &amp; RLE Consultation</a>
+				<a class="sv-book" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344" target="_blank" rel="noopener">Book a free consultation</a>
 			</div>
 		</div>
 	</div>
@@ -416,111 +504,168 @@
 
 			<nav class="sv-nav" id="sv-nav" aria-label="Main navigation">
 
-				<!-- Vision Correction — mega panel -->
-				<div class="sv-trigger" data-sv-trigger>
+				<!-- Vision Correction -->
+				<div class="sv-trigger sv-trigger--wide" data-sv-trigger>
 					<button class="sv-nav-btn" type="button" aria-expanded="false" aria-controls="sv-panel-vision">
-						Vision Correction <span class="sv-chevron" aria-hidden="true">&#9662;</span>
+						Vision Correction <span class="sv-chevron" aria-hidden="true"></span>
 					</button>
-					<div class="sv-panel sv-panel--mega" id="sv-panel-vision">
-						<div class="sv-mega-cols">
-							<div class="sv-mega-col">
-								<span class="sv-mega-heading">LASIK &amp; Laser</span>
-								<ul class="sv-link-list">
-									<li><a href="https://www.silkvision.net/silk-vision-lasik-eye-surgery-center">LASIK Surgery</a></li>
-									<li><a href="https://www.silkvision.net/photorefractive-keratectomy-prk">PRK</a></li>
-									<li><a href="https://www.silkvision.net/visual-rejuvenation">LASIK Touch-Ups</a></li>
-									<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">Is LASIK Right for You?</a></li>
-									<li><a href="https://www.silkvision.net/cost-lasik-surgery-explained">LASIK Cost</a></li>
-									<li><a href="https://www.silkvision.net/lasik-resources">LASIK Resources</a></li>
+					<div class="sv-panel sv-panel--wide" id="sv-panel-vision">
+						<div class="sv-panel-grid">
+							<div class="sv-col">
+								<p class="sv-eyebrow">Reshape the cornea</p>
+								<ul class="sv-list">
+									<li><a href="https://www.silkvision.net/silk-vision-lasik-eye-surgery-center">
+										<span class="sv-item">LASIK</span>
+										<span class="sv-note">Laser reshaping, next-day recovery</span></a></li>
+									<li><a href="https://www.silkvision.net/photorefractive-keratectomy-prk">
+										<span class="sv-item">PRK</span>
+										<span class="sv-note">No flap — works with thin corneas</span></a></li>
+									<li><a href="https://www.silkvision.net/visual-rejuvenation">
+										<span class="sv-item">LASIK touch-ups</span>
+										<span class="sv-note">Refine a correction from years ago</span></a></li>
 								</ul>
 							</div>
-							<div class="sv-mega-col">
-								<span class="sv-mega-heading">Lens Options</span>
-								<ul class="sv-link-list">
-									<li><a href="https://www.silkvision.net/evo-icl-welcome-future-vision">EVO ICL<span class="sv-tagline">Keep Your Natural Lens</span></a></li>
-									<li><a href="https://www.silkvision.net/refractive-lens-surgery-alternative-lasik">Lens Replacement (RLE)<span class="sv-tagline">Replace Your Natural Lens</span></a></li>
-									<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">Light Adjustable Lens<span class="sv-tagline">Fine-Tuned After Surgery</span></a></li>
+							<div class="sv-col">
+								<p class="sv-eyebrow">Work with the lens</p>
+								<ul class="sv-list">
+									<li><a href="https://www.silkvision.net/evo-icl-welcome-future-vision">
+										<span class="sv-item">EVO ICL</span>
+										<span class="sv-note">An added lens, your cornea untouched</span></a></li>
+									<li><a href="https://www.silkvision.net/refractive-lens-surgery-alternative-lasik">
+										<span class="sv-item">Lens replacement (RLE)</span>
+										<span class="sv-note">Swaps the natural lens, no cataracts later</span></a></li>
+									<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
+										<span class="sv-item">Light adjustable lens</span>
+										<span class="sv-note">Tuned to your eyes after surgery</span></a></li>
 								</ul>
 							</div>
-						</div>
-						<div class="sv-panel-foot">
-							Not sure which fits? <a href="https://www.silkvision.net/lasik-self-evaluation-test">Take the Self-Test</a>
+							<aside class="sv-rail">
+								<p class="sv-eyebrow">Not sure which</p>
+								<p class="sv-rail-title">Six questions, one answer</p>
+								<p class="sv-rail-body">Your prescription, your age and how you spend your days decide which procedure fits.</p>
+								<a class="sv-btn" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
+								<ul class="sv-rail-links">
+									<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">Am I a LASIK candidate?</a></li>
+									<li><a href="https://www.silkvision.net/cost-lasik-surgery-explained">What LASIK costs</a></li>
+									<li><a href="https://www.silkvision.net/lasik-resources">Patient resources</a></li>
+								</ul>
+							</aside>
 						</div>
 					</div>
 				</div>
 
-				<!-- Eye Care — mega panel -->
-				<div class="sv-trigger" data-sv-trigger>
+				<!-- Eye Care -->
+				<div class="sv-trigger sv-trigger--wide" data-sv-trigger>
 					<button class="sv-nav-btn" type="button" aria-expanded="false" aria-controls="sv-panel-eyecare">
-						Eye Care <span class="sv-chevron" aria-hidden="true">&#9662;</span>
+						Eye Care <span class="sv-chevron" aria-hidden="true"></span>
 					</button>
-					<div class="sv-panel sv-panel--mega" id="sv-panel-eyecare">
-						<div class="sv-mega-cols">
-							<div class="sv-mega-col">
-								<span class="sv-mega-heading">Cataract &amp; Lens Care</span>
-								<ul class="sv-link-list">
-									<li><a href="https://www.silkvision.net/cataract-surgery-and-cataract-removal">Cataract Surgery &amp; Removal</a></li>
-									<li><a href="https://www.silkvision.net/visual-rejuvenation">Cataract Touch-Ups</a></li>
-									<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">Light Adjustable Lens</a></li>
-									<li><a href="https://www.silkvision.net/services-overview">All Services Overview</a></li>
+					<div class="sv-panel sv-panel--wide" id="sv-panel-eyecare">
+						<div class="sv-panel-grid">
+							<div class="sv-col">
+								<p class="sv-eyebrow">Cataract care</p>
+								<ul class="sv-list">
+									<li><a href="https://www.silkvision.net/cataract-surgery-and-cataract-removal">
+										<span class="sv-item">Cataract surgery</span>
+										<span class="sv-note">Replaces a clouded lens</span></a></li>
+									<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
+										<span class="sv-item">Light adjustable lens</span>
+										<span class="sv-note">Tuned to your eyes after surgery</span></a></li>
+									<li><a href="https://www.silkvision.net/visual-rejuvenation">
+										<span class="sv-item">Cataract touch-ups</span>
+										<span class="sv-note">Sharpen vision after surgery</span></a></li>
 								</ul>
 							</div>
-							<div class="sv-mega-col">
-								<span class="sv-mega-heading">Conditions We Treat</span>
-								<ul class="sv-link-list">
-									<li><a href="https://www.silkvision.net/advanced-cornea-care-northern-virginia">Cornea</a></li>
-									<li><a href="https://www.silkvision.net/glaucoma">Glaucoma</a></li>
-									<li><a href="https://www.silkvision.net/eye-care/dry-eyes">Dry Eyes</a></li>
-									<li><a href="https://www.silkvision.net/keratoconus">Keratoconus</a></li>
-									<li><a href="https://www.silkvision.net/pterygium">Pterygium</a></li>
+							<div class="sv-col">
+								<p class="sv-eyebrow">Conditions we treat</p>
+								<ul class="sv-list">
+									<li><a href="https://www.silkvision.net/advanced-cornea-care-northern-virginia">
+										<span class="sv-item">Cornea</span>
+										<span class="sv-note">Transplants and corneal disease</span></a></li>
+									<li><a href="https://www.silkvision.net/glaucoma">
+										<span class="sv-item">Glaucoma</span>
+										<span class="sv-note">Keep the vision you still have</span></a></li>
+									<li><a href="https://www.silkvision.net/eye-care/dry-eyes">
+										<span class="sv-item">Dry eyes</span>
+										<span class="sv-note">Treatment beyond artificial tears</span></a></li>
+									<li><a href="https://www.silkvision.net/keratoconus">
+										<span class="sv-item">Keratoconus</span>
+										<span class="sv-note">Cross-linking stops it progressing</span></a></li>
+									<li><a href="https://www.silkvision.net/pterygium">
+										<span class="sv-item">Pterygium</span>
+										<span class="sv-note">Removes growth on the eye's surface</span></a></li>
 								</ul>
 							</div>
-						</div>
-						<div class="sv-panel-foot">
-							Questions about a diagnosis? <a href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Ask Our Team</a>
+							<aside class="sv-rail">
+								<p class="sv-eyebrow">Start here</p>
+								<p class="sv-rail-title">Bring us your symptoms</p>
+								<p class="sv-rail-body">Annandale and Manassas, Monday to Friday, 8:30am to 4:30pm.</p>
+								<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a>
+								<ul class="sv-rail-links">
+									<li><a href="https://www.silkvision.net/services-overview">All services</a></li>
+									<li><a href="https://www.silkvision.net/locations">Locations and hours</a></li>
+									<li><a href="https://www.silkvision.net/accepted-insurance">Accepted insurance</a></li>
+								</ul>
+							</aside>
 						</div>
 					</div>
 				</div>
 
-				<!-- About — list panel -->
+				<!-- About -->
 				<div class="sv-trigger" data-sv-trigger>
 					<button class="sv-nav-btn" type="button" aria-expanded="false" aria-controls="sv-panel-about">
-						About <span class="sv-chevron" aria-hidden="true">&#9662;</span>
+						About <span class="sv-chevron" aria-hidden="true"></span>
 					</button>
-					<div class="sv-panel sv-panel--list sv-panel--narrow" id="sv-panel-about">
-						<ul class="sv-link-list">
-							<li><a href="https://www.silkvision.net/trusted-eye-physicians-and-surgeons-northern-virginia">About Silk Vision</a></li>
-							<li><a href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">Wesam Silk, M.D.</a></li>
-							<li><a href="https://www.silkvision.net/testimonials">Testimonials</a></li>
-							<li><a href="https://www.silkvision.net/blog">Blog</a></li>
-							<li><a href="https://www.silkvision.net/locations">Locations</a></li>
-							<li><a href="https://www.silkvision.net/you-are-candidate-office-based-surgery">Office-Based Surgery</a></li>
+					<div class="sv-panel sv-panel--list" id="sv-panel-about">
+						<p class="sv-eyebrow">The practice</p>
+						<ul class="sv-list">
+							<li><a href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">
+								<span class="sv-item">Wesam Silk, M.D.</span>
+								<span class="sv-note">26,000+ procedures performed</span></a></li>
+							<li><a href="https://www.silkvision.net/trusted-eye-physicians-and-surgeons-northern-virginia">
+								<span class="sv-item">About Silk Vision</span></a></li>
+							<li><a href="https://www.silkvision.net/testimonials">
+								<span class="sv-item">Patient stories</span></a></li>
+							<li><a href="https://www.silkvision.net/blog">
+								<span class="sv-item">Blog</span></a></li>
+							<li><a href="https://www.silkvision.net/locations">
+								<span class="sv-item">Locations</span>
+								<span class="sv-note">Annandale and Manassas</span></a></li>
+							<li><a href="https://www.silkvision.net/you-are-candidate-office-based-surgery">
+								<span class="sv-item">Office-based surgery</span></a></li>
 						</ul>
 					</div>
 				</div>
 
-				<!-- Patients — list panel -->
+				<!-- Patients -->
 				<div class="sv-trigger" data-sv-trigger>
 					<button class="sv-nav-btn" type="button" aria-expanded="false" aria-controls="sv-panel-patients">
-						Patients <span class="sv-chevron" aria-hidden="true">&#9662;</span>
+						Patients <span class="sv-chevron" aria-hidden="true"></span>
 					</button>
 					<div class="sv-panel sv-panel--list sv-panel--right" id="sv-panel-patients">
-						<ul class="sv-link-list">
-							<li><a href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an Appointment</a></li>
-							<li><a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL" target="_blank" rel="noopener">Patient Portal Login</a></li>
-							<li><a href="https://www.silkvision.net/registration-consent-forms">Registration Forms</a></li>
-							<li><a href="https://www.silkvision.net/financing">Financing</a></li>
-							<li><a href="https://www.silkvision.net/accepted-insurance">Accepted Insurance</a></li>
-							<li><a href="https://www.silkvision.net/leave-review">Leave a Review</a></li>
+						<p class="sv-eyebrow">Before your visit</p>
+						<ul class="sv-list">
+							<li><a href="https://www.silkvision.net/registration-consent-forms">
+								<span class="sv-item">Registration forms</span>
+								<span class="sv-note">Fill them in before you arrive</span></a></li>
+							<li><a href="https://www.silkvision.net/financing">
+								<span class="sv-item">Financing</span>
+								<span class="sv-note">Payment plans and 0% options</span></a></li>
+							<li><a href="https://www.silkvision.net/accepted-insurance">
+								<span class="sv-item">Accepted insurance</span></a></li>
+							<li><a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL" target="_blank" rel="noopener">
+								<span class="sv-item">Patient portal</span>
+								<span class="sv-note">Records, bills and results</span></a></li>
+							<li><a href="https://www.silkvision.net/leave-review">
+								<span class="sv-item">Leave a review</span></a></li>
 						</ul>
 						<div class="sv-panel-foot">
-							<a href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a Consultation</a>
+							<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
 						</div>
 					</div>
 				</div>
 
-				<a class="sv-contact-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Contact</a>
-				<a class="sv-top-cta sv-mobile-only" href="tel:7038769700">Call or Text (703) 876-9700</a>
+				<a class="sv-contact" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Contact</a>
+				<a class="sv-btn sv-mobile-only" href="tel:7038769700">Call or text (703) 876-9700</a>
 			</nav>
 		</div>
 	</header>
@@ -535,6 +680,7 @@
 	var burger = document.getElementById('sv-burger');
 	var nav = document.getElementById('sv-nav');
 	var desktop = window.matchMedia('(min-width: 1024px)');
+	var hoverTimer;
 
 	function setOpen(trigger, open) {
 		trigger.classList.toggle('sv-open', open);
@@ -559,17 +705,22 @@
 
 		trigger.addEventListener('mouseenter', function () {
 			if (!desktop.matches) { return; }
+			clearTimeout(hoverTimer);
 			closeAll(trigger);
 			setOpen(trigger, true);
 		});
+		// a short grace period so a slightly off-target mouse path does not
+		// snap the panel shut mid-reach
 		trigger.addEventListener('mouseleave', function () {
 			if (!desktop.matches) { return; }
-			setOpen(trigger, false);
+			clearTimeout(hoverTimer);
+			hoverTimer = setTimeout(function () { setOpen(trigger, false); }, 140);
 		});
 
 		btn.addEventListener('click', function (e) {
 			e.preventDefault();
 			var isOpen = trigger.classList.contains('sv-open');
+			clearTimeout(hoverTimer);
 			closeAll(trigger);
 			setOpen(trigger, !isOpen);
 		});
@@ -596,10 +747,12 @@
 	});
 
 	document.addEventListener('keydown', function (e) {
-		if (e.key === 'Escape' || e.keyCode === 27) { closeAll(null); }
+		if (e.key === 'Escape' || e.keyCode === 27) {
+			closeAll(null);
+			closeNav();
+		}
 	});
 
-	// Reset panel state when crossing the desktop/mobile breakpoint.
 	var onChange = function () {
 		closeAll(null);
 		if (desktop.matches) { closeNav(); }
@@ -608,7 +761,7 @@
 	else if (desktop.addListener) { desktop.addListener(onChange); }
 })();
 </script>
-<!-- =============== end Silk Vision mega menu =============== -->
+<!-- =================== end Silk Vision navigation =================== -->
 
 </body>
 </html>
