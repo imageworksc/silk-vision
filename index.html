@@ -184,16 +184,19 @@
   display: inline-block;
   background: var(--sv-blue);
   color: #fff;
-  border: 1px solid var(--sv-blue);
+  border: 1.5px solid var(--sv-blue);
   border-radius: 6px;
   font-family: 'Montserrat', sans-serif;
   font-size: 15px;
   font-weight: 600;
-  padding: 10px 22px;
+  letter-spacing: 0.01em;
+  padding: 11px 26px;
   white-space: nowrap;
-  transition: background 0.16s ease, border-color 0.16s ease;
+  transition: background 0.16s ease, color 0.16s ease;
 }
-.sv-contact:hover { background: var(--sv-blue-deep); border-color: var(--sv-blue-deep); }
+/* fills blue with white type, empties out to a blue outline on hover */
+.sv-contact:hover,
+.sv-contact:focus-visible { background: #fff; color: var(--sv-blue); }
 
 /* --- Panels -------------------------------------------------------------- */
 .sv-panel {
@@ -225,10 +228,11 @@
 .sv-trigger--wide .sv-panel { top: 100%; left: auto; right: 0; }
 
 /* Rows — the blue edge grows as you point at one */
+.sv-list li + li { margin-top: 2px; }
 .sv-list a {
   position: relative;
   display: block;
-  padding: 9px 12px 9px 15px;
+  padding: 10px 12px 11px 15px;
   border-radius: 7px;
   transition: background 0.14s ease;
 }
@@ -259,9 +263,9 @@
 .sv-note {
   display: block;
   font-size: 12.5px;
-  line-height: 1.4;
+  line-height: 1.5;
   color: var(--sv-body);
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .sv-eyebrow {
@@ -276,32 +280,32 @@
 }
 
 /* Wide panel: two columns of procedures + a tinted rail with the next step */
-.sv-panel--wide { width: 790px; max-width: calc(100vw - 48px); }
-.sv-panel-grid { display: grid; grid-template-columns: 1fr 1fr 268px; }
-.sv-col { padding: 24px 16px 26px; }
-.sv-col:first-child { padding-left: 24px; }
+.sv-panel--wide { width: 880px; max-width: calc(100vw - 48px); }
+.sv-panel-grid { display: grid; grid-template-columns: 1fr 1fr 310px; }
+.sv-col { padding: 28px 20px 30px; }
+.sv-col:first-child { padding-left: 28px; }
 
 .sv-rail {
   background: var(--sv-mist);
   border-left: 1px solid var(--sv-line);
-  padding: 24px 24px 26px;
+  padding: 28px 30px 32px;
   display: flex;
   flex-direction: column;
 }
-.sv-rail .sv-eyebrow { padding-left: 0; margin-bottom: 8px; color: var(--sv-purple); }
+.sv-rail .sv-eyebrow { padding-left: 0; margin-bottom: 12px; color: var(--sv-purple); }
 .sv-rail-title {
   font-family: 'Montserrat', sans-serif;
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.35;
   color: var(--sv-ink);
-  margin: 0 0 6px;
+  margin: 0 0 10px;
 }
 .sv-rail-body {
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 13.5px;
+  line-height: 1.7;
   color: var(--sv-body);
-  margin: 0 0 16px;
+  margin: 0 0 24px;
 }
 .sv-btn {
   display: inline-flex;
@@ -314,7 +318,7 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   font-weight: 700;
-  padding: 12px 18px;
+  padding: 14px 20px;
   text-align: center;
   transition: background 0.16s ease;
 }
@@ -330,13 +334,13 @@
 .sv-btn:hover { background: var(--sv-purple-deep); }
 .sv-btn:hover::after { transform: rotate(45deg) translate(2px, -2px); }
 
-.sv-rail-links { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--sv-line); }
-.sv-rail-links li + li { margin-top: 9px; }
+.sv-rail-links { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--sv-line); }
+.sv-rail-links li + li { margin-top: 13px; }
 .sv-rail-links a {
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 500;
   color: var(--sv-blue);
-  line-height: 1.35;
+  line-height: 1.45;
 }
 .sv-rail-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
@@ -381,8 +385,11 @@
 }
 
 @media screen and (max-width: 1120px) {
-  .sv-panel--wide { width: 700px; }
-  .sv-panel-grid { grid-template-columns: 1fr 1fr 230px; }
+  .sv-panel--wide { width: 760px; }
+  .sv-panel-grid { grid-template-columns: 1fr 1fr 264px; }
+  .sv-col { padding: 24px 16px 26px; }
+  .sv-col:first-child { padding-left: 24px; }
+  .sv-rail { padding: 24px 24px 28px; }
 }
 
 @media screen and (max-width: 1023px) {
