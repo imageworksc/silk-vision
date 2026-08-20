@@ -279,33 +279,37 @@
   padding-left: 15px;
 }
 
-/* Wide panel: two columns of procedures + a tinted rail with the next step */
-.sv-panel--wide { width: 880px; max-width: calc(100vw - 48px); }
-.sv-panel-grid { display: grid; grid-template-columns: 1fr 1fr 310px; }
-.sv-col { padding: 28px 20px 30px; }
-.sv-col:first-child { padding-left: 28px; }
+/* Wide panel: two columns of procedures + a tinted rail with the next step.
+   The rail holds one short thought and one action, centred in the panel's
+   height, so it reads as a resting place rather than a fourth list. */
+.sv-panel--wide { width: 920px; max-width: calc(100vw - 48px); }
+.sv-panel-grid { display: grid; grid-template-columns: 1fr 1fr 330px; }
+.sv-col { padding: 30px 22px 34px; }
+.sv-col:first-child { padding-left: 30px; }
 
 .sv-rail {
   background: var(--sv-mist);
   border-left: 1px solid var(--sv-line);
-  padding: 28px 30px 32px;
+  padding: 34px 34px 36px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
-.sv-rail .sv-eyebrow { padding-left: 0; margin-bottom: 12px; color: var(--sv-purple); }
+.sv-rail .sv-eyebrow { padding-left: 0; margin-bottom: 14px; color: var(--sv-purple); }
 .sv-rail-title {
   font-family: 'Montserrat', sans-serif;
-  font-size: 19px;
+  font-size: 21px;
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
   color: var(--sv-ink);
-  margin: 0 0 10px;
+  margin: 0 0 12px;
 }
 .sv-rail-body {
-  font-size: 13.5px;
-  line-height: 1.7;
+  font-size: 14px;
+  line-height: 1.6;
   color: var(--sv-body);
-  margin: 0 0 24px;
+  margin: 0 0 28px;
 }
 .sv-btn {
   display: inline-flex;
@@ -334,8 +338,8 @@
 .sv-btn:hover { background: var(--sv-purple-deep); }
 .sv-btn:hover::after { transform: rotate(45deg) translate(2px, -2px); }
 
-.sv-rail-links { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--sv-line); }
-.sv-rail-links li + li { margin-top: 13px; }
+.sv-rail-links { margin-top: 30px; }
+.sv-rail-links li + li { margin-top: 14px; }
 .sv-rail-links a {
   font-size: 13.5px;
   font-weight: 500;
@@ -548,8 +552,8 @@
 							</div>
 							<aside class="sv-rail">
 								<p class="sv-eyebrow">Not sure which</p>
-								<p class="sv-rail-title">Six questions, one answer</p>
-								<p class="sv-rail-body">Your prescription, your age and how you spend your days decide which procedure fits.</p>
+								<p class="sv-rail-title">Which one fits your eyes?</p>
+								<p class="sv-rail-body">Six questions, about two minutes.</p>
 								<a class="sv-btn" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
 								<ul class="sv-rail-links">
 									<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">Am I a LASIK candidate?</a></li>
@@ -605,7 +609,7 @@
 							<aside class="sv-rail">
 								<p class="sv-eyebrow">Start here</p>
 								<p class="sv-rail-title">Bring us your symptoms</p>
-								<p class="sv-rail-body">Annandale and Manassas, Monday to Friday, 8:30am to 4:30pm.</p>
+								<p class="sv-rail-body">Annandale and Manassas, weekdays 8:30&ndash;4:30.</p>
 								<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a>
 								<ul class="sv-rail-links">
 									<li><a href="https://www.silkvision.net/services-overview">All services</a></li>
