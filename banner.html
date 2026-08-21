@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Silk Vision — Navigation, banner panels</title>
+<title>Silk Vision — Navigation, bleeding block</title>
 <link rel="icon" type="image/png" sizes="32x32" href="https://www.silkvision.net/favicon-32x32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -784,80 +784,33 @@
 .sv-rail-links li + li { margin-top: 10px; }
 
 /* ==========================================================================
-   Option C — the promo breaks out of the column and runs as a banner
+   Option C — the right-hand block bleeds off the edge
 
-   The item columns keep the header's 1400px column. The block that used to
-   sit beside them spans the whole band underneath: tinted ground, copy and
-   button held to the column, and the photograph bleeding off the right edge
-   of the window.
+   The item columns still line up with the header's column, but the grid is
+   no longer centred: it takes the whole band and pads its left edge to reach
+   that alignment. The last column therefore runs all the way to the right
+   edge of the window, and its tint carries with it, so the block reads as a
+   banner attached to the panel rather than a card sitting inside it.
    ========================================================================== */
-.sv-panel--wide .sv-panel-grid { grid-template-columns: 1fr 1fr 250px; padding-bottom: 26px; }
+.sv-panel--wide .sv-panel-grid {
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0 0 0 max(3.5vw, calc((100vw - 1400px) / 2));
+  grid-template-columns: 1fr 1fr minmax(360px, 30%);
+  column-gap: 48px;
+}
+.sv-panel--wide .sv-col { padding: 34px 0 34px; }
 
-.sv-banner {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  border-top: 1px solid var(--sv-line);
-  background: linear-gradient(90deg, #eff4fb 0%, #e9f0f9 55%, #e7eef8 100%);
-}
-.sv-banner-inner {
-  position: relative;
-  z-index: 2;
-  width: 1400px;
-  max-width: 93%;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  min-height: 132px;
-  padding: 20px clamp(270px, 31%, 430px) 20px 0;
-}
-.sv-banner-text { display: block; flex: 1; }
-.sv-banner .sv-eyebrow { display: block; padding-left: 0; margin-bottom: 6px; }
-.sv-banner-title {
-  display: block;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--sv-ink);
-  margin-bottom: 5px;
-}
-.sv-banner-body { display: block; font-size: 14.5px; line-height: 1.5; color: var(--sv-body); }
-.sv-banner .sv-btn { flex-shrink: 0; margin: 0; }
-.sv-banner:hover .sv-btn { background: var(--sv-purple-deep); }
-
-.sv-banner-photo {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: clamp(260px, 30%, 420px);
-  z-index: 1;
-}
-.sv-banner-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
-/* the photo dissolves into the tint instead of butting against it */
-.sv-banner-photo::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, #e9f0f9 0%, rgba(233, 240, 249, 0) 58%);
-}
-
-@media screen and (max-width: 1023px) {
-  .sv-banner { border-top: none; background: #eff4fb; border-radius: 10px; margin-top: 8px; }
-  .sv-banner-inner {
-    width: auto;
-    max-width: none;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 18px;
-    min-height: 0;
-  }
-  .sv-banner-photo { position: static; width: auto; height: 120px; }
-  .sv-banner-photo::after { display: none; }
-  .sv-banner .sv-btn { align-self: stretch; text-align: center; }
+.sv-panel--wide .sv-rail {
+  align-self: stretch;
+  background: linear-gradient(135deg, #eff4fb 0%, #e8eff9 55%, #ece9f8 100%);
+  border: none;
+  border-left: 1px solid var(--sv-line);
+  border-radius: 0;
+  margin: 0;
+  padding: 30px max(3.5vw, calc((100vw - 1400px) / 2)) 32px 40px;
+  justify-content: center;
 }
 </style>
 <style>
@@ -961,26 +914,19 @@
 										<span class="sv-text"><span class="sv-item">Light adjustable lens</span><span class="sv-note">Tuned to your eyes after surgery</span></span></a></li>
 								</ul>
 							</div>
-							<div class="sv-col">
-								<p class="sv-eyebrow">Also useful</p>
+							<aside class="sv-rail">
+								<span class="sv-illus"><img src="./assets/banner-patients-3.jpg" alt="Three patients of the practice" loading="lazy"></span>
+								<p class="sv-eyebrow">Not sure which</p>
+								<p class="sv-rail-title">Which one fits<br>your eyes?</p>
+								<p class="sv-rail-body">Six questions, about two minutes.</p>
+								<a class="sv-btn" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
 								<ul class="sv-rail-links">
 									<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">Am I a LASIK candidate?</a></li>
 									<li><a href="https://www.silkvision.net/cost-lasik-surgery-explained">What LASIK costs</a></li>
 									<li><a href="https://www.silkvision.net/lasik-resources">Patient resources</a></li>
 								</ul>
-							</div>
+							</aside>
 						</div>
-						<a class="sv-banner" href="https://www.silkvision.net/lasik-self-evaluation-test">
-							<span class="sv-banner-inner">
-								<span class="sv-banner-text">
-									<span class="sv-eyebrow">Not sure which</span>
-									<span class="sv-banner-title">Which one fits your eyes?</span>
-									<span class="sv-banner-body">Six questions, about two minutes.</span>
-								</span>
-								<span class="sv-btn">Take the self-test</span>
-							</span>
-							<span class="sv-banner-photo"><img src="./assets/banner-patients-3.jpg" alt="Three patients of the practice" loading="lazy"></span>
-						</a>
 					</div>
 				</div>
 
@@ -1025,26 +971,19 @@
 										<span class="sv-text"><span class="sv-item">Pterygium</span><span class="sv-note">Removes growth on the eye's surface</span></span></a></li>
 								</ul>
 							</div>
-							<div class="sv-col">
-								<p class="sv-eyebrow">Practical details</p>
+							<aside class="sv-rail">
+								<span class="sv-illus"><img src="./assets/rail-exam.jpg" alt="A phoropter in one of our exam rooms" loading="lazy"></span>
+								<p class="sv-eyebrow">Start here</p>
+								<p class="sv-rail-title">Bring us your symptoms</p>
+								<p class="sv-rail-body">Annandale and Manassas,<br>weekdays 8:30&ndash;4:30.</p>
+								<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a>
 								<ul class="sv-rail-links">
 									<li><a href="https://www.silkvision.net/services-overview">All services</a></li>
 									<li><a href="https://www.silkvision.net/locations">Locations and hours</a></li>
 									<li><a href="https://www.silkvision.net/accepted-insurance">Accepted insurance</a></li>
 								</ul>
-							</div>
+							</aside>
 						</div>
-						<a class="sv-banner" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">
-							<span class="sv-banner-inner">
-								<span class="sv-banner-text">
-									<span class="sv-eyebrow">Start here</span>
-									<span class="sv-banner-title">Bring us your symptoms</span>
-									<span class="sv-banner-body">Annandale and Manassas, weekdays 8:30&ndash;4:30.</span>
-								</span>
-								<span class="sv-btn">Request an appointment</span>
-							</span>
-							<span class="sv-banner-photo"><img src="./assets/rail-exam.jpg" alt="A phoropter in one of our exam rooms" loading="lazy"></span>
-						</a>
 					</div>
 				</div>
 
@@ -1083,25 +1022,18 @@
 										<span class="sv-text"><span class="sv-item">Locations</span><span class="sv-note">Annandale and Manassas</span></span></a></li>
 								</ul>
 							</div>
-							<div class="sv-col">
-								<p class="sv-eyebrow">More about us</p>
+							<aside class="sv-rail">
+								<span class="sv-illus"><img src="./assets/rail-doctor.jpg" alt="A surgeon at Silk Vision" loading="lazy"></span>
+								<p class="sv-eyebrow">Your surgeon</p>
+								<p class="sv-rail-title">One surgeon,<br>26,000 procedures</p>
+								<p class="sv-rail-body">Twenty years of LASIK, cataract and corneal surgery in Northern Virginia.</p>
+								<a class="sv-btn" href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">Meet Dr. Silk</a>
 								<ul class="sv-rail-links">
 									<li><a href="https://www.silkvision.net/testimonials">Read patient stories</a></li>
 									<li><a href="https://www.silkvision.net/locations">Locations and hours</a></li>
 								</ul>
-							</div>
+							</aside>
 						</div>
-						<a class="sv-banner" href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">
-							<span class="sv-banner-inner">
-								<span class="sv-banner-text">
-									<span class="sv-eyebrow">Your surgeon</span>
-									<span class="sv-banner-title">One surgeon, 26,000 procedures</span>
-									<span class="sv-banner-body">Twenty years of LASIK, cataract and corneal surgery in Northern Virginia.</span>
-								</span>
-								<span class="sv-btn">Meet Dr. Silk</span>
-							</span>
-							<span class="sv-banner-photo"><img src="./assets/rail-doctor.jpg" alt="A surgeon at Silk Vision" loading="lazy"></span>
-						</a>
 					</div>
 				</div>
 
@@ -1137,25 +1069,18 @@
 										<span class="sv-text"><span class="sv-item">Leave a review</span><span class="sv-note">Tell us how it went</span></span></a></li>
 								</ul>
 							</div>
-							<div class="sv-col">
-								<p class="sv-eyebrow">Also useful</p>
+							<aside class="sv-rail">
+								<span class="sv-illus"><img src="./assets/banner-patients-2.jpg" alt="Two patients of the practice" loading="lazy"></span>
+								<p class="sv-eyebrow">Ready when you are</p>
+								<p class="sv-rail-title">Questions before<br>you book?</p>
+								<p class="sv-rail-body">Call or text (703) 876-9700,<br>weekdays 8:30&ndash;4:30.</p>
+								<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
 								<ul class="sv-rail-links">
 									<li><a href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a></li>
 									<li><a href="https://www.silkvision.net/special-offers">Current offers</a></li>
 								</ul>
-							</div>
+							</aside>
 						</div>
-						<a class="sv-banner" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">
-							<span class="sv-banner-inner">
-								<span class="sv-banner-text">
-									<span class="sv-eyebrow">Ready when you are</span>
-									<span class="sv-banner-title">Questions before you book?</span>
-									<span class="sv-banner-body">Call or text (703) 876-9700,<br>weekdays 8:30&ndash;4:30.</span>
-								</span>
-								<span class="sv-btn">Book a consultation</span>
-							</span>
-							<span class="sv-banner-photo"><img src="./assets/banner-patients-2.jpg" alt="Two patients of the practice" loading="lazy"></span>
-						</a>
 					</div>
 				</div>
 
