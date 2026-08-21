@@ -756,6 +756,16 @@
 }
 .sv-rail-links li + li { margin-top: 0; }
 .sv-panel--wide .sv-list li + li { margin-top: 12px; }
+
+/* The band still runs edge to edge; its contents sit in the same 1400px
+   column as the header above, so the first item lines up under the logo. */
+.sv-panel--wide .sv-panel-grid {
+  width: 1400px;
+  max-width: 93%;
+  margin: 0 auto;
+  padding-left: 0;
+  padding-right: 0;
+}
 </style>
 <style>
   html { min-height: 100%; }
