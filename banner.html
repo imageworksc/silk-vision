@@ -867,6 +867,22 @@
     grid-template-columns: minmax(320px, 420px) minmax(320px, 420px) 1fr 880px;
   }
 }
+
+/* The item columns were wider than their text, which pushed the block away
+   from the middle column. They hug their content now, the gutter tightens,
+   and the block picks up the width they give back. */
+.sv-panel--wide .sv-panel-grid {
+  grid-template-columns: minmax(280px, 372px) minmax(280px, 372px) 1fr;
+  column-gap: 32px;
+}
+.sv-panel--wide .sv-rail { padding-left: 30px; }
+
+@media screen and (min-width: 1700px) {
+  .sv-panel--wide .sv-panel-grid {
+    grid-template-columns: minmax(300px, 380px) minmax(300px, 380px) 1fr 880px;
+    column-gap: 32px;
+  }
+}
 </style>
 <style>
   html { min-height: 100%; }
