@@ -265,16 +265,32 @@
 .sv-item {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
   font-family: 'Poppins', sans-serif;
   font-size: 15px;
   font-weight: 500;
   line-height: 1.35;
   color: var(--sv-ink);
 }
+/* every icon sits in its own tinted square, as in the reference */
+.sv-ico-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #e7f0f8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.14s ease;
+}
+.sv-list a:hover .sv-ico-box,
+.sv-list a:focus-visible .sv-ico-box { background: var(--sv-blue); }
+.sv-list a:hover .sv-ico,
+.sv-list a:focus-visible .sv-ico { color: #fff; }
 .sv-ico {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   color: var(--sv-blue);
   fill: none;
@@ -307,7 +323,7 @@
 /* Wide panel: two columns of procedures + a tinted rail with the next step.
    The rail holds one short thought and one action, centred in the panel's
    height, so it reads as a resting place rather than a fourth list. */
-.sv-panel--wide { width: 920px; max-width: calc(100vw - 48px); }
+.sv-panel--wide { width: 950px; max-width: calc(100vw - 48px); }
 .sv-panel-grid { display: grid; grid-template-columns: 1fr 1fr 330px; }
 .sv-col { padding: 30px 22px 34px; }
 .sv-col:first-child { padding-left: 30px; }
@@ -419,8 +435,8 @@
 }
 
 @media screen and (max-width: 1120px) {
-  .sv-panel--wide { width: 760px; }
-  .sv-panel-grid { grid-template-columns: 1fr 1fr 264px; }
+  .sv-panel--wide { width: 840px; }
+  .sv-panel-grid { grid-template-columns: 1fr 1fr 280px; }
   .sv-col { padding: 24px 16px 26px; }
   .sv-col:first-child { padding-left: 24px; }
   .sv-rail { padding: 24px 24px 28px; }
@@ -518,29 +534,32 @@
 <!-- ===================== Silk Vision navigation ===================== -->
 <div id="sv-header-wrap">
 	<svg class="sv-sprite" aria-hidden="true" focusable="false"><defs>
-		<symbol id="i-lasik" viewBox="0 0 24 24"><path d="M2.5 14s3.4-5 9.5-5 9.5 5 9.5 5-3.4 5-9.5 5-9.5-5-9.5-5Z"/><circle cx="12" cy="14" r="2.3"/><path d="M12 2.5v4"/></symbol>
-		<symbol id="i-prk" viewBox="0 0 24 24"><path d="M2.5 17.5c3-5.5 16-5.5 19 0"/><path d="M8.5 5.5v5M15.5 5.5v5"/></symbol>
-		<symbol id="i-touchup" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20.5 4.5V9h-4.5"/></symbol>
-		<symbol id="i-icl" viewBox="0 0 24 24"><path d="M2.5 12s3.5-5.5 9.5-5.5S21.5 12 21.5 12s-3.5 5.5-9.5 5.5S2.5 12 2.5 12Z"/><path d="M9.5 12h5M12 9.5v5"/></symbol>
-		<symbol id="i-rle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8 10.5h8l-2.2-2.2"/><path d="M16 13.5H8l2.2 2.2"/></symbol>
-		<symbol id="i-lal" viewBox="0 0 24 24"><path d="M3.5 8.5h17M3.5 15.5h17"/><circle cx="9" cy="8.5" r="2.2"/><circle cx="15" cy="15.5" r="2.2"/></symbol>
-		<symbol id="i-cataract" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M7.5 14c1.8-2.2 7.2-2.2 9 0"/><path d="M8.5 10c1.5-1.6 5.5-1.6 7 0"/></symbol>
-		<symbol id="i-cornea" viewBox="0 0 24 24"><path d="M3 18.5h18"/><path d="M5.5 18.5a6.5 6.5 0 0 1 13 0"/><path d="M9 18.5a3 3 0 0 1 6 0"/></symbol>
-		<symbol id="i-glaucoma" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 12 16 8.5"/></symbol>
-		<symbol id="i-dryeye" viewBox="0 0 24 24"><path d="M12 3.5s5 6 5 9.2a5 5 0 0 1-10 0C7 9.5 12 3.5 12 3.5Z"/><path d="M4.5 20 20 4.5"/></symbol>
-		<symbol id="i-keratoconus" viewBox="0 0 24 24"><path d="M12 3.5 19 18.5H5L12 3.5Z"/><path d="M8.5 14.5h7"/></symbol>
-		<symbol id="i-pterygium" viewBox="0 0 24 24"><path d="M2.5 12s3.5-5.5 9.5-5.5S21.5 12 21.5 12s-3.5 5.5-9.5 5.5S2.5 12 2.5 12Z"/><path d="M2.5 12 8 10v4l-5.5-2Z"/></symbol>
-		<symbol id="i-doctor" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></symbol>
-		<symbol id="i-practice" viewBox="0 0 24 24"><path d="M3.5 20.5V9L12 4l8.5 5v11.5"/><path d="M9.5 20.5V15h5v5.5"/></symbol>
-		<symbol id="i-quote" viewBox="0 0 24 24"><path d="M3.5 4.5h17v11h-11l-6 4.5V4.5Z"/><path d="M8 10h8"/></symbol>
-		<symbol id="i-blog" viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2.5"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></symbol>
-		<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.2a7 7 0 1 0-14 0C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.8" r="2.6"/></symbol>
-		<symbol id="i-surgery" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M12 9v6M9 12h6"/></symbol>
-		<symbol id="i-forms" viewBox="0 0 24 24"><path d="M8.5 4.5h-2a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-13a2 2 0 0 0-2-2h-2"/><rect x="8.5" y="2.5" width="7" height="4" rx="1.2"/><path d="M8.5 12h7M8.5 16h4"/></symbol>
-		<symbol id="i-card" viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19M6 15h4"/></symbol>
-		<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.5 19.5 6v6c0 4.4-3.2 7.6-7.5 9.5C7.7 19.6 4.5 16.4 4.5 12V6L12 2.5Z"/></symbol>
-		<symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="10.5" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/></symbol>
-		<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.7L12 16.8l-5.2 2.7 1-5.7L3.5 9.7l5.9-.8L12 3.5Z"/></symbol>
+		<!-- Each glyph draws the thing itself: a corneal profile, an implanted
+		     lens, the shape a disease gives the cornea. Nothing is reused as a
+		     stand-in for a different procedure. -->
+		<symbol id="i-lasik" viewBox="0 0 24 24"><path d="M3 18.5c0-5 4-9 9-9s9 4 9 9"/><path d="M12 9.5 6.5 5.8"/><path d="M17 2.5v4M15.4 5 17 6.6 18.6 5"/></symbol>
+		<symbol id="i-prk" viewBox="0 0 24 24"><path d="M3 18.5c0-5 4-9 9-9s9 4 9 9"/><path d="M5.6 13.6c2.2-1.6 10.6-1.6 12.8 0" stroke-dasharray="2 2.2"/><path d="M12 1.5v4M10.4 4 12 5.6 13.6 4"/></symbol>
+		<symbol id="i-touchup" viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 1 1-2.7-6.2"/><path d="M21 3.5V8h-4.5"/><circle cx="12" cy="12" r="2.8"/></symbol>
+		<symbol id="i-icl" viewBox="0 0 24 24"><path d="M1.5 13.5s4-6 10.5-6 10.5 6 10.5 6-4 6-10.5 6-10.5-6-10.5-6Z"/><ellipse cx="12" cy="13.5" rx="4.2" ry="2.8"/><path d="m18 4.5-3.4 3.4"/><path d="M14.6 5.6v2.3h2.3"/></symbol>
+		<symbol id="i-rle" viewBox="0 0 24 24"><circle cx="12" cy="14" r="4.6"/><path d="M16.6 14c2.6-1.9 4.7-1 4.7 1.5"/><path d="M7.4 14c-2.6 1.9-4.7 1-4.7-1.5"/><path d="M8 5.5h8l-2.2-2.2M16 5.5l-2.2 2.2"/></symbol>
+		<symbol id="i-lal" viewBox="0 0 24 24"><circle cx="12" cy="15" r="4.4"/><path d="M16.4 15c2.5-1.8 4.6-.9 4.6 1.5"/><path d="M7.6 15c-2.5 1.8-4.6.9-4.6-1.5"/><path d="M12 3v3.4M8 4.6l1.6 2.6M16 4.6l-1.6 2.6"/></symbol>
+		<symbol id="i-cataract" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M6.6 13.8c1.9-2.4 8.9-2.4 10.8 0"/><path d="M8 9.6c1.8-1.7 6.2-1.7 8 0"/><path d="M12 3.4v2"/></symbol>
+		<symbol id="i-cornea" viewBox="0 0 24 24"><path d="M2.5 19h19"/><path d="M4.5 19a7.5 7.5 0 0 1 15 0"/><path d="M7.5 19a4.5 4.5 0 0 1 9 0"/><path d="M10.5 19a1.5 1.5 0 0 1 3 0"/></symbol>
+		<symbol id="i-glaucoma" viewBox="0 0 24 24"><path d="M1.5 12.5s4-6 10.5-6 10.5 6 10.5 6-4 6-10.5 6-10.5-6-10.5-6Z"/><path d="M12 16V9"/><path d="M9.6 11.4 12 9l2.4 2.4"/></symbol>
+		<symbol id="i-dryeye" viewBox="0 0 24 24"><path d="M1.5 12.5s4-6 10.5-6c2.3 0 4.2.7 5.8 1.7"/><circle cx="11" cy="12.5" r="3"/><path d="M1.5 12.5s2.4 3.6 7 5.2"/><path d="M18.6 13.4s2.4 2.9 2.4 4.2a2.4 2.4 0 0 1-4.8 0c0-1.3 2.4-4.2 2.4-4.2Z"/><path d="m15.4 19.6 6.4-6.4"/></symbol>
+		<symbol id="i-keratoconus" viewBox="0 0 24 24"><path d="M2.5 19h19"/><path d="M6 19a6 6 0 0 1 12 0" stroke-dasharray="2 2.2"/><path d="M6 19 12 5.5 18 19"/></symbol>
+		<symbol id="i-pterygium" viewBox="0 0 24 24"><path d="M1.5 12.5s4-6 10.5-6 10.5 6 10.5 6-4 6-10.5 6-10.5-6-10.5-6Z"/><circle cx="13" cy="12.5" r="3.2"/><path d="M2 12.5 10 10v5l-8-2.5Z"/></symbol>
+		<symbol id="i-doctor" viewBox="0 0 24 24"><circle cx="12" cy="7.6" r="3.6"/><path d="M4.8 20.5a7.2 7.2 0 0 1 14.4 0"/><path d="M15.6 15.6v3.4M13.9 17.3h3.4"/></symbol>
+		<symbol id="i-practice" viewBox="0 0 24 24"><path d="M3.5 20.5V9.6L12 4l8.5 5.6v10.9"/><path d="M12 11.6v5M9.5 14.1h5"/><path d="M2.5 20.5h19"/></symbol>
+		<symbol id="i-quote" viewBox="0 0 24 24"><path d="M3.5 4.5h17v11.5h-10L5 20.5V4.5Z"/><path d="m12 7.6 1.3 2.6 2.9.4-2.1 2 .5 2.9-2.6-1.4-2.6 1.4.5-2.9-2.1-2 2.9-.4L12 7.6Z"/></symbol>
+		<symbol id="i-blog" viewBox="0 0 24 24"><path d="M19.5 12.5v6a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 18.5V5.5A2.5 2.5 0 0 1 6 3h7"/><path d="M7.5 9h6M7.5 13h7M7.5 17h4"/><path d="m17.5 2.5 3 3-4 4h-3v-3l4-4Z"/></symbol>
+		<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.5s7-6.4 7-11.5a7 7 0 1 0-14 0c0 5.1 7 11.5 7 11.5Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+		<symbol id="i-surgery" viewBox="0 0 24 24"><path d="M12 3.5a5 5 0 0 1 5 5c0 1.7-2.2 2.8-5 2.8s-5-1.1-5-2.8a5 5 0 0 1 5-5Z"/><path d="M9.4 9.5h5.2"/><path d="M12 11.3v7.2M8.5 21h7"/></symbol>
+		<symbol id="i-forms" viewBox="0 0 24 24"><path d="M9 4.5H6.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-13a2 2 0 0 0-2-2H15"/><rect x="9" y="2.5" width="6" height="4" rx="1.3"/><path d="m8.6 13.4 2.1 2.1 4.7-4.7"/></symbol>
+		<symbol id="i-card" viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/><path d="m13.4 16 4.2-4.2"/><circle cx="13.6" cy="12.2" r=".7"/><circle cx="17.4" cy="15.8" r=".7"/></symbol>
+		<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.5 19.5 6v6c0 4.4-3.2 7.6-7.5 9.5C7.7 19.6 4.5 16.4 4.5 12V6L12 2.5Z"/><path d="M12 9v6M9 12h6"/></symbol>
+		<symbol id="i-lock" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="13" rx="2.5"/><path d="M9 20.5h6M12 17v3.5"/><rect x="9.6" y="9" width="4.8" height="4.4" rx="1.1"/><path d="M10.7 9V7.9a1.3 1.3 0 0 1 2.6 0V9"/></symbol>
+		<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.2 2.7 5.5 6.1.9-4.4 4.3 1 6-5.4-2.9-5.4 2.9 1-6-4.4-4.3 6.1-.9L12 3.2Z"/></symbol>
 	</defs></svg>
 
 	<div class="sv-utility">
@@ -582,13 +601,13 @@
 								<p class="sv-eyebrow">Reshape the cornea</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/silk-vision-lasik-eye-surgery-center">
-										<span class="sv-item"><svg class="sv-ico"><use href="#i-lasik"></use></svg>LASIK</span>
+										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-lasik"></use></svg></span>LASIK</span>
 										<span class="sv-note">Laser reshaping, next-day recovery</span></a></li>
 									<li><a href="https://www.silkvision.net/photorefractive-keratectomy-prk">
-										<span class="sv-item"><svg class="sv-ico"><use href="#i-prk"></use></svg>PRK</span>
+										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-prk"></use></svg></span>PRK</span>
 										<span class="sv-note">No flap — works with thin corneas</span></a></li>
 									<li><a href="https://www.silkvision.net/visual-rejuvenation">
-										<span class="sv-item"><svg class="sv-ico"><use href="#i-touchup"></use></svg>LASIK touch-ups</span>
+										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-touchup"></use></svg></span>LASIK touch-ups</span>
 										<span class="sv-note">Refine a correction from years ago</span></a></li>
 								</ul>
 							</div>
@@ -596,13 +615,13 @@
 								<p class="sv-eyebrow">Work with the lens</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/evo-icl-welcome-future-vision">
-										<span class="sv-item"><svg class="sv-ico"><use href="#i-icl"></use></svg>EVO ICL</span>
+										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-icl"></use></svg></span>EVO ICL</span>
 										<span class="sv-note">An added lens, your cornea untouched</span></a></li>
 									<li><a href="https://www.silkvision.net/refractive-lens-surgery-alternative-lasik">
-										<span class="sv-item"><svg class="sv-ico"><use href="#i-rle"></use></svg>Lens replacement (RLE)</span>
+										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-rle"></use></svg></span>Lens replacement (RLE)</span>
 										<span class="sv-note">Swaps the natural lens, no cataracts later</span></a></li>
 									<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
-										<span class="sv-item"><svg class="sv-ico"><use href="#i-lal"></use></svg>Light adjustable lens</span>
+										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-lal"></use></svg></span>Light adjustable lens</span>
 										<span class="sv-note">Tuned to your eyes after surgery</span></a></li>
 								</ul>
 							</div>
@@ -632,13 +651,13 @@
 								<p class="sv-eyebrow">Cataract care</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/cataract-surgery-and-cataract-removal">
-										<span class="sv-item"><svg class="sv-ico"><use href="#i-cataract"></use></svg>Cataract surgery</span>
+										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-cataract"></use></svg></span>Cataract surgery</span>
 										<span class="sv-note">Replaces a clouded lens</span></a></li>
 									<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
-										<span class="sv-item"><svg class="sv-ico"><use href="#i-lal"></use></svg>Light adjustable lens</span>
+										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-lal"></use></svg></span>Light adjustable lens</span>
 										<span class="sv-note">Tuned to your eyes after surgery</span></a></li>
 									<li><a href="https://www.silkvision.net/visual-rejuvenation">
-										<span class="sv-item"><svg class="sv-ico"><use href="#i-touchup"></use></svg>Cataract touch-ups</span>
+										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-touchup"></use></svg></span>Cataract touch-ups</span>
 										<span class="sv-note">Sharpen vision after surgery</span></a></li>
 								</ul>
 							</div>
@@ -646,19 +665,19 @@
 								<p class="sv-eyebrow">Conditions we treat</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/advanced-cornea-care-northern-virginia">
-										<span class="sv-item"><svg class="sv-ico"><use href="#i-cornea"></use></svg>Cornea</span>
+										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-cornea"></use></svg></span>Cornea</span>
 										<span class="sv-note">Transplants and corneal disease</span></a></li>
 									<li><a href="https://www.silkvision.net/glaucoma">
-										<span class="sv-item"><svg class="sv-ico"><use href="#i-glaucoma"></use></svg>Glaucoma</span>
+										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-glaucoma"></use></svg></span>Glaucoma</span>
 										<span class="sv-note">Keep the vision you still have</span></a></li>
 									<li><a href="https://www.silkvision.net/eye-care/dry-eyes">
-										<span class="sv-item"><svg class="sv-ico"><use href="#i-dryeye"></use></svg>Dry eyes</span>
+										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-dryeye"></use></svg></span>Dry eyes</span>
 										<span class="sv-note">Treatment beyond artificial tears</span></a></li>
 									<li><a href="https://www.silkvision.net/keratoconus">
-										<span class="sv-item"><svg class="sv-ico"><use href="#i-keratoconus"></use></svg>Keratoconus</span>
+										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-keratoconus"></use></svg></span>Keratoconus</span>
 										<span class="sv-note">Cross-linking stops it progressing</span></a></li>
 									<li><a href="https://www.silkvision.net/pterygium">
-										<span class="sv-item"><svg class="sv-ico"><use href="#i-pterygium"></use></svg>Pterygium</span>
+										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-pterygium"></use></svg></span>Pterygium</span>
 										<span class="sv-note">Removes growth on the eye's surface</span></a></li>
 								</ul>
 							</div>
@@ -686,19 +705,19 @@
 						<p class="sv-eyebrow">The practice</p>
 						<ul class="sv-list">
 							<li><a href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">
-								<span class="sv-item"><svg class="sv-ico"><use href="#i-doctor"></use></svg>Wesam Silk, M.D.</span>
+								<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-doctor"></use></svg></span>Wesam Silk, M.D.</span>
 								<span class="sv-note">26,000+ procedures performed</span></a></li>
 							<li><a href="https://www.silkvision.net/trusted-eye-physicians-and-surgeons-northern-virginia">
-								<span class="sv-item"><svg class="sv-ico"><use href="#i-practice"></use></svg>About Silk Vision</span></a></li>
+								<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-practice"></use></svg></span>About Silk Vision</span></a></li>
 							<li><a href="https://www.silkvision.net/testimonials">
-								<span class="sv-item"><svg class="sv-ico"><use href="#i-quote"></use></svg>Patient stories</span></a></li>
+								<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-quote"></use></svg></span>Patient stories</span></a></li>
 							<li><a href="https://www.silkvision.net/blog">
-								<span class="sv-item"><svg class="sv-ico"><use href="#i-blog"></use></svg>Blog</span></a></li>
+								<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-blog"></use></svg></span>Blog</span></a></li>
 							<li><a href="https://www.silkvision.net/locations">
-								<span class="sv-item"><svg class="sv-ico"><use href="#i-pin"></use></svg>Locations</span>
+								<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-pin"></use></svg></span>Locations</span>
 								<span class="sv-note">Annandale and Manassas</span></a></li>
 							<li><a href="https://www.silkvision.net/you-are-candidate-office-based-surgery">
-								<span class="sv-item"><svg class="sv-ico"><use href="#i-surgery"></use></svg>Office-based surgery</span></a></li>
+								<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-surgery"></use></svg></span>Office-based surgery</span></a></li>
 						</ul>
 					</div>
 				</div>
@@ -712,18 +731,18 @@
 						<p class="sv-eyebrow">Before your visit</p>
 						<ul class="sv-list">
 							<li><a href="https://www.silkvision.net/registration-consent-forms">
-								<span class="sv-item"><svg class="sv-ico"><use href="#i-forms"></use></svg>Registration forms</span>
+								<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-forms"></use></svg></span>Registration forms</span>
 								<span class="sv-note">Fill them in before you arrive</span></a></li>
 							<li><a href="https://www.silkvision.net/financing">
-								<span class="sv-item"><svg class="sv-ico"><use href="#i-card"></use></svg>Financing</span>
+								<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-card"></use></svg></span>Financing</span>
 								<span class="sv-note">Payment plans and 0% options</span></a></li>
 							<li><a href="https://www.silkvision.net/accepted-insurance">
-								<span class="sv-item"><svg class="sv-ico"><use href="#i-shield"></use></svg>Accepted insurance</span></a></li>
+								<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-shield"></use></svg></span>Accepted insurance</span></a></li>
 							<li><a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL" target="_blank" rel="noopener">
-								<span class="sv-item"><svg class="sv-ico"><use href="#i-lock"></use></svg>Patient portal</span>
+								<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-lock"></use></svg></span>Patient portal</span>
 								<span class="sv-note">Records, bills and results</span></a></li>
 							<li><a href="https://www.silkvision.net/leave-review">
-								<span class="sv-item"><svg class="sv-ico"><use href="#i-star"></use></svg>Leave a review</span></a></li>
+								<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-star"></use></svg></span>Leave a review</span></a></li>
 						</ul>
 						<div class="sv-panel-foot">
 							<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
