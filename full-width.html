@@ -644,35 +644,10 @@
 }
 .sv-rail-lead::after { content: ' \2192'; }
 
-/* one action per panel, along the foot */
-.sv-panel-bar { border-top: 1px solid var(--sv-line); background: #fafcfe; }
-.sv-panel-bar-inner {
-  width: auto;
-  max-width: none;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 16px 44px;
-}
-.sv-panel-bar p { font-size: 14px; color: var(--sv-body); }
-.sv-panel-bar .sv-btn { align-self: auto; }
 
 @media screen and (max-width: 1023px) {
   .sv-panel--wide .sv-panel-grid { padding: 4px 0 0; }
   .sv-panel--wide .sv-rail { margin-left: 0; padding: 22px; }
-  .sv-panel-bar { border-top: none; background: transparent; }
-  .sv-panel-bar-inner {
-    width: auto;
-    max-width: none;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-    padding: 16px 0 4px;
-    text-align: center;
-  }
-  .sv-panel-bar .sv-btn { align-self: stretch; }
 }
 
 /* ==========================================================================
