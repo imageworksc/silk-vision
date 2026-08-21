@@ -731,6 +731,31 @@
 /* the action lives in the rail; the strip along the foot is gone */
 .sv-rail .sv-btn { margin: 14px 0; }
 .sv-rail-links { margin-top: 0; }
+
+/* The rail runs taller than the item columns, which leaves white space at the
+   foot of the panel. Trim it back so the two sides finish closer together. */
+.sv-illus { margin-bottom: 14px; }
+.sv-illus img { height: 104px; }
+.sv-panel--wide .sv-rail { padding: 20px 22px 22px; }
+.sv-rail .sv-eyebrow { margin-bottom: 8px; }
+.sv-rail-title { font-size: 20px; margin-bottom: 6px; }
+.sv-rail-body { margin-bottom: 0; }
+.sv-rail .sv-btn { margin: 14px 0 12px; }
+.sv-rail-links li + li { margin-top: 9px; }
+.sv-panel--wide .sv-panel-grid { padding-bottom: 26px; }
+
+/* Vision Correction runs three items to a column, so its rail was finishing
+   far below them. The photo comes down, the links pair up two to a row, and
+   the rows get a little more air: both sides now end within a line of each
+   other. */
+.sv-illus img { height: 92px; }
+.sv-rail-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+}
+.sv-rail-links li + li { margin-top: 0; }
+.sv-panel--wide .sv-list li + li { margin-top: 12px; }
 </style>
 <style>
   html { min-height: 100%; }
