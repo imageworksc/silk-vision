@@ -548,13 +548,11 @@
   border-radius: 0;
   box-shadow: 0 20px 32px -14px rgba(0, 54, 93, 0.18);
 }
-/* the band fills its width: no centred column, and the rail card takes a
-   full third instead of a fixed strip, so no gap opens beside it */
 .sv-panel--wide .sv-panel-grid {
-  width: auto;
-  max-width: none;
-  margin: 0;
-  grid-template-columns: 1fr 1fr minmax(360px, 1fr);
+  width: 1400px;
+  max-width: 93%;
+  margin: 0 auto;
+  grid-template-columns: 1fr 1fr 400px;
 }
 .sv-panel--wide .sv-col { padding: 36px 40px 42px 0; }
 .sv-panel--wide .sv-col:first-child { padding-left: 0; }
@@ -578,7 +576,7 @@
 .sv-rail-body { font-size: 14.5px; }
 
 @media screen and (max-width: 1300px) {
-  .sv-panel--wide .sv-panel-grid { grid-template-columns: 1fr 1fr minmax(300px, 1fr); }
+  .sv-panel--wide .sv-panel-grid { grid-template-columns: 1fr 1fr 330px; }
   .sv-panel--wide .sv-col { padding-right: 30px; }
   .sv-panel--wide .sv-rail { padding-left: 36px; }
 }
@@ -605,7 +603,7 @@
    the single action for each panel sits in a strip along the foot, so no
    panel shows two competing buttons.
    ========================================================================== */
-.sv-panel--wide .sv-panel-grid { padding: 40px 44px 36px; column-gap: 48px; }
+.sv-panel--wide .sv-panel-grid { padding: 40px 0 36px; column-gap: 44px; }
 .sv-panel--wide .sv-col { padding: 0; }
 
 /* whole row lights up as one card, no left edge marker */
@@ -633,11 +631,8 @@
 #sv-panel-eyecare .sv-note { padding-left: 52px; }
 
 /* the rail becomes a rounded card rather than a full-height column */
-/* a grid item stretches to the row height by default, which left the card
-   trailing empty space under short content */
 .sv-panel--wide .sv-rail {
   background: var(--sv-mist);
-  align-self: start;
   border: 1px solid var(--sv-line);
   border-radius: 14px;
   border-left: 1px solid var(--sv-line);
@@ -659,14 +654,14 @@
 /* one action per panel, along the foot */
 .sv-panel-bar { border-top: 1px solid var(--sv-line); background: #fafcfe; }
 .sv-panel-bar-inner {
-  width: auto;
-  max-width: none;
-  margin: 0;
+  width: 1400px;
+  max-width: 93%;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 16px 44px;
+  padding: 16px 0;
 }
 .sv-panel-bar p { font-size: 14px; color: var(--sv-body); }
 .sv-panel-bar .sv-btn { align-self: auto; }
@@ -685,6 +680,57 @@
     text-align: center;
   }
   .sv-panel-bar .sv-btn { align-self: stretch; }
+}
+
+/* ==========================================================================
+   Denser: the two item columns hug their content and sit side by side, and
+   the rail takes whatever is left, filled with cards rather than air.
+   ========================================================================== */
+.sv-panel--wide .sv-panel-grid {
+  grid-template-columns: minmax(240px, 310px) minmax(240px, 310px) 1fr;
+  column-gap: 36px;
+  padding: 32px 44px 30px;
+}
+/* a grid item stretches to the row height by default, leaving the card
+   trailing empty space under short content */
+.sv-panel--wide .sv-rail { align-self: start; padding: 22px 24px 24px; margin-left: 16px; }
+
+.sv-feature {
+  display: block;
+  background: #fff;
+  border: 1px solid var(--sv-line);
+  border-radius: 10px;
+  padding: 14px 16px 15px;
+  transition: border-color 0.14s ease, box-shadow 0.14s ease;
+}
+.sv-feature + .sv-feature { margin-top: 10px; }
+.sv-feature:hover,
+.sv-feature:focus-visible {
+  border-color: #bcd4e8;
+  box-shadow: 0 2px 8px rgba(0, 54, 93, 0.07);
+}
+.sv-feature-title {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--sv-ink);
+  margin-bottom: 3px;
+}
+.sv-feature-body {
+  display: block;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--sv-body);
+}
+.sv-rail .sv-rail-lead { display: inline-block; margin-top: 14px; font-size: 13.5px; }
+.sv-rail .sv-eyebrow { margin-bottom: 12px; }
+
+@media screen and (max-width: 1200px) {
+  .sv-panel--wide .sv-panel-grid {
+    grid-template-columns: minmax(220px, 280px) minmax(220px, 280px) 1fr;
+    column-gap: 28px;
+  }
 }
 </style>
 <style>
@@ -778,15 +824,16 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<p class="sv-eyebrow">Not sure which</p>
-								<p class="sv-rail-title">Which one fits<br>your eyes?</p>
-								<p class="sv-rail-body">Six questions, about two minutes.</p>
-								<ul class="sv-rail-links">
-									<li><a class="sv-rail-lead" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a></li>
-									<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">Am I a LASIK candidate?</a></li>
-									<li><a href="https://www.silkvision.net/cost-lasik-surgery-explained">What LASIK costs</a></li>
-									<li><a href="https://www.silkvision.net/lasik-resources">Patient resources</a></li>
-								</ul>
+								<p class="sv-eyebrow">Explore</p>
+								<a class="sv-feature" href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">
+									<span class="sv-feature-title">Am I a candidate?</span>
+									<span class="sv-feature-body">A corneal scan and your prescription decide which procedure fits.</span>
+								</a>
+								<a class="sv-feature" href="https://www.silkvision.net/cost-lasik-surgery-explained">
+									<span class="sv-feature-title">What LASIK costs</span>
+									<span class="sv-feature-body">What the procedure runs and how patients pay for it.</span>
+								</a>
+								<a class="sv-rail-lead" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
 							</aside>
 						</div>
 						<div class="sv-panel-bar">
@@ -840,14 +887,16 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<p class="sv-eyebrow">Start here</p>
-								<p class="sv-rail-title">Bring us your symptoms</p>
-								<p class="sv-rail-body">Annandale and Manassas,<br>weekdays 8:30&ndash;4:30.</p>
-								<ul class="sv-rail-links">
-									<li><a href="https://www.silkvision.net/services-overview">All services</a></li>
-									<li><a href="https://www.silkvision.net/locations">Locations and hours</a></li>
-									<li><a href="https://www.silkvision.net/accepted-insurance">Accepted insurance</a></li>
-								</ul>
+								<p class="sv-eyebrow">Explore</p>
+								<a class="sv-feature" href="https://www.silkvision.net/services-overview">
+									<span class="sv-feature-title">All services</span>
+									<span class="sv-feature-body">Every procedure and condition we treat, in one place.</span>
+								</a>
+								<a class="sv-feature" href="https://www.silkvision.net/locations">
+									<span class="sv-feature-title">Locations and hours</span>
+									<span class="sv-feature-body">Annandale and Manassas, weekdays 8:30&ndash;4:30.</span>
+								</a>
+								<a class="sv-rail-lead" href="https://www.silkvision.net/accepted-insurance">See accepted insurance</a>
 							</aside>
 						</div>
 						<div class="sv-panel-bar">
@@ -895,13 +944,16 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<p class="sv-eyebrow">Your surgeon</p>
-								<p class="sv-rail-title">One surgeon,<br>26,000 procedures</p>
-								<p class="sv-rail-body">Twenty years of LASIK, cataract and corneal surgery in Northern Virginia.</p>
-								<ul class="sv-rail-links">
-									<li><a href="https://www.silkvision.net/testimonials">Read patient stories</a></li>
-									<li><a href="https://www.silkvision.net/locations">Locations and hours</a></li>
-								</ul>
+								<p class="sv-eyebrow">Explore</p>
+								<a class="sv-feature" href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">
+									<span class="sv-feature-title">Wesam Silk, M.D.</span>
+									<span class="sv-feature-body">26,000+ procedures across LASIK, cataract and corneal surgery.</span>
+								</a>
+								<a class="sv-feature" href="https://www.silkvision.net/testimonials">
+									<span class="sv-feature-title">Patient stories</span>
+									<span class="sv-feature-body">What people say after surgery, in their own words.</span>
+								</a>
+								<a class="sv-rail-lead" href="https://www.silkvision.net/locations">Locations and hours</a>
 							</aside>
 						</div>
 						<div class="sv-panel-bar">
@@ -946,13 +998,16 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<p class="sv-eyebrow">Ready when you are</p>
-								<p class="sv-rail-title">Questions before<br>you book?</p>
-								<p class="sv-rail-body">Call or text (703) 876-9700,<br>weekdays 8:30&ndash;4:30.</p>
-								<ul class="sv-rail-links">
-									<li><a href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a></li>
-									<li><a href="https://www.silkvision.net/special-offers">Current offers</a></li>
-								</ul>
+								<p class="sv-eyebrow">Explore</p>
+								<a class="sv-feature" href="https://www.silkvision.net/financing">
+									<span class="sv-feature-title">Financing</span>
+									<span class="sv-feature-body">Payment plans and 0% introductory options for qualified patients.</span>
+								</a>
+								<a class="sv-feature" href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL">
+									<span class="sv-feature-title">Patient portal</span>
+									<span class="sv-feature-body">Records, bills and results in one place.</span>
+								</a>
+								<a class="sv-rail-lead" href="https://www.silkvision.net/special-offers">See current offers</a>
 							</aside>
 						</div>
 						<div class="sv-panel-bar">
