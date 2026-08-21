@@ -548,11 +548,13 @@
   border-radius: 0;
   box-shadow: 0 20px 32px -14px rgba(0, 54, 93, 0.18);
 }
+/* the band fills its width: no centred column, and the rail card takes a
+   full third instead of a fixed strip, so no gap opens beside it */
 .sv-panel--wide .sv-panel-grid {
-  width: 1400px;
-  max-width: 93%;
-  margin: 0 auto;
-  grid-template-columns: 1fr 1fr 400px;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  grid-template-columns: 1fr 1fr minmax(360px, 1fr);
 }
 .sv-panel--wide .sv-col { padding: 36px 40px 42px 0; }
 .sv-panel--wide .sv-col:first-child { padding-left: 0; }
@@ -576,7 +578,7 @@
 .sv-rail-body { font-size: 14.5px; }
 
 @media screen and (max-width: 1300px) {
-  .sv-panel--wide .sv-panel-grid { grid-template-columns: 1fr 1fr 330px; }
+  .sv-panel--wide .sv-panel-grid { grid-template-columns: 1fr 1fr minmax(300px, 1fr); }
   .sv-panel--wide .sv-col { padding-right: 30px; }
   .sv-panel--wide .sv-rail { padding-left: 36px; }
 }
@@ -603,7 +605,7 @@
    the single action for each panel sits in a strip along the foot, so no
    panel shows two competing buttons.
    ========================================================================== */
-.sv-panel--wide .sv-panel-grid { padding: 40px 0 36px; column-gap: 44px; }
+.sv-panel--wide .sv-panel-grid { padding: 40px 44px 36px; column-gap: 48px; }
 .sv-panel--wide .sv-col { padding: 0; }
 
 /* whole row lights up as one card, no left edge marker */
@@ -657,14 +659,14 @@
 /* one action per panel, along the foot */
 .sv-panel-bar { border-top: 1px solid var(--sv-line); background: #fafcfe; }
 .sv-panel-bar-inner {
-  width: 1400px;
-  max-width: 93%;
-  margin: 0 auto;
+  width: auto;
+  max-width: none;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 16px 0;
+  padding: 16px 44px;
 }
 .sv-panel-bar p { font-size: 14px; color: var(--sv-body); }
 .sv-panel-bar .sv-btn { align-self: auto; }
