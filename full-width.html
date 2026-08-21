@@ -691,6 +691,41 @@
 @media screen and (max-width: 1200px) {
   .sv-panel--wide .sv-panel-grid { column-gap: 36px; }
 }
+
+/* ==========================================================================
+   Item layout: the icon and the text are two columns, not an inline pair.
+   The label and its line sit in one text column beside the square, aligned
+   to each other rather than hanging off the icon.
+   ========================================================================== */
+.sv-list a {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 13px 14px 14px;
+  border-radius: 12px;
+}
+.sv-text { display: block; }
+.sv-item { display: block; gap: 0; font-size: 15.5px; font-weight: 500; line-height: 1.4; }
+.sv-note {
+  display: block;
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin-top: 2px;
+  padding-left: 0 !important;
+}
+.sv-list li + li { margin-top: 6px; }
+
+/* the square reads lighter as an outline on white than as a filled chip */
+.sv-ico-box {
+  background: #fff;
+  border: 1px solid var(--sv-line);
+  border-radius: 10px;
+  margin-top: 1px;
+}
+.sv-list a:hover .sv-ico-box,
+.sv-list a:focus-visible .sv-ico-box { background: #fff; border-color: #bcd4e8; }
+.sv-list a:hover,
+.sv-list a:focus-visible { background: #f6f9fc; border-color: #e4edf5; }
 </style>
 <style>
   html { min-height: 100%; }
@@ -758,28 +793,28 @@
 								<p class="sv-eyebrow">Reshape the cornea</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/silk-vision-lasik-eye-surgery-center">
-										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-lasik"></use></svg></span>LASIK</span>
-										<span class="sv-note">Laser reshaping, next-day recovery</span></a></li>
+										<span class="sv-ico-box"><svg class="sv-ico"><use href="#i-lasik"></use></svg></span>
+										<span class="sv-text"><span class="sv-item">LASIK</span><span class="sv-note">Laser reshaping, next-day recovery</span></span></a></li>
 									<li><a href="https://www.silkvision.net/photorefractive-keratectomy-prk">
-										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-prk"></use></svg></span>PRK</span>
-										<span class="sv-note">No flap — works with thin corneas</span></a></li>
+										<span class="sv-ico-box"><svg class="sv-ico"><use href="#i-prk"></use></svg></span>
+										<span class="sv-text"><span class="sv-item">PRK</span><span class="sv-note">No flap — works with thin corneas</span></span></a></li>
 									<li><a href="https://www.silkvision.net/visual-rejuvenation">
-										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-touchup"></use></svg></span>LASIK touch-ups</span>
-										<span class="sv-note">Refine a correction from years ago</span></a></li>
+										<span class="sv-ico-box"><svg class="sv-ico"><use href="#i-touchup"></use></svg></span>
+										<span class="sv-text"><span class="sv-item">LASIK touch-ups</span><span class="sv-note">Refine a correction from years ago</span></span></a></li>
 								</ul>
 							</div>
 							<div class="sv-col">
 								<p class="sv-eyebrow">Work with the lens</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/evo-icl-welcome-future-vision">
-										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-icl"></use></svg></span>EVO ICL</span>
-										<span class="sv-note">An added lens, your cornea untouched</span></a></li>
+										<span class="sv-ico-box"><svg class="sv-ico"><use href="#i-icl"></use></svg></span>
+										<span class="sv-text"><span class="sv-item">EVO ICL</span><span class="sv-note">An added lens, your cornea untouched</span></span></a></li>
 									<li><a href="https://www.silkvision.net/refractive-lens-surgery-alternative-lasik">
-										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-rle"></use></svg></span>Lens replacement (RLE)</span>
-										<span class="sv-note">Swaps the natural lens, no cataracts later</span></a></li>
+										<span class="sv-ico-box"><svg class="sv-ico"><use href="#i-rle"></use></svg></span>
+										<span class="sv-text"><span class="sv-item">Lens replacement (RLE)</span><span class="sv-note">Swaps the natural lens, no cataracts later</span></span></a></li>
 									<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
-										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-lal"></use></svg></span>Light adjustable lens</span>
-										<span class="sv-note">Tuned to your eyes after surgery</span></a></li>
+										<span class="sv-ico-box"><svg class="sv-ico"><use href="#i-lal"></use></svg></span>
+										<span class="sv-text"><span class="sv-item">Light adjustable lens</span><span class="sv-note">Tuned to your eyes after surgery</span></span></a></li>
 								</ul>
 							</div>
 							<aside class="sv-rail">
@@ -814,34 +849,34 @@
 								<p class="sv-eyebrow">Cataract care</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/cataract-surgery-and-cataract-removal">
-										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-cataract"></use></svg></span>Cataract surgery</span>
-										<span class="sv-note">Replaces a clouded lens</span></a></li>
+										<span class="sv-ico-box"><svg class="sv-ico"><use href="#i-cataract"></use></svg></span>
+										<span class="sv-text"><span class="sv-item">Cataract surgery</span><span class="sv-note">Replaces a clouded lens</span></span></a></li>
 									<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
-										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-lal"></use></svg></span>Light adjustable lens</span>
-										<span class="sv-note">Tuned to your eyes after surgery</span></a></li>
+										<span class="sv-ico-box"><svg class="sv-ico"><use href="#i-lal"></use></svg></span>
+										<span class="sv-text"><span class="sv-item">Light adjustable lens</span><span class="sv-note">Tuned to your eyes after surgery</span></span></a></li>
 									<li><a href="https://www.silkvision.net/visual-rejuvenation">
-										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-touchup"></use></svg></span>Cataract touch-ups</span>
-										<span class="sv-note">Sharpen vision after surgery</span></a></li>
+										<span class="sv-ico-box"><svg class="sv-ico"><use href="#i-touchup"></use></svg></span>
+										<span class="sv-text"><span class="sv-item">Cataract touch-ups</span><span class="sv-note">Sharpen vision after surgery</span></span></a></li>
 								</ul>
 							</div>
 							<div class="sv-col">
 								<p class="sv-eyebrow">Conditions we treat</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/advanced-cornea-care-northern-virginia">
-										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-cornea"></use></svg></span>Cornea</span>
-										<span class="sv-note">Transplants and corneal disease</span></a></li>
+										<span class="sv-ico-box"><svg class="sv-ico"><use href="#i-cornea"></use></svg></span>
+										<span class="sv-text"><span class="sv-item">Cornea</span><span class="sv-note">Transplants and corneal disease</span></span></a></li>
 									<li><a href="https://www.silkvision.net/glaucoma">
-										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-glaucoma"></use></svg></span>Glaucoma</span>
-										<span class="sv-note">Keep the vision you still have</span></a></li>
+										<span class="sv-ico-box"><svg class="sv-ico"><use href="#i-glaucoma"></use></svg></span>
+										<span class="sv-text"><span class="sv-item">Glaucoma</span><span class="sv-note">Keep the vision you still have</span></span></a></li>
 									<li><a href="https://www.silkvision.net/eye-care/dry-eyes">
-										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-dryeye"></use></svg></span>Dry eyes</span>
-										<span class="sv-note">Treatment beyond artificial tears</span></a></li>
+										<span class="sv-ico-box"><svg class="sv-ico"><use href="#i-dryeye"></use></svg></span>
+										<span class="sv-text"><span class="sv-item">Dry eyes</span><span class="sv-note">Treatment beyond artificial tears</span></span></a></li>
 									<li><a href="https://www.silkvision.net/keratoconus">
-										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-keratoconus"></use></svg></span>Keratoconus</span>
-										<span class="sv-note">Cross-linking stops it progressing</span></a></li>
+										<span class="sv-ico-box"><svg class="sv-ico"><use href="#i-keratoconus"></use></svg></span>
+										<span class="sv-text"><span class="sv-item">Keratoconus</span><span class="sv-note">Cross-linking stops it progressing</span></span></a></li>
 									<li><a href="https://www.silkvision.net/pterygium">
-										<span class="sv-item"><span class="sv-ico-box"><svg class="sv-ico"><use href="#i-pterygium"></use></svg></span>Pterygium</span>
-										<span class="sv-note">Removes growth on the eye's surface</span></a></li>
+										<span class="sv-ico-box"><svg class="sv-ico"><use href="#i-pterygium"></use></svg></span>
+										<span class="sv-text"><span class="sv-item">Pterygium</span><span class="sv-note">Removes growth on the eye's surface</span></span></a></li>
 								</ul>
 							</div>
 							<aside class="sv-rail">
@@ -875,28 +910,22 @@
 								<p class="sv-eyebrow">The practice</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">
-										<span class="sv-item">Wesam Silk, M.D.</span>
-										<span class="sv-note">26,000+ procedures performed</span></a></li>
+										<span class="sv-text"><span class="sv-item">Wesam Silk, M.D.</span><span class="sv-note">26,000+ procedures performed</span></span></a></li>
 									<li><a href="https://www.silkvision.net/trusted-eye-physicians-and-surgeons-northern-virginia">
-										<span class="sv-item">About Silk Vision</span>
-										<span class="sv-note">Who we are and how we work</span></a></li>
+										<span class="sv-text"><span class="sv-item">About Silk Vision</span><span class="sv-note">Who we are and how we work</span></span></a></li>
 									<li><a href="https://www.silkvision.net/you-are-candidate-office-based-surgery">
-										<span class="sv-item">Office-based surgery</span>
-										<span class="sv-note">Your procedure in our own suite</span></a></li>
+										<span class="sv-text"><span class="sv-item">Office-based surgery</span><span class="sv-note">Your procedure in our own suite</span></span></a></li>
 								</ul>
 							</div>
 							<div class="sv-col">
 								<p class="sv-eyebrow">See for yourself</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/testimonials">
-										<span class="sv-item">Patient stories</span>
-										<span class="sv-note">In their own words</span></a></li>
+										<span class="sv-text"><span class="sv-item">Patient stories</span><span class="sv-note">In their own words</span></span></a></li>
 									<li><a href="https://www.silkvision.net/blog">
-										<span class="sv-item">Blog</span>
-										<span class="sv-note">Answers to what patients ask</span></a></li>
+										<span class="sv-text"><span class="sv-item">Blog</span><span class="sv-note">Answers to what patients ask</span></span></a></li>
 									<li><a href="https://www.silkvision.net/locations">
-										<span class="sv-item">Locations</span>
-										<span class="sv-note">Annandale and Manassas</span></a></li>
+										<span class="sv-text"><span class="sv-item">Locations</span><span class="sv-note">Annandale and Manassas</span></span></a></li>
 								</ul>
 							</div>
 							<aside class="sv-rail">
@@ -929,25 +958,20 @@
 								<p class="sv-eyebrow">Before your visit</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/registration-consent-forms">
-										<span class="sv-item">Registration forms</span>
-										<span class="sv-note">Fill them in before you arrive</span></a></li>
+										<span class="sv-text"><span class="sv-item">Registration forms</span><span class="sv-note">Fill them in before you arrive</span></span></a></li>
 									<li><a href="https://www.silkvision.net/accepted-insurance">
-										<span class="sv-item">Accepted insurance</span>
-										<span class="sv-note">Plans we work with</span></a></li>
+										<span class="sv-text"><span class="sv-item">Accepted insurance</span><span class="sv-note">Plans we work with</span></span></a></li>
 									<li><a href="https://www.silkvision.net/financing">
-										<span class="sv-item">Financing</span>
-										<span class="sv-note">Payment plans and 0% options</span></a></li>
+										<span class="sv-text"><span class="sv-item">Financing</span><span class="sv-note">Payment plans and 0% options</span></span></a></li>
 								</ul>
 							</div>
 							<div class="sv-col">
 								<p class="sv-eyebrow">Your account</p>
 								<ul class="sv-list">
 									<li><a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL" target="_blank" rel="noopener">
-										<span class="sv-item">Patient portal</span>
-										<span class="sv-note">Records, bills and results</span></a></li>
+										<span class="sv-text"><span class="sv-item">Patient portal</span><span class="sv-note">Records, bills and results</span></span></a></li>
 									<li><a href="https://www.silkvision.net/leave-review">
-										<span class="sv-item">Leave a review</span>
-										<span class="sv-note">Tell us how it went</span></a></li>
+										<span class="sv-text"><span class="sv-item">Leave a review</span><span class="sv-note">Tell us how it went</span></span></a></li>
 								</ul>
 							</div>
 							<aside class="sv-rail">
