@@ -736,16 +736,21 @@
 #sv-panel-vision .sv-note,
 #sv-panel-eyecare .sv-note { padding-left: 0; }
 
-/* the drawing sits on its own white surface inside the tinted card, which is
-   what makes it read as a picture rather than as floating shapes */
+/* a photograph of the practice heads each rail card. Crops are set per panel
+   so the same frame gives a different picture: the doctor on one, the
+   phoropter beside him on another. */
 .sv-illus {
   display: block;
   margin: 0 0 18px;
-  padding: 16px 18px;
-  background: #fff;
-  border: 1px solid #e5ecf6;
   border-radius: 10px;
+  overflow: hidden;
+  background: #eef3f9;
 }
+.sv-illus img { display: block; width: 100%; height: 132px; object-fit: cover; }
+#sv-panel-vision .sv-illus img { object-position: 50% 34%; }
+#sv-panel-eyecare .sv-illus img { object-position: 45% 46%; }
+#sv-panel-about .sv-illus img { object-position: 62% 28%; }
+#sv-panel-patients .sv-illus img { object-position: 50% 34%; }
 .sv-illus svg { display: block; width: 100%; height: auto; }
 </style>
 <style>
@@ -850,13 +855,7 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<span class="sv-illus"><svg viewBox="0 0 320 92" role="img" aria-label="An eye chart with one line picked out">
-									<rect x="68" y="12" width="184" height="15" rx="4" fill="#c7dbee"/>
-									<rect x="86" y="35" width="148" height="13" rx="4" fill="#d9e6f3"/>
-									<rect x="104" y="56" width="112" height="11" rx="4" fill="#005894"/>
-									<rect x="124" y="75" width="72" height="9" rx="4" fill="#e2ecf5"/>
-									<path d="M78 61.5h16M226 61.5h16" stroke="#005894" stroke-width="2" stroke-linecap="round" opacity=".5"/>
-								</svg></span>
+								<span class="sv-illus"><img src="./assets/rail-people.jpg" alt="Patients outdoors, no glasses in sight" loading="lazy"></span>
 								<p class="sv-eyebrow">Not sure which</p>
 								<p class="sv-rail-title">Which one fits<br>your eyes?</p>
 								<p class="sv-rail-body">Six questions, about two minutes.</p>
@@ -919,12 +918,7 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<span class="sv-illus"><svg viewBox="0 0 320 92" role="img" aria-label="An eye under examination">
-									<circle cx="160" cy="46" r="43" fill="none" stroke="#e1ebf5" stroke-width="2"/>
-									<path d="M112 46s21-19 48-19 48 19 48 19-21 19-48 19-48-19-48-19Z" fill="#eaf2fa" stroke="#005894" stroke-width="2.5"/>
-									<circle cx="160" cy="46" r="11" fill="#005894"/>
-									<path d="M160 0v10M160 82v10M74 46H62M258 46h12" stroke="#005894" stroke-width="2" stroke-linecap="round" opacity=".45"/>
-								</svg></span>
+								<span class="sv-illus"><img src="./assets/rail-exam.jpg" alt="A phoropter in one of our exam rooms" loading="lazy"></span>
 								<p class="sv-eyebrow">Start here</p>
 								<p class="sv-rail-title">Bring us your symptoms</p>
 								<p class="sv-rail-body">Annandale and Manassas,<br>weekdays 8:30&ndash;4:30.</p>
@@ -980,14 +974,7 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<span class="sv-illus"><svg viewBox="0 0 320 92" role="img" aria-label="A surgeon and a record of procedures">
-									<circle cx="74" cy="46" r="34" fill="#eaf2fa" stroke="#005894" stroke-width="2.5"/>
-									<circle cx="74" cy="37" r="11" fill="#005894"/>
-									<path d="M56 62a18 18 0 0 1 36 0Z" fill="#005894"/>
-									<rect x="130" y="24" width="150" height="13" rx="6.5" fill="#cbdeef"/>
-									<rect x="130" y="46" width="108" height="12" rx="6" fill="#dfeaf5"/>
-									<rect x="130" y="66" width="66" height="12" rx="6" fill="#edf3f9"/>
-								</svg></span>
+								<span class="sv-illus"><img src="./assets/rail-doctor.jpg" alt="A surgeon at Silk Vision" loading="lazy"></span>
 								<p class="sv-eyebrow">Your surgeon</p>
 								<p class="sv-rail-title">One surgeon,<br>26,000 procedures</p>
 								<p class="sv-rail-body">Twenty years of LASIK, cataract and corneal surgery in Northern Virginia.</p>
@@ -1039,18 +1026,7 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<span class="sv-illus"><svg viewBox="0 0 320 92" role="img" aria-label="A calendar with a day chosen">
-									<rect x="96" y="12" width="128" height="76" rx="12" fill="#ffffff" stroke="#005894" stroke-width="2.5"/>
-									<path d="M96 36h128" stroke="#005894" stroke-width="2.5"/>
-									<path d="M126 2v16M194 2v16" stroke="#005894" stroke-width="4" stroke-linecap="round"/>
-									<g fill="#d9e6f3">
-										<rect x="112" y="48" width="16" height="10" rx="4"/><rect x="138" y="48" width="16" height="10" rx="4"/>
-										<rect x="192" y="48" width="16" height="10" rx="4"/>
-										<rect x="112" y="68" width="16" height="10" rx="4"/><rect x="166" y="68" width="16" height="10" rx="4"/>
-										<rect x="192" y="68" width="16" height="10" rx="4"/>
-									</g>
-									<rect x="162" y="44" width="26" height="18" rx="7" fill="#005894"/>
-								</svg></span>
+								<span class="sv-illus"><img src="./assets/rail-booking.jpg" alt="Patients of the practice" loading="lazy"></span>
 								<p class="sv-eyebrow">Ready when you are</p>
 								<p class="sv-rail-title">Questions before<br>you book?</p>
 								<p class="sv-rail-body">Call or text (703) 876-9700,<br>weekdays 8:30&ndash;4:30.</p>
