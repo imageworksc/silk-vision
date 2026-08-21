@@ -828,6 +828,29 @@
 #sv-panel-about .sv-illus img,
 #sv-panel-patients .sv-illus img { object-position: 50% 45%; }
 #sv-panel-about .sv-illus img { object-position: 50% 50%; }
+
+/* ==========================================================================
+   Very wide screens
+
+   The block's right padding tracked the container gutter, which is 20px at
+   1440 but 1220px at 4K — enough to crush its text to one word a line. It is
+   capped now. Past 1700px the item columns and the block also stop growing,
+   so the layout holds its proportions instead of stretching with the window,
+   and the photograph is never scaled past its own resolution.
+   ========================================================================== */
+.sv-panel--wide .sv-rail {
+  padding-right: min(max(3.5vw, calc((100vw - 1400px) / 2)), 80px);
+}
+.sv-illus {
+  margin-right: calc(-1 * min(max(3.5vw, (100vw - 1400px) / 2), 80px));
+}
+
+@media screen and (min-width: 1700px) {
+  .sv-panel--wide .sv-panel-grid {
+    grid-template-columns: minmax(320px, 440px) minmax(320px, 440px) 1fr 660px;
+  }
+  .sv-panel--wide .sv-rail { grid-column: 4; }
+}
 </style>
 <style>
   html { min-height: 100%; }
