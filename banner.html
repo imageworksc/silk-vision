@@ -851,6 +851,22 @@
   }
   .sv-panel--wide .sv-rail { grid-column: 4; }
 }
+
+/* ==========================================================================
+   Wider image block
+
+   The block takes a bigger share of the panel so its photograph runs much
+   further across, and the photograph grows taller with it so the frame does
+   not turn into a letterbox slot.
+   ========================================================================== */
+.sv-panel--wide .sv-panel-grid { grid-template-columns: 1fr 1fr minmax(440px, 38%); }
+.sv-illus img { height: 214px; }
+
+@media screen and (min-width: 1700px) {
+  .sv-panel--wide .sv-panel-grid {
+    grid-template-columns: minmax(320px, 420px) minmax(320px, 420px) 1fr 880px;
+  }
+}
 </style>
 <style>
   html { min-height: 100%; }
