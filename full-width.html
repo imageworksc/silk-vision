@@ -631,8 +631,11 @@
 #sv-panel-eyecare .sv-note { padding-left: 52px; }
 
 /* the rail becomes a rounded card rather than a full-height column */
+/* a grid item stretches to the row height by default, which left the card
+   trailing empty space under short content */
 .sv-panel--wide .sv-rail {
   background: var(--sv-mist);
+  align-self: start;
   border: 1px solid var(--sv-line);
   border-radius: 14px;
   border-left: 1px solid var(--sv-line);
