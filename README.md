@@ -1,41 +1,29 @@
 # Silk Vision — Navigation
 
-Mega-menu navigation for [silkvision.net](https://www.silkvision.net/), rebuilt in the
-production design language. The published page is the menu and the logo, nothing else.
+Three versions of a mega-menu navigation for [silkvision.net](https://www.silkvision.net/),
+built from the practice's own colours, type and photography.
 
-**Live:** https://imageworksc.github.io/silk-vision/
+| Page | Panels |
+| --- | --- |
+| [index.html](https://imageworksc.github.io/silk-vision/) | Panels hang under their trigger as cards |
+| [full-width.html](https://imageworksc.github.io/silk-vision/full-width.html) | Panels are bands across the window; contents held to the header column; the promo is a block beside the items |
+| [banner.html](https://imageworksc.github.io/silk-vision/banner.html) | Same bands, but the promo breaks out of the column and runs as a full-bleed banner under the items |
 
-## Design tokens (pulled from the production stylesheet)
+## Shared design
 
 | Token | Value | Used for |
 | --- | --- | --- |
-| Brand blue | `#005894` / `#005895` | Nav links, panel headings, outlined Contact button |
-| Utility blue | `#106096` | Top bar text |
-| Purple gradient | `#800080` → `#5f005f` | Top-bar CTA, panel CTAs |
-| Body | `#45575b` | Panel copy, panel border |
-| Rules | `#ccc`, `#bcc4c6` | Header rule, column dividers, utility separators |
-| Type | Montserrat (nav + headings), Poppins (body) | |
+| Brand blue | `#005894` / `#00365d` | Nav, item names, icons |
+| Purple | `#800080` | Actions only, never decoration |
+| Mist / hairline | `#f2f7fb` / `#dbe7f1` | Hover wash, rules |
+| Type | Montserrat (nav, headings), Poppins (body) | |
 | Container | `1400px` / `max-width: 93%` | Matches the site grid |
 
-## Structure
-
-Four dropdowns, all wired to live silkvision.net URLs:
-
-- **Vision Correction** — two columns (LASIK & Laser / Lens Options) plus a Self-Test CTA
-- **Eye Care** — two columns (Cataract & Lens Care / Conditions We Treat) plus an Ask Our Team CTA
-- **About** — single column, practice and doctor pages
-- **Patients** — single column, right-aligned panel, plus a Book a Consultation CTA
-
-## Behaviour
-
-- Opens on hover at ≥1024px, with an invisible bridge so the pointer survives the gap to the panel
-- Click also toggles, `Escape` and outside-click close, `aria-expanded` tracked on every trigger
-- Below 1024px the bar collapses to a hamburger and the panels become accordions
-- Header is sticky; honours `prefers-reduced-motion`
-- All CSS is scoped to `#sv-header-wrap` / `.sv-*`, so the block can be dropped into the live
-  theme without colliding with it
+Every procedure row carries the one fact that separates it from the row above, and each
+row has an outline icon drawn from the anatomy or object involved. All CSS is scoped to
+`#sv-header-wrap` / `.sv-*`, so any of the three can be dropped into the live theme.
 
 ## Files
 
-- `index.html` — the whole component: markup, scoped CSS and script in one file
-- `assets/logo.png` — the site logo
+- `index.html`, `full-width.html`, `banner.html` — one self-contained page each
+- `assets/` — logo and the photographs used in the panels
