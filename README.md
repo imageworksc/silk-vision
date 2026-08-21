@@ -1,4 +1,4 @@
-# Silk Vision — Navigation
+| [banner.html](https://imageworksc.github.io/silk-vision/banner.html) | Same bands, but the block on the right bleeds off the edge of the window and reads as a banner |# Silk Vision — Navigation
 
 Three versions of a mega-menu navigation for [silkvision.net](https://www.silkvision.net/),
 built from the practice's own colours, type and photography.
