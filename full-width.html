@@ -766,6 +766,18 @@
   padding-left: 0;
   padding-right: 0;
 }
+
+/* The rail is a block in the panel, not a card sitting on it: no fill, no
+   radius, no outline. A hairline on its left is all that marks it off from
+   the item columns. */
+.sv-panel--wide .sv-rail {
+  background: none;
+  border: none;
+  border-left: 1px solid var(--sv-line);
+  border-radius: 0;
+  margin-left: 0;
+  padding: 0 0 0 40px;
+}
 </style>
 <style>
   html { min-height: 100%; }
