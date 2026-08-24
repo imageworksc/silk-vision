@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Silk Vision — Navigation, bleeding block</title>
+<title>Silk Vision — Navigation, floating panels</title>
 <link rel="icon" type="image/png" sizes="32x32" href="https://www.silkvision.net/favicon-32x32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -907,6 +907,82 @@
 
 @media screen and (max-width: 1023px) {
   .sv-panel--wide { border-top: none; box-shadow: none; }
+}
+
+/* ==========================================================================
+   A floating panel instead of a band
+
+   The panel stops at the header's column, gets rounded corners and a lifted
+   shadow, and sits 26px clear of the navbar. The image block still runs to
+   the panel's own right edge, so it keeps the bleeding-block character —
+   only now the edge it bleeds to is the panel's, not the window's.
+
+   The gap is bridged by a strip that belongs to the open trigger, so the
+   pointer can cross it without the menu closing. It exists only while that
+   trigger is open, or the four strips would overlap and hand the pointer to
+   the wrong panel.
+   ========================================================================== */
+/* margin, not a calc on top: the percentage there resolves against a box
+   that is not the one it looks like, and the gap came out at zero */
+.sv-panel--wide {
+  top: 100%;
+  margin-top: 26px;
+  left: 50% !important;
+  right: auto !important;
+  width: min(1400px, 93vw) !important;
+  max-width: none !important;
+  transform: translateX(-50%) translateY(-6px);
+  border: 1px solid var(--sv-line);
+  border-radius: 14px;
+  background-clip: border-box;
+  box-shadow:
+    0 26px 54px -20px rgba(0, 54, 93, 0.30),
+    0 6px 16px -8px rgba(0, 54, 93, 0.10);
+}
+.sv-trigger.sv-open .sv-panel--wide { transform: translateX(-50%) translateY(0); }
+.sv-trigger--wide.sv-open::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 30px;
+}
+
+.sv-panel--wide .sv-panel-grid {
+  padding: 0 0 0 40px;
+  grid-template-columns: minmax(260px, 372px) minmax(260px, 372px) 1fr;
+  column-gap: 32px;
+}
+.sv-panel--wide .sv-col { padding: 32px 0 34px; }
+.sv-panel--wide .sv-rail {
+  align-self: stretch;
+  padding: 0 30px 26px;
+}
+.sv-illus { margin: 0 -30px 18px; }
+
+@media screen and (min-width: 1700px) {
+  .sv-panel--wide .sv-panel-grid {
+    grid-template-columns: minmax(300px, 380px) minmax(300px, 380px) 1fr;
+  }
+  .sv-panel--wide .sv-rail { grid-column: auto; }
+}
+
+@media screen and (max-width: 1023px) {
+  .sv-panel--wide {
+    position: static;
+    margin-top: 0;
+    left: auto !important;
+    width: auto !important;
+    transform: none !important;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .sv-trigger--wide.sv-open::after { display: none; }
+  .sv-panel--wide .sv-panel-grid { padding-left: 0; }
+  .sv-panel--wide .sv-rail { padding: 0 0 18px; }
+  .sv-illus { margin: 0 0 14px; }
 }
 </style>
 <style>
