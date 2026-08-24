@@ -1046,6 +1046,38 @@
 .sv-rail-links { order: 1; flex: 1 1 auto; margin-top: 0; }
 .sv-rail .sv-btn { order: 2; flex: 0 0 auto; align-self: flex-start; margin: 0; }
 .sv-rail-links li:first-child a { padding-top: 0; }
+
+/* the item columns stop at their text so the block gets the width it needs to
+   hold the button beside the links, the way the other option does */
+.sv-panel--wide .sv-panel-grid {
+  grid-template-columns: minmax(250px, 344px) minmax(250px, 344px) 1fr;
+  column-gap: 34px;
+}
+.sv-panel--wide .sv-panel-grid {
+  grid-template-columns: minmax(240px, 322px) minmax(240px, 322px) 1fr;
+  column-gap: 30px;
+}
+
+/* the link list was demanding its full natural width, which pushed the button
+   onto its own line; a zero basis lets it take what is left instead */
+.sv-rail-links { flex: 1 1 0; min-width: 0; }
+.sv-panel--wide .sv-panel-grid {
+  grid-template-columns: minmax(240px, 332px) minmax(240px, 332px) 1fr;
+  column-gap: 32px;
+}
+
+/* this block is narrower than the other option's, so the button takes a
+   smaller size to leave the links room to stay on one line each */
+.sv-rail .sv-btn { font-size: 13px; padding: 10px 16px; }
+.sv-rail-links { flex: 1 1 190px; }
+.sv-rail-links a { white-space: nowrap; }
+.sv-panel--wide .sv-panel-grid {
+  grid-template-columns: minmax(240px, 316px) minmax(240px, 316px) 1fr;
+  column-gap: 28px;
+}
+.sv-rail-text { flex-wrap: nowrap; gap: 18px; }
+.sv-rail-links { flex: 0 1 auto; }
+.sv-rail-links a { font-size: 14px; }
 </style>
 <style>
   html { min-height: 100%; }
@@ -1152,12 +1184,20 @@
 								<span class="sv-illus"><img src="./assets/pic-lens.jpg" alt="An implanted lens seen through the iris" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Not sure which</span><span class="sv-rail-title">Which one fits your eyes?</span><span class="sv-rail-body">Six questions, about two minutes.</span></span></span>
 								
 								
-								<a class="sv-btn" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
-								<ul class="sv-rail-links">
+								<span class="sv-rail-text">
+								
+								
+									<a class="sv-btn" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
+								
+								
+									<ul class="sv-rail-links">
 									<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-forms"></use></svg>Am I a LASIK candidate?</a></li>
 									<li><a href="https://www.silkvision.net/cost-lasik-surgery-explained"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-card"></use></svg>What LASIK costs</a></li>
 									<li><a href="https://www.silkvision.net/lasik-resources"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-blog"></use></svg>Patient resources</a></li>
 								</ul>
+								
+								
+								</span>
 							</aside>
 						</div>
 					</div>
@@ -1208,12 +1248,20 @@
 								<span class="sv-illus"><img src="./assets/pic-exam-solo.jpg" alt="A patient at the slit lamp during an eye exam" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Start here</span><span class="sv-rail-title">Bring us your symptoms</span><span class="sv-rail-body">Annandale and Manassas, weekdays 8:30&ndash;4:30.</span></span></span>
 								
 								
-								<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a>
-								<ul class="sv-rail-links">
+								<span class="sv-rail-text">
+								
+								
+									<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a>
+								
+								
+									<ul class="sv-rail-links">
 									<li><a href="https://www.silkvision.net/services-overview"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-practice"></use></svg>All services</a></li>
 									<li><a href="https://www.silkvision.net/locations"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-pin"></use></svg>Locations and hours</a></li>
 									<li><a href="https://www.silkvision.net/accepted-insurance"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-shield"></use></svg>Accepted insurance</a></li>
 								</ul>
+								
+								
+								</span>
 							</aside>
 						</div>
 					</div>
@@ -1258,11 +1306,19 @@
 								<span class="sv-illus"><img src="./assets/pic-phoropter.jpg" alt="A patient behind a phoropter during an eye exam" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Your surgeon</span><span class="sv-rail-title">One surgeon, 26,000 procedures</span><span class="sv-rail-body">Twenty years of eye surgery in Northern Virginia.</span></span></span>
 								
 								
-								<a class="sv-btn" href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">Meet Dr. Silk</a>
-								<ul class="sv-rail-links">
+								<span class="sv-rail-text">
+								
+								
+									<a class="sv-btn" href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">Meet Dr. Silk</a>
+								
+								
+									<ul class="sv-rail-links">
 									<li><a href="https://www.silkvision.net/testimonials"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-quote"></use></svg>Read patient stories</a></li>
 									<li><a href="https://www.silkvision.net/locations"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-pin"></use></svg>Locations and hours</a></li>
 								</ul>
+								
+								
+								</span>
 							</aside>
 						</div>
 					</div>
@@ -1304,11 +1360,19 @@
 								<span class="sv-illus"><img src="./assets/pic-booking.jpg" alt="Two patients looking at a laptop together" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Ready when you are</span><span class="sv-rail-title">Questions before you book?</span><span class="sv-rail-body">Call or text <span class="sv-nowrap">(703) 876-9700</span>, weekdays 8:30&ndash;4:30.</span></span></span>
 								
 								
-								<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
-								<ul class="sv-rail-links">
+								<span class="sv-rail-text">
+								
+								
+									<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
+								
+								
+									<ul class="sv-rail-links">
 									<li><a href="https://w31qe7s2lq5.typeform.com/SilkVisionForm"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-forms"></use></svg>Request an appointment</a></li>
 									<li><a href="https://www.silkvision.net/special-offers"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-star"></use></svg>Current offers</a></li>
 								</ul>
+								
+								
+								</span>
 							</aside>
 						</div>
 					</div>

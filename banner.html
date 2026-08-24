@@ -1292,6 +1292,10 @@
 .sv-rail-links { order: 1; flex: 1 1 auto; margin-top: 0; }
 .sv-rail .sv-btn { order: 2; flex: 0 0 auto; align-self: flex-start; margin: 0; }
 .sv-rail-links li:first-child a { padding-top: 0; }
+
+/* the link list was demanding its full natural width, which pushed the button
+   onto its own line; a zero basis lets it take what is left instead */
+.sv-rail-links { flex: 1 1 0; min-width: 0; }
 </style>
 <style>
   html { min-height: 100%; }
