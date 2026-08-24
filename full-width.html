@@ -832,6 +832,62 @@
   .sv-panel--wide .sv-panel-grid { padding: 0; }
   .sv-illus img { height: 150px; }
 }
+
+/* ==========================================================================
+   The block's type carries the width
+
+   The title was set at 20px with a hard line break in it, so both lines
+   stopped well short of the block and the right half sat empty. The break is
+   gone and the display size is up to where the copy actually fills the
+   measure; the supporting text and links scale with it.
+   ========================================================================== */
+.sv-rail .sv-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  margin-bottom: 14px;
+}
+.sv-rail-title {
+  font-size: 34px;
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+  margin-bottom: 12px;
+}
+.sv-rail-body {
+  font-size: 16px;
+  line-height: 1.55;
+  max-width: 30ch;
+}
+.sv-rail .sv-btn {
+  font-size: 14px;
+  padding: 12px 22px;
+  border-radius: 6px;
+}
+.sv-rail-links a { font-size: 14.5px; }
+.sv-rail-links li + li { margin-top: 12px; }
+
+@media screen and (max-width: 1200px) {
+  .sv-rail-title { font-size: 28px; }
+  .sv-rail-body { font-size: 15px; }
+}
+@media screen and (max-width: 1023px) {
+  .sv-rail-title { font-size: 24px; }
+}
+
+/* an earlier rule set the title from .sv-rail-text, which outranked the size
+   above; this matches that weight and takes the display size up to where the
+   line actually fills the block */
+.sv-rail .sv-rail-title,
+.sv-rail-text .sv-rail-title { font-size: 38px; line-height: 1.08; letter-spacing: -0.02em; }
+.sv-rail .sv-rail-body { font-size: 16px; max-width: 32ch; }
+
+@media screen and (max-width: 1300px) {
+  .sv-rail .sv-rail-title,
+  .sv-rail-text .sv-rail-title { font-size: 32px; }
+}
+@media screen and (max-width: 1023px) {
+  .sv-rail .sv-rail-title,
+  .sv-rail-text .sv-rail-title { font-size: 26px; }
+}
 </style>
 <style>
   html { min-height: 100%; }
@@ -937,7 +993,7 @@
 							<aside class="sv-rail">
 								<span class="sv-illus"><img src="./assets/pic-lens.jpg" alt="An implanted lens seen through the iris" loading="lazy"></span>
 								<p class="sv-eyebrow">Not sure which</p>
-								<p class="sv-rail-title">Which one fits<br>your eyes?</p>
+								<p class="sv-rail-title">Which one fits your eyes?</p>
 								<p class="sv-rail-body">Six questions, about two minutes.</p>
 								<a class="sv-btn" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
 								<ul class="sv-rail-links">
@@ -1045,7 +1101,7 @@
 							<aside class="sv-rail">
 								<span class="sv-illus"><img src="./assets/pic-phoropter.jpg" alt="A patient behind a phoropter during an eye exam" loading="lazy"></span>
 								<p class="sv-eyebrow">Your surgeon</p>
-								<p class="sv-rail-title">One surgeon,<br>26,000 procedures</p>
+								<p class="sv-rail-title">One surgeon, 26,000 procedures</p>
 								<p class="sv-rail-body">Twenty years of LASIK, cataract and corneal surgery in Northern Virginia.</p>
 								<a class="sv-btn" href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">Meet Dr. Silk</a>
 								<ul class="sv-rail-links">
@@ -1092,7 +1148,7 @@
 							<aside class="sv-rail">
 								<span class="sv-illus"><img src="./assets/pic-booking.jpg" alt="Two patients looking at a laptop together" loading="lazy"></span>
 								<p class="sv-eyebrow">Ready when you are</p>
-								<p class="sv-rail-title">Questions before<br>you book?</p>
+								<p class="sv-rail-title">Questions before you book?</p>
 								<p class="sv-rail-body">Call or text (703) 876-9700,<br>weekdays 8:30&ndash;4:30.</p>
 								<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
 								<ul class="sv-rail-links">
