@@ -1138,6 +1138,42 @@
   .sv-rail .sv-rail-title,
   .sv-rail-text .sv-rail-title { font-size: 26px; }
 }
+
+/* the supporting line runs on one line, and each link carries its own icon */
+.sv-rail .sv-rail-body {
+  max-width: none;
+  white-space: nowrap;
+}
+.sv-rail-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.sv-link-ico {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  color: var(--sv-blue);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media screen and (max-width: 1200px) {
+  .sv-rail .sv-rail-body { white-space: normal; }
+}
+
+/* one line where it fits, rather than forced: nowrap pushed the sentence past
+   the block's padding in the narrower of the two layouts */
+.sv-rail .sv-rail-body {
+  white-space: normal;
+  max-width: none;
+  font-size: 15.5px;
+  text-wrap: balance;
+}
+.sv-nowrap { white-space: nowrap; }
 </style>
 <style>
   html { min-height: 100%; }
@@ -1248,9 +1284,9 @@
 									<p class="sv-rail-body">Six questions, about two minutes.</p>
 									<a class="sv-btn" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
 									<ul class="sv-rail-links">
-										<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">Am I a LASIK candidate?</a></li>
-										<li><a href="https://www.silkvision.net/cost-lasik-surgery-explained">What LASIK costs</a></li>
-										<li><a href="https://www.silkvision.net/lasik-resources">Patient resources</a></li>
+										<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-forms"></use></svg>Am I a LASIK candidate?</a></li>
+										<li><a href="https://www.silkvision.net/cost-lasik-surgery-explained"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-card"></use></svg>What LASIK costs</a></li>
+										<li><a href="https://www.silkvision.net/lasik-resources"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-blog"></use></svg>Patient resources</a></li>
 									</ul>
 								</span>
 							</aside>
@@ -1304,12 +1340,12 @@
 								<span class="sv-rail-text">
 									<p class="sv-eyebrow">Start here</p>
 									<p class="sv-rail-title">Bring us your symptoms</p>
-									<p class="sv-rail-body">Annandale and Manassas,<br>weekdays 8:30&ndash;4:30.</p>
+									<p class="sv-rail-body">Annandale and Manassas, weekdays 8:30&ndash;4:30.</p>
 									<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a>
 									<ul class="sv-rail-links">
-										<li><a href="https://www.silkvision.net/services-overview">All services</a></li>
-										<li><a href="https://www.silkvision.net/locations">Locations and hours</a></li>
-										<li><a href="https://www.silkvision.net/accepted-insurance">Accepted insurance</a></li>
+										<li><a href="https://www.silkvision.net/services-overview"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-practice"></use></svg>All services</a></li>
+										<li><a href="https://www.silkvision.net/locations"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-pin"></use></svg>Locations and hours</a></li>
+										<li><a href="https://www.silkvision.net/accepted-insurance"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-shield"></use></svg>Accepted insurance</a></li>
 									</ul>
 								</span>
 							</aside>
@@ -1357,11 +1393,11 @@
 								<span class="sv-rail-text">
 									<p class="sv-eyebrow">Your surgeon</p>
 									<p class="sv-rail-title">One surgeon, 26,000 procedures</p>
-									<p class="sv-rail-body">Twenty years of LASIK, cataract and corneal surgery in Northern Virginia.</p>
+									<p class="sv-rail-body">Twenty years of eye surgery in Northern Virginia.</p>
 									<a class="sv-btn" href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">Meet Dr. Silk</a>
 									<ul class="sv-rail-links">
-										<li><a href="https://www.silkvision.net/testimonials">Read patient stories</a></li>
-										<li><a href="https://www.silkvision.net/locations">Locations and hours</a></li>
+										<li><a href="https://www.silkvision.net/testimonials"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-quote"></use></svg>Read patient stories</a></li>
+										<li><a href="https://www.silkvision.net/locations"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-pin"></use></svg>Locations and hours</a></li>
 									</ul>
 								</span>
 							</aside>
@@ -1406,11 +1442,11 @@
 								<span class="sv-rail-text">
 									<p class="sv-eyebrow">Ready when you are</p>
 									<p class="sv-rail-title">Questions before you book?</p>
-									<p class="sv-rail-body">Call or text (703) 876-9700,<br>weekdays 8:30&ndash;4:30.</p>
+									<p class="sv-rail-body">Call or text <span class="sv-nowrap">(703) 876-9700</span>, weekdays 8:30&ndash;4:30.</p>
 									<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
 									<ul class="sv-rail-links">
-										<li><a href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a></li>
-										<li><a href="https://www.silkvision.net/special-offers">Current offers</a></li>
+										<li><a href="https://w31qe7s2lq5.typeform.com/SilkVisionForm"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-forms"></use></svg>Request an appointment</a></li>
+										<li><a href="https://www.silkvision.net/special-offers"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-star"></use></svg>Current offers</a></li>
 									</ul>
 								</span>
 							</aside>
