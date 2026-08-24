@@ -984,6 +984,62 @@
   .sv-panel--wide .sv-rail { padding: 0 0 18px; }
   .sv-illus { margin: 0 0 14px; }
 }
+
+/* ==========================================================================
+   Per the sketch: a narrower panel with air down both sides, the items in a
+   grid at the top, and the promo running across the foot as a banner.
+   ========================================================================== */
+.sv-panel--wide { width: min(1180px, 90vw) !important; }
+
+.sv-panel--wide .sv-panel-grid {
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
+  padding: 0 40px;
+}
+.sv-panel--wide .sv-col { padding: 32px 0 30px; }
+
+/* the block leaves the column and spans the foot of the panel */
+.sv-panel--wide .sv-rail {
+  grid-column: 1 / -1;
+  align-self: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 0;
+  margin: 6px -40px 0;
+  padding: 0;
+  border-left: none;
+  border-top: 1px solid var(--sv-line);
+}
+.sv-illus {
+  margin: 0;
+  width: 42%;
+  max-width: 460px;
+  flex-shrink: 0;
+  border-radius: 0;
+}
+.sv-illus img { height: 100%; min-height: 186px; }
+.sv-rail-text {
+  display: block;
+  flex: 1;
+  padding: 26px 34px 28px;
+}
+.sv-rail-text .sv-rail-title { font-size: 22px; }
+.sv-rail-links { display: flex; flex-wrap: wrap; gap: 10px 26px; }
+.sv-rail-links li + li { margin-top: 0; }
+
+@media screen and (max-width: 1023px) {
+  .sv-panel--wide { width: auto !important; }
+  .sv-panel--wide .sv-panel-grid { padding: 0; }
+  .sv-panel--wide .sv-rail {
+    flex-direction: column;
+    margin: 10px 0 0;
+    border-top: none;
+  }
+  .sv-illus { width: auto; max-width: none; border-radius: 8px; }
+  .sv-illus img { height: 150px; min-height: 0; }
+  .sv-rail-text { padding: 16px 0 0; }
+}
 </style>
 <style>
   html { min-height: 100%; }
@@ -1088,15 +1144,17 @@
 							</div>
 							<aside class="sv-rail">
 								<span class="sv-illus"><img src="./assets/pic-lens.jpg" alt="An implanted lens seen through the iris" loading="lazy"></span>
-								<p class="sv-eyebrow">Not sure which</p>
-								<p class="sv-rail-title">Which one fits<br>your eyes?</p>
-								<p class="sv-rail-body">Six questions, about two minutes.</p>
-								<a class="sv-btn" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
-								<ul class="sv-rail-links">
-									<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">Am I a LASIK candidate?</a></li>
-									<li><a href="https://www.silkvision.net/cost-lasik-surgery-explained">What LASIK costs</a></li>
-									<li><a href="https://www.silkvision.net/lasik-resources">Patient resources</a></li>
-								</ul>
+								<span class="sv-rail-text">
+									<p class="sv-eyebrow">Not sure which</p>
+									<p class="sv-rail-title">Which one fits<br>your eyes?</p>
+									<p class="sv-rail-body">Six questions, about two minutes.</p>
+									<a class="sv-btn" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
+									<ul class="sv-rail-links">
+										<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">Am I a LASIK candidate?</a></li>
+										<li><a href="https://www.silkvision.net/cost-lasik-surgery-explained">What LASIK costs</a></li>
+										<li><a href="https://www.silkvision.net/lasik-resources">Patient resources</a></li>
+									</ul>
+								</span>
 							</aside>
 						</div>
 					</div>
@@ -1145,15 +1203,17 @@
 							</div>
 							<aside class="sv-rail">
 								<span class="sv-illus"><img src="./assets/pic-exam.jpg" alt="A patient at the slit lamp during an eye exam" loading="lazy"></span>
-								<p class="sv-eyebrow">Start here</p>
-								<p class="sv-rail-title">Bring us your symptoms</p>
-								<p class="sv-rail-body">Annandale and Manassas,<br>weekdays 8:30&ndash;4:30.</p>
-								<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a>
-								<ul class="sv-rail-links">
-									<li><a href="https://www.silkvision.net/services-overview">All services</a></li>
-									<li><a href="https://www.silkvision.net/locations">Locations and hours</a></li>
-									<li><a href="https://www.silkvision.net/accepted-insurance">Accepted insurance</a></li>
-								</ul>
+								<span class="sv-rail-text">
+									<p class="sv-eyebrow">Start here</p>
+									<p class="sv-rail-title">Bring us your symptoms</p>
+									<p class="sv-rail-body">Annandale and Manassas,<br>weekdays 8:30&ndash;4:30.</p>
+									<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a>
+									<ul class="sv-rail-links">
+										<li><a href="https://www.silkvision.net/services-overview">All services</a></li>
+										<li><a href="https://www.silkvision.net/locations">Locations and hours</a></li>
+										<li><a href="https://www.silkvision.net/accepted-insurance">Accepted insurance</a></li>
+									</ul>
+								</span>
 							</aside>
 						</div>
 					</div>
@@ -1196,14 +1256,16 @@
 							</div>
 							<aside class="sv-rail">
 								<span class="sv-illus"><img src="./assets/pic-surgery.jpg" alt="Surgery in progress and the laser used for it" loading="lazy"></span>
-								<p class="sv-eyebrow">Your surgeon</p>
-								<p class="sv-rail-title">One surgeon,<br>26,000 procedures</p>
-								<p class="sv-rail-body">Twenty years of LASIK, cataract and corneal surgery in Northern Virginia.</p>
-								<a class="sv-btn" href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">Meet Dr. Silk</a>
-								<ul class="sv-rail-links">
-									<li><a href="https://www.silkvision.net/testimonials">Read patient stories</a></li>
-									<li><a href="https://www.silkvision.net/locations">Locations and hours</a></li>
-								</ul>
+								<span class="sv-rail-text">
+									<p class="sv-eyebrow">Your surgeon</p>
+									<p class="sv-rail-title">One surgeon,<br>26,000 procedures</p>
+									<p class="sv-rail-body">Twenty years of LASIK, cataract and corneal surgery in Northern Virginia.</p>
+									<a class="sv-btn" href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">Meet Dr. Silk</a>
+									<ul class="sv-rail-links">
+										<li><a href="https://www.silkvision.net/testimonials">Read patient stories</a></li>
+										<li><a href="https://www.silkvision.net/locations">Locations and hours</a></li>
+									</ul>
+								</span>
 							</aside>
 						</div>
 					</div>
@@ -1243,14 +1305,16 @@
 							</div>
 							<aside class="sv-rail">
 								<span class="sv-illus"><img src="./assets/pic-patients.jpg" alt="Patients of the practice" loading="lazy"></span>
-								<p class="sv-eyebrow">Ready when you are</p>
-								<p class="sv-rail-title">Questions before<br>you book?</p>
-								<p class="sv-rail-body">Call or text (703) 876-9700,<br>weekdays 8:30&ndash;4:30.</p>
-								<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
-								<ul class="sv-rail-links">
-									<li><a href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a></li>
-									<li><a href="https://www.silkvision.net/special-offers">Current offers</a></li>
-								</ul>
+								<span class="sv-rail-text">
+									<p class="sv-eyebrow">Ready when you are</p>
+									<p class="sv-rail-title">Questions before<br>you book?</p>
+									<p class="sv-rail-body">Call or text (703) 876-9700,<br>weekdays 8:30&ndash;4:30.</p>
+									<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
+									<ul class="sv-rail-links">
+										<li><a href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a></li>
+										<li><a href="https://www.silkvision.net/special-offers">Current offers</a></li>
+									</ul>
+								</span>
 							</aside>
 						</div>
 					</div>
