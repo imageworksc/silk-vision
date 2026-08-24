@@ -1225,6 +1225,51 @@
   .sv-illus-caption .sv-rail-title { font-size: 23px; }
   .sv-illus img { height: 190px; }
 }
+
+/* ==========================================================================
+   Caption over a multiplied grey, not a blue tint
+
+   The wash is a white-to-charcoal gradient set to multiply, so it darkens the
+   photograph rather than staining it: white leaves the image untouched at the
+   top and the charcoal end carries the type at the foot. The description sits
+   in the caption now too, which takes the last of the copy out of the column
+   below.
+   ========================================================================== */
+.sv-illus { isolation: isolate; }
+.sv-illus-caption {
+  background: none;
+  justify-content: flex-end;
+  padding: 24px 24px 22px;
+}
+.sv-illus-caption::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #d8d8d8 38%,
+    #6f6f6f 72%,
+    #2a2a2a 100%
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.sv-illus-caption > * { position: relative; z-index: 1; }
+.sv-illus-caption .sv-rail-body {
+  display: block;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 8px 0 0;
+  max-width: none;
+}
+.sv-illus img { height: 250px; }
+.sv-rail-text { padding-top: 22px; }
+
+/* the block centred its column, which floated the photo off the panel's top
+   edge once the copy moved into the image */
+.sv-panel--wide .sv-rail { justify-content: flex-start; }
 </style>
 <style>
   html { min-height: 100%; }
@@ -1328,10 +1373,10 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<span class="sv-illus"><img src="./assets/pic-lens.jpg" alt="An implanted lens seen through the iris" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Not sure which</span><span class="sv-rail-title">Which one fits your eyes?</span></span></span>
+								<span class="sv-illus"><img src="./assets/pic-lens.jpg" alt="An implanted lens seen through the iris" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Not sure which</span><span class="sv-rail-title">Which one fits your eyes?</span><span class="sv-rail-body">Six questions, about two minutes.</span></span></span>
 								<span class="sv-rail-text">
 									
-									<p class="sv-rail-body">Six questions, about two minutes.</p>
+									
 									<a class="sv-btn" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
 									<ul class="sv-rail-links">
 										<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-forms"></use></svg>Am I a LASIK candidate?</a></li>
@@ -1386,10 +1431,10 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<span class="sv-illus"><img src="./assets/pic-exam.jpg" alt="A patient at the slit lamp during an eye exam" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Start here</span><span class="sv-rail-title">Bring us your symptoms</span></span></span>
+								<span class="sv-illus"><img src="./assets/pic-exam.jpg" alt="A patient at the slit lamp during an eye exam" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Start here</span><span class="sv-rail-title">Bring us your symptoms</span><span class="sv-rail-body">Annandale and Manassas, weekdays 8:30&ndash;4:30.</span></span></span>
 								<span class="sv-rail-text">
 									
-									<p class="sv-rail-body">Annandale and Manassas, weekdays 8:30&ndash;4:30.</p>
+									
 									<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a>
 									<ul class="sv-rail-links">
 										<li><a href="https://www.silkvision.net/services-overview"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-practice"></use></svg>All services</a></li>
@@ -1438,10 +1483,10 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<span class="sv-illus"><img src="./assets/pic-phoropter.jpg" alt="A patient behind a phoropter during an eye exam" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Your surgeon</span><span class="sv-rail-title">One surgeon, 26,000 procedures</span></span></span>
+								<span class="sv-illus"><img src="./assets/pic-phoropter.jpg" alt="A patient behind a phoropter during an eye exam" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Your surgeon</span><span class="sv-rail-title">One surgeon, 26,000 procedures</span><span class="sv-rail-body">Twenty years of eye surgery in Northern Virginia.</span></span></span>
 								<span class="sv-rail-text">
 									
-									<p class="sv-rail-body">Twenty years of eye surgery in Northern Virginia.</p>
+									
 									<a class="sv-btn" href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">Meet Dr. Silk</a>
 									<ul class="sv-rail-links">
 										<li><a href="https://www.silkvision.net/testimonials"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-quote"></use></svg>Read patient stories</a></li>
@@ -1486,10 +1531,10 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<span class="sv-illus"><img src="./assets/pic-booking.jpg" alt="Two patients looking at a laptop together" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Ready when you are</span><span class="sv-rail-title">Questions before you book?</span></span></span>
+								<span class="sv-illus"><img src="./assets/pic-booking.jpg" alt="Two patients looking at a laptop together" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Ready when you are</span><span class="sv-rail-title">Questions before you book?</span><span class="sv-rail-body">Call or text <span class="sv-nowrap">(703) 876-9700</span>, weekdays 8:30&ndash;4:30.</span></span></span>
 								<span class="sv-rail-text">
 									
-									<p class="sv-rail-body">Call or text <span class="sv-nowrap">(703) 876-9700</span>, weekdays 8:30&ndash;4:30.</p>
+									
 									<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
 									<ul class="sv-rail-links">
 										<li><a href="https://w31qe7s2lq5.typeform.com/SilkVisionForm"><svg class="sv-link-ico" aria-hidden="true"><use href="#i-forms"></use></svg>Request an appointment</a></li>
