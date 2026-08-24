@@ -1040,6 +1040,48 @@
   .sv-illus img { height: 150px; min-height: 0; }
   .sv-rail-text { padding: 16px 0 0; }
 }
+
+/* ==========================================================================
+   Back to the structure that worked: two columns of items with the block on
+   the right. The panel is wider than the last pass and the gutters between
+   columns are tighter, which is where that width comes from.
+   ========================================================================== */
+.sv-panel--wide { width: min(1500px, 93vw) !important; }
+
+.sv-panel--wide .sv-panel-grid {
+  grid-template-columns: minmax(260px, 374px) minmax(260px, 374px) 1fr;
+  column-gap: 26px;
+  padding: 0 0 0 36px;
+}
+.sv-panel--wide .sv-col { padding: 30px 0 32px; }
+
+.sv-panel--wide .sv-rail {
+  grid-column: auto;
+  align-self: stretch;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  border-top: none;
+  border-left: 1px solid var(--sv-line);
+}
+.sv-illus {
+  width: auto;
+  max-width: none;
+  margin: 0;
+  border-radius: 0;
+}
+.sv-illus img { height: 200px; min-height: 0; }
+.sv-rail-text { display: block; flex: 0 1 auto; padding: 22px 30px 26px; }
+.sv-rail-links { display: block; }
+.sv-rail-links li + li { margin-top: 10px; }
+
+@media screen and (max-width: 1023px) {
+  .sv-panel--wide .sv-panel-grid { padding: 0; }
+  .sv-panel--wide .sv-rail { border-left: none; }
+  .sv-illus { border-radius: 8px; }
+  .sv-illus img { height: 150px; }
+  .sv-rail-text { padding: 16px 0 0; }
+}
 </style>
 <style>
   html { min-height: 100%; }
