@@ -928,6 +928,57 @@
    to hold on one line */
 .sv-rail .sv-rail-body { font-size: 14.5px; }
 .sv-nowrap { white-space: nowrap; }
+
+/* ==========================================================================
+   The heading sits inside the photograph
+
+   Eyebrow and title move over the image on a blue wash that deepens towards
+   the foot, so they stay legible on any frame. Taking them out of the text
+   column is what shortens the panel.
+   ========================================================================== */
+.sv-illus { position: relative; }
+.sv-illus img { display: block; }
+.sv-illus-caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 22px 24px 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 88, 148, 0.05) 0%,
+    rgba(0, 88, 148, 0.42) 45%,
+    rgba(0, 54, 93, 0.82) 100%
+  );
+}
+.sv-illus-caption .sv-eyebrow {
+  display: block;
+  color: rgba(255, 255, 255, 0.88);
+  padding-left: 0;
+  margin: 0 0 6px;
+}
+.sv-illus-caption .sv-rail-title,
+.sv-illus-caption .sv-rail-text .sv-rail-title {
+  display: block;
+  color: #fff;
+  font-size: 30px;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 30, 55, 0.35);
+}
+.sv-illus img { height: 232px; }
+.sv-rail-text { padding-top: 20px; }
+
+@media screen and (max-width: 1300px) {
+  .sv-illus-caption .sv-rail-title { font-size: 26px; }
+}
+@media screen and (max-width: 1023px) {
+  .sv-illus-caption { padding: 18px 18px 16px; }
+  .sv-illus-caption .sv-rail-title { font-size: 23px; }
+  .sv-illus img { height: 190px; }
+}
 </style>
 <style>
   html { min-height: 100%; }
@@ -1031,9 +1082,8 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<span class="sv-illus"><img src="./assets/pic-lens.jpg" alt="An implanted lens seen through the iris" loading="lazy"></span>
-								<p class="sv-eyebrow">Not sure which</p>
-								<p class="sv-rail-title">Which one fits your eyes?</p>
+								<span class="sv-illus"><img src="./assets/pic-lens.jpg" alt="An implanted lens seen through the iris" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Not sure which</span><span class="sv-rail-title">Which one fits your eyes?</span></span></span>
+								
 								<p class="sv-rail-body">Six questions, about two minutes.</p>
 								<a class="sv-btn" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
 								<ul class="sv-rail-links">
@@ -1088,9 +1138,8 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<span class="sv-illus"><img src="./assets/pic-exam-solo.jpg" alt="A patient at the slit lamp during an eye exam" loading="lazy"></span>
-								<p class="sv-eyebrow">Start here</p>
-								<p class="sv-rail-title">Bring us your symptoms</p>
+								<span class="sv-illus"><img src="./assets/pic-exam-solo.jpg" alt="A patient at the slit lamp during an eye exam" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Start here</span><span class="sv-rail-title">Bring us your symptoms</span></span></span>
+								
 								<p class="sv-rail-body">Annandale and Manassas, weekdays 8:30&ndash;4:30.</p>
 								<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a>
 								<ul class="sv-rail-links">
@@ -1139,9 +1188,8 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<span class="sv-illus"><img src="./assets/pic-phoropter.jpg" alt="A patient behind a phoropter during an eye exam" loading="lazy"></span>
-								<p class="sv-eyebrow">Your surgeon</p>
-								<p class="sv-rail-title">One surgeon, 26,000 procedures</p>
+								<span class="sv-illus"><img src="./assets/pic-phoropter.jpg" alt="A patient behind a phoropter during an eye exam" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Your surgeon</span><span class="sv-rail-title">One surgeon, 26,000 procedures</span></span></span>
+								
 								<p class="sv-rail-body">Twenty years of eye surgery in Northern Virginia.</p>
 								<a class="sv-btn" href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">Meet Dr. Silk</a>
 								<ul class="sv-rail-links">
@@ -1186,9 +1234,8 @@
 								</ul>
 							</div>
 							<aside class="sv-rail">
-								<span class="sv-illus"><img src="./assets/pic-booking.jpg" alt="Two patients looking at a laptop together" loading="lazy"></span>
-								<p class="sv-eyebrow">Ready when you are</p>
-								<p class="sv-rail-title">Questions before you book?</p>
+								<span class="sv-illus"><img src="./assets/pic-booking.jpg" alt="Two patients looking at a laptop together" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Ready when you are</span><span class="sv-rail-title">Questions before you book?</span></span></span>
+								
 								<p class="sv-rail-body">Call or text <span class="sv-nowrap">(703) 876-9700</span>, weekdays 8:30&ndash;4:30.</p>
 								<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
 								<ul class="sv-rail-links">
