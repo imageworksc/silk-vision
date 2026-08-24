@@ -1274,6 +1274,24 @@
 /* the button sits 4px closer to the photograph */
 .sv-rail-text { padding-top: 18px; }
 .sv-rail .sv-btn { margin-top: 0; }
+
+/* ==========================================================================
+   Button beside the links, not above them
+
+   The action moves to the right of the link list and both start at the same
+   height, so the block loses the button's whole row. If the pair cannot fit
+   side by side the button wraps under, rather than overflowing.
+   ========================================================================== */
+.sv-rail-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px 20px;
+}
+.sv-rail-links { order: 1; flex: 1 1 auto; margin-top: 0; }
+.sv-rail .sv-btn { order: 2; flex: 0 0 auto; align-self: flex-start; margin: 0; }
+.sv-rail-links li:first-child a { padding-top: 0; }
 </style>
 <style>
   html { min-height: 100%; }
