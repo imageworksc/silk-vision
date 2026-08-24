@@ -887,6 +887,27 @@
 /* the photo's left margin has to match the block's left padding exactly, or it
    hangs past the block's edge */
 .sv-illus { margin-left: -30px; }
+
+/* ==========================================================================
+   The band floats clear of the header
+
+   A 14px transparent top border opens the gap without breaking the hover
+   path: the pointer is still inside the panel while it crosses, so the menu
+   does not flicker shut. background-clip keeps the white from painting into
+   that strip, and the hairline comes back as an inset shadow.
+   ========================================================================== */
+.sv-panel--wide {
+  border-top: 18px solid transparent;
+  background-clip: padding-box;
+  box-shadow:
+    inset 0 1px 0 var(--sv-line),
+    0 24px 48px -18px rgba(0, 54, 93, 0.28),
+    0 2px 12px -4px rgba(0, 54, 93, 0.12);
+}
+
+@media screen and (max-width: 1023px) {
+  .sv-panel--wide { border-top: none; box-shadow: none; }
+}
 </style>
 <style>
   html { min-height: 100%; }
