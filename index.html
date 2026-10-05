@@ -260,46 +260,14 @@
 .sv-list a:focus-visible { background: var(--sv-mist); }
 .sv-list a:hover::before,
 .sv-list a:focus-visible::before { transform: scaleY(1); }
-/* icon sits inline with the name; the note runs full width beneath, as in
-   the reference layout */
 .sv-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: block;
   font-family: 'Poppins', sans-serif;
   font-size: 15px;
   font-weight: 500;
   line-height: 1.35;
   color: var(--sv-ink);
 }
-/* every icon sits in its own tinted square, as in the reference */
-.sv-ico-box {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: #e7f0f8;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: background 0.14s ease;
-}
-.sv-list a:hover .sv-ico-box,
-.sv-list a:focus-visible .sv-ico-box { background: var(--sv-blue); }
-.sv-list a:hover .sv-ico,
-.sv-list a:focus-visible .sv-ico { color: #fff; }
-.sv-ico {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  color: var(--sv-blue);
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.sv-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
 
 .sv-note {
   display: block;
@@ -514,9 +482,26 @@
 
 @media screen and (max-width: 600px) {
   .sv-utility { font-size: 12.5px; }
+  .sv-utility-right { gap: 16px; }
   .sv-book { font-size: 12px; }
   .sv-logo img { width: 152px; }
 }
+
+/* the number alone, so the bar fits a 360px phone without scrolling sideways */
+@media screen and (max-width: 440px) {
+  .sv-phone-label { display: none; }
+}
+
+/* --- Very large screens -------------------------------------------------
+   At 100% scaling a 4K or 5K display is 3840–5120 CSS px wide, and a header
+   set in px shrinks to a thin strip across the middle. Past 2400px the whole
+   header scales up in steps, so it keeps the proportions it has at 1920. */
+@media screen and (min-width: 2400px) { #sv-header-wrap { zoom: 1.25; } }
+@media screen and (min-width: 2880px) { #sv-header-wrap { zoom: 1.5; } }
+@media screen and (min-width: 3360px) { #sv-header-wrap { zoom: 1.75; } }
+@media screen and (min-width: 3840px) { #sv-header-wrap { zoom: 2; } }
+@media screen and (min-width: 4480px) { #sv-header-wrap { zoom: 2.33; } }
+@media screen and (min-width: 5120px) { #sv-header-wrap { zoom: 2.67; } }
 
 @media (prefers-reduced-motion: reduce) {
   #sv-header-wrap *,
@@ -533,24 +518,6 @@
 
 <!-- ===================== Silk Vision navigation ===================== -->
 <div id="sv-header-wrap">
-	<svg class="sv-sprite" aria-hidden="true" focusable="false"><defs>
-		<!-- Each glyph draws the thing itself: a corneal profile, an implanted
-		     lens, the shape a disease gives the cornea. Nothing is reused as a
-		     stand-in for a different procedure. -->
-		<symbol id="i-lasik" viewBox="0 0 24 24"><path d="M3 18.5c0-5 4-9 9-9s9 4 9 9"/><path d="M12 9.5 6.5 5.8"/><path d="M17 2.5v4M15.4 5 17 6.6 18.6 5"/></symbol>
-		<symbol id="i-prk" viewBox="0 0 24 24"><path d="M3 18.5c0-5 4-9 9-9s9 4 9 9"/><path d="M5.6 13.6c2.2-1.6 10.6-1.6 12.8 0" stroke-dasharray="2 2.2"/><path d="M12 1.5v4M10.4 4 12 5.6 13.6 4"/></symbol>
-		<symbol id="i-touchup" viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 1 1-2.7-6.2"/><path d="M21 3.5V8h-4.5"/><circle cx="12" cy="12" r="2.8"/></symbol>
-		<symbol id="i-icl" viewBox="0 0 24 24"><path d="M1.5 13.5s4-6 10.5-6 10.5 6 10.5 6-4 6-10.5 6-10.5-6-10.5-6Z"/><ellipse cx="12" cy="13.5" rx="4.2" ry="2.8"/><path d="m18 4.5-3.4 3.4"/><path d="M14.6 5.6v2.3h2.3"/></symbol>
-		<symbol id="i-rle" viewBox="0 0 24 24"><circle cx="12" cy="14" r="4.6"/><path d="M16.6 14c2.6-1.9 4.7-1 4.7 1.5"/><path d="M7.4 14c-2.6 1.9-4.7 1-4.7-1.5"/><path d="M8 5.5h8l-2.2-2.2M16 5.5l-2.2 2.2"/></symbol>
-		<symbol id="i-lal" viewBox="0 0 24 24"><circle cx="12" cy="15" r="4.4"/><path d="M16.4 15c2.5-1.8 4.6-.9 4.6 1.5"/><path d="M7.6 15c-2.5 1.8-4.6.9-4.6-1.5"/><path d="M12 3v3.4M8 4.6l1.6 2.6M16 4.6l-1.6 2.6"/></symbol>
-		<symbol id="i-cataract" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M6.6 13.8c1.9-2.4 8.9-2.4 10.8 0"/><path d="M8 9.6c1.8-1.7 6.2-1.7 8 0"/><path d="M12 3.4v2"/></symbol>
-		<symbol id="i-cornea" viewBox="0 0 24 24"><path d="M2.5 19h19"/><path d="M4.5 19a7.5 7.5 0 0 1 15 0"/><path d="M7.5 19a4.5 4.5 0 0 1 9 0"/><path d="M10.5 19a1.5 1.5 0 0 1 3 0"/></symbol>
-		<symbol id="i-glaucoma" viewBox="0 0 24 24"><path d="M1.5 12.5s4-6 10.5-6 10.5 6 10.5 6-4 6-10.5 6-10.5-6-10.5-6Z"/><path d="M12 16V9"/><path d="M9.6 11.4 12 9l2.4 2.4"/></symbol>
-		<symbol id="i-dryeye" viewBox="0 0 24 24"><path d="M1.5 12.5s4-6 10.5-6c2.3 0 4.2.7 5.8 1.7"/><circle cx="11" cy="12.5" r="3"/><path d="M1.5 12.5s2.4 3.6 7 5.2"/><path d="M18.6 13.4s2.4 2.9 2.4 4.2a2.4 2.4 0 0 1-4.8 0c0-1.3 2.4-4.2 2.4-4.2Z"/><path d="m15.4 19.6 6.4-6.4"/></symbol>
-		<symbol id="i-keratoconus" viewBox="0 0 24 24"><path d="M2.5 19h19"/><path d="M6 19a6 6 0 0 1 12 0" stroke-dasharray="2 2.2"/><path d="M6 19 12 5.5 18 19"/></symbol>
-		<symbol id="i-pterygium" viewBox="0 0 24 24"><path d="M1.5 12.5s4-6 10.5-6 10.5 6 10.5 6-4 6-10.5 6-10.5-6-10.5-6Z"/><circle cx="13" cy="12.5" r="3.2"/><path d="M2 12.5 10 10v5l-8-2.5Z"/></symbol>
-	</defs></svg>
-
 	<div class="sv-utility">
 		<div class="sv-inner">
 			<div class="sv-utility-left">
@@ -560,7 +527,7 @@
 			<div class="sv-utility-right">
 				<span class="sv-phone">
 					<svg viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"></path></svg>
-					Call or text <a href="tel:7038769700">(703) 876-9700</a>
+					<span class="sv-phone-label">Call or text</span> <a href="tel:7038769700">(703) 876-9700</a>
 				</span>
 				<a class="sv-book" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344" target="_blank" rel="noopener">Book a free consultation</a>
 			</div>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Silk Vision — Navigation, floating panels</title>
+<title>Silk Vision — Navigation, edge block</title>
 <link rel="icon" type="image/png" sizes="32x32" href="https://www.silkvision.net/favicon-32x32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -135,16 +135,6 @@
 
 .sv-nav { display: flex; align-items: center; gap: 30px; }
 .sv-trigger { position: relative; }
-/* invisible bridge so the pointer survives the gap down to a list panel;
-   wide panels sit flush under the header rule and need none */
-.sv-trigger:not(.sv-trigger--wide)::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: -60px;
-  right: -60px;
-  height: 20px;
-}
 .sv-nav-btn {
   position: relative;
   border: none;
@@ -229,7 +219,6 @@
   pointer-events: auto;
   transform: translateY(0);
 }
-.sv-panel--right { left: auto; right: -26px; }
 /* Wide panels hang off the header row, not off their trigger, so they always
    land flush under the rule and can never run past the edge of the viewport. */
 .sv-trigger--wide { position: static; }
@@ -260,46 +249,14 @@
 .sv-list a:focus-visible { background: var(--sv-mist); }
 .sv-list a:hover::before,
 .sv-list a:focus-visible::before { transform: scaleY(1); }
-/* icon sits inline with the name; the note runs full width beneath, as in
-   the reference layout */
 .sv-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: block;
   font-family: 'Poppins', sans-serif;
   font-size: 15px;
   font-weight: 500;
   line-height: 1.35;
   color: var(--sv-ink);
 }
-/* every icon sits in its own tinted square, as in the reference */
-.sv-ico-box {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: #e7f0f8;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: background 0.14s ease;
-}
-.sv-list a:hover .sv-ico-box,
-.sv-list a:focus-visible .sv-ico-box { background: var(--sv-blue); }
-.sv-list a:hover .sv-ico,
-.sv-list a:focus-visible .sv-ico { color: #fff; }
-.sv-ico {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  color: var(--sv-blue);
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.sv-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
 
 .sv-note {
   display: block;
@@ -394,16 +351,6 @@
 }
 .sv-rail-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-/* List panel: one column, for sections that are simply a set of pages */
-.sv-panel--list { width: 306px; padding: 18px 14px; }
-.sv-panel--list .sv-eyebrow { padding-left: 15px; }
-.sv-panel-foot {
-  margin: 14px 4px 0;
-  padding-top: 14px;
-  border-top: 1px solid var(--sv-line);
-}
-.sv-panel-foot .sv-btn { width: auto; }
-
 /* --- Mobile -------------------------------------------------------------- */
 .sv-burger {
   display: none;
@@ -497,16 +444,13 @@
   .sv-panel-grid { grid-template-columns: 1fr; }
   .sv-col { padding: 16px 0 6px; }
   .sv-col:first-child { padding-left: 0; }
+  .sv-eyebrow { padding-left: 15px; }
   .sv-rail {
     border-left: none;
     border-radius: 8px;
     margin: 12px 0 18px;
     padding: 20px;
   }
-  .sv-panel--list { padding: 8px 0 16px; }
-  .sv-panel--list .sv-eyebrow,
-  .sv-eyebrow { padding-left: 15px; }
-  .sv-panel-foot { margin: 12px 0 16px; border-top: none; padding-top: 0; }
 
   .sv-contact { display: block; text-align: center; margin-top: 22px; }
   .sv-nav .sv-btn.sv-mobile-only { display: flex; align-self: stretch; margin-top: 12px; }
@@ -514,9 +458,26 @@
 
 @media screen and (max-width: 600px) {
   .sv-utility { font-size: 12.5px; }
+  .sv-utility-right { gap: 16px; }
   .sv-book { font-size: 12px; }
   .sv-logo img { width: 152px; }
 }
+
+/* the number alone, so the bar fits a 360px phone without scrolling sideways */
+@media screen and (max-width: 440px) {
+  .sv-phone-label { display: none; }
+}
+
+/* --- Very large screens -------------------------------------------------
+   At 100% scaling a 4K or 5K display is 3840–5120 CSS px wide, and a header
+   set in px shrinks to a thin strip across the middle. Past 2400px the whole
+   header scales up in steps, so it keeps the proportions it has at 1920. */
+@media screen and (min-width: 2400px) { #sv-header-wrap { zoom: 1.25; } }
+@media screen and (min-width: 2880px) { #sv-header-wrap { zoom: 1.5; } }
+@media screen and (min-width: 3360px) { #sv-header-wrap { zoom: 1.75; } }
+@media screen and (min-width: 3840px) { #sv-header-wrap { zoom: 2; } }
+@media screen and (min-width: 4480px) { #sv-header-wrap { zoom: 2.33; } }
+@media screen and (min-width: 5120px) { #sv-header-wrap { zoom: 2.67; } }
 
 @media (prefers-reduced-motion: reduce) {
   #sv-header-wrap *,
@@ -525,687 +486,71 @@
 }
 
 /* ==========================================================================
-   Option B — full-bleed panels, icons with real presence
+   Floating panels, edge block
 
-   The panel stops being a card floating under its trigger and becomes a band
-   across the whole viewport, edge to edge. Icons roughly double, so the row is read by its
-   icon first and its label second.
+   Every section opens a wide panel: a card up to 1500px across, centred under
+   the header and 26px clear of it. The items take the left of the card and
+   the photo block runs flush to its top, right and bottom edges on a soft
+   tint, so it reads as part of the panel rather than a card inside it.
+   Everything below builds on the shared rules above.
    ========================================================================== */
-.sv-header .sv-inner { position: static; }
-.sv-panel--wide {
-  top: 100%;
-  left: 0 !important;
-  right: 0 !important;
-  width: auto !important;
-  max-width: none !important;
-  transform: translateY(-6px);
-  border: none;
-  border-top: 1px solid var(--sv-line);
-  border-radius: 0;
-  box-shadow: 0 20px 32px -14px rgba(0, 54, 93, 0.18);
-}
-.sv-panel--wide .sv-panel-grid {
-  width: auto;
-  max-width: none;
-  margin: 0;
-}
-.sv-panel--wide .sv-col { padding: 36px 40px 42px 0; }
-.sv-panel--wide .sv-col:first-child { padding-left: 0; }
-.sv-panel--wide .sv-rail {
-  background: transparent;
-  border-left: 1px solid var(--sv-line);
-  padding: 36px 0 42px 48px;
-}
 
-/* Icons: 48px square, 26px glyph, note indented to clear it */
-.sv-ico-box { width: 48px; height: 48px; border-radius: 12px; }
-.sv-ico { width: 26px; height: 26px; }
-.sv-item { gap: 14px; font-size: 16px; }
-.sv-note { font-size: 13px; margin-top: 4px; }
-.sv-list a { padding: 12px 12px 13px 15px; }
-#sv-panel-vision .sv-note,
-#sv-panel-eyecare .sv-note { padding-left: 62px; }
-
-.sv-eyebrow { margin-bottom: 16px; }
-.sv-rail-title { font-size: 24px; }
-.sv-rail-body { font-size: 14.5px; }
-
-@media screen and (max-width: 1300px) {
-  .sv-panel--wide .sv-rail { padding-left: 36px; }
-}
-
-@media screen and (max-width: 1023px) {
-  .sv-panel--wide {
-    left: auto;
-    width: auto !important;
-    margin-left: 0;
-    border-top: none;
-    box-shadow: none;
-  }
-  .sv-panel--wide .sv-panel-grid { width: auto; max-width: none; grid-template-columns: 1fr; }
-  .sv-panel--wide .sv-col { padding: 16px 0 6px; }
-  .sv-panel--wide .sv-rail { border-left: none; padding: 20px 0 8px; }
-  .sv-ico-box { width: 40px; height: 40px; border-radius: 10px; }
-  .sv-ico { width: 22px; height: 22px; }
-  #sv-panel-vision .sv-note,
-  #sv-panel-eyecare .sv-note { padding-left: 54px; }
-}
-
-/* ==========================================================================
-   Cleaner pass: rows behave as soft cards, the rail is a card of its own and
-   the single action for each panel sits in a strip along the foot, so no
-   panel shows two competing buttons.
-   ========================================================================== */
-.sv-panel--wide .sv-panel-grid { padding: 40px 0 36px; column-gap: 44px; }
-.sv-panel--wide .sv-col { padding: 0; }
-
-/* whole row lights up as one card, no left edge marker */
+/* Rows are soft cards: the whole row lights up, with no edge marker */
+.sv-list li + li { margin-top: 12px; }
 .sv-list a {
-  padding: 12px 14px 13px;
-  border-radius: 10px;
+  padding: 13px 14px 14px;
   border: 1px solid transparent;
+  border-radius: 12px;
   transition: background 0.14s ease, border-color 0.14s ease;
 }
 .sv-list a::before { display: none; }
 .sv-list a:hover,
-.sv-list a:focus-visible { background: #f6f9fc; border-color: var(--sv-line); }
-.sv-list a:hover .sv-ico-box,
-.sv-list a:focus-visible .sv-ico-box { background: #dbe8f4; }
-.sv-list a:hover .sv-ico,
-.sv-list a:focus-visible .sv-ico { color: var(--sv-blue); }
-.sv-list li + li { margin-top: 4px; }
-
-/* icon square lighter and a touch smaller; the note lines up with the title */
-.sv-ico-box { width: 40px; height: 40px; border-radius: 10px; background: #eef4fa; }
-.sv-ico { width: 22px; height: 22px; }
-.sv-item { gap: 12px; font-size: 15.5px; }
-.sv-note { font-size: 13px; line-height: 1.5; margin-top: 3px; }
-#sv-panel-vision .sv-note,
-#sv-panel-eyecare .sv-note { padding-left: 52px; }
-
-/* the rail becomes a rounded card rather than a full-height column */
-.sv-panel--wide .sv-rail {
-  background: var(--sv-mist);
-  border: 1px solid var(--sv-line);
-  border-radius: 14px;
-  border-left: 1px solid var(--sv-line);
-  margin-left: 8px;
-  padding: 28px 30px 30px;
-  justify-content: flex-start;
-}
-.sv-rail-title { font-size: 21px; margin-bottom: 8px; }
-.sv-rail-body { font-size: 14px; margin-bottom: 22px; }
-.sv-rail-links { margin-top: 0; }
-.sv-rail-links li + li { margin-top: 12px; }
-.sv-rail-lead {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  color: var(--sv-purple) !important;
-}
-.sv-rail-lead::after { content: ' \2192'; }
-
-
-@media screen and (max-width: 1023px) {
-  .sv-panel--wide .sv-panel-grid { padding: 4px 0 0; }
-  .sv-panel--wide .sv-rail { margin-left: 0; padding: 22px; }
-}
-
-/* ==========================================================================
-   The columns share the whole band: equal fractions with a wide gutter, so
-   the spare width lands between them instead of at the edges.
-   ========================================================================== */
-.sv-panel--wide .sv-panel-grid {
-  grid-template-columns: 1fr 1fr minmax(330px, 1fr);
-  column-gap: 64px;
-  padding: 32px 44px 30px;
-}
-/* a grid item stretches to the row height by default, leaving the card
-   trailing empty space under short content */
-.sv-panel--wide .sv-rail { align-self: start; padding: 22px 24px 24px; margin-left: 16px; }
-
-@media screen and (max-width: 1200px) {
-  .sv-panel--wide .sv-panel-grid { column-gap: 36px; }
-}
-
-/* ==========================================================================
-   Item layout: the icon and the text are two columns, not an inline pair.
-   The label and its line sit in one text column beside the square, aligned
-   to each other rather than hanging off the icon.
-   ========================================================================== */
-.sv-list a {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 13px 14px 14px;
-  border-radius: 12px;
-}
-.sv-text { display: block; }
-.sv-item { display: block; gap: 0; font-size: 15.5px; font-weight: 500; line-height: 1.4; }
-.sv-note {
-  display: block;
-  font-size: 13.5px;
-  line-height: 1.55;
-  margin-top: 2px;
-  padding-left: 0 !important;
-}
-.sv-list li + li { margin-top: 6px; }
-
-/* the square reads lighter as an outline on white than as a filled chip */
-.sv-ico-box {
-  background: #fff;
-  border: 1px solid var(--sv-line);
-  border-radius: 10px;
-  margin-top: 1px;
-}
-.sv-list a:hover .sv-ico-box,
-.sv-list a:focus-visible .sv-ico-box { background: #fff; border-color: #bcd4e8; }
-.sv-list a:hover,
 .sv-list a:focus-visible { background: #f6f9fc; border-color: #e4edf5; }
+.sv-text { display: block; }
+.sv-item { font-size: 15.5px; line-height: 1.4; }
+.sv-note { font-size: 13.5px; line-height: 1.55; margin-top: 2px; }
+.sv-eyebrow { margin-bottom: 16px; }
 
-/* the rail sits on a soft blue-to-lavender wash rather than a flat tint */
-.sv-panel--wide .sv-rail {
-  background: linear-gradient(155deg, #f2f7fd 0%, #eef2fb 52%, #f7f1fb 100%);
-  border-color: #e2e9f5;
-}
-/* every panel carries icons now, so the note indent rules can go */
-#sv-panel-vision .sv-note,
-#sv-panel-eyecare .sv-note { padding-left: 0; }
-
-/* a photograph of the practice heads each rail card. Crops are set per panel
-   so the same frame gives a different picture: the doctor on one, the
-   phoropter beside him on another. */
+/* The block's heading sits inside the photograph, over a white-to-charcoal
+   gradient set to multiply: it darkens the picture rather than staining it,
+   and the dark end carries the type. */
 .sv-illus {
+  position: relative;
+  isolation: isolate;
   display: block;
-  margin: 0 0 18px;
-  border-radius: 10px;
   overflow: hidden;
   background: #eef3f9;
 }
-.sv-illus img { display: block; width: 100%; height: 132px; object-fit: cover; }
-#sv-panel-vision .sv-illus img { object-position: 50% 45%; }
-#sv-panel-eyecare .sv-illus img { object-position: 45% 46%; }
-#sv-panel-about .sv-illus img { object-position: 62% 28%; }
-#sv-panel-patients .sv-illus img { object-position: 50% 42%; }
-.sv-illus svg { display: block; width: 100%; height: auto; }
-
-/* the action lives in the rail; the strip along the foot is gone */
-.sv-rail .sv-btn { margin: 14px 0; }
-.sv-rail-links { margin-top: 0; }
-
-/* The rail runs taller than the item columns, which leaves white space at the
-   foot of the panel. Trim it back so the two sides finish closer together. */
-.sv-illus { margin-bottom: 14px; }
-.sv-illus img { height: 104px; }
-.sv-panel--wide .sv-rail { padding: 20px 22px 22px; }
-.sv-rail .sv-eyebrow { margin-bottom: 8px; }
-.sv-rail-title { font-size: 20px; margin-bottom: 6px; }
-.sv-rail-body { margin-bottom: 0; }
-.sv-rail .sv-btn { margin: 14px 0 12px; }
-.sv-rail-links li + li { margin-top: 9px; }
-.sv-panel--wide .sv-panel-grid { padding-bottom: 26px; }
-
-/* Vision Correction runs three items to a column, so its rail was finishing
-   far below them. The photo comes down, the links pair up two to a row, and
-   the rows get a little more air: both sides now end within a line of each
-   other. */
-.sv-illus img { height: 92px; }
-.sv-rail-links {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px 16px;
-}
-.sv-rail-links li + li { margin-top: 0; }
-.sv-panel--wide .sv-list li + li { margin-top: 12px; }
-
-/* The band still runs edge to edge; its contents sit in the same 1400px
-   column as the header above, so the first item lines up under the logo. */
-.sv-panel--wide .sv-panel-grid {
-  width: 1400px;
-  max-width: 93%;
-  margin: 0 auto;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-/* The rail is a block in the panel, not a card sitting on it: no fill, no
-   radius, no outline. A hairline on its left is all that marks it off from
-   the item columns. */
-.sv-panel--wide .sv-rail {
-  background: none;
-  border: none;
-  border-left: 1px solid var(--sv-line);
-  border-radius: 0;
-  margin-left: 0;
-  padding: 0 0 0 40px;
-}
-
-/* the links under the button stack, one per line */
-.sv-rail-links { display: block; }
-.sv-rail-links li + li { margin-top: 10px; }
-
-/* ==========================================================================
-   Option C — the right-hand block bleeds off the edge
-
-   The item columns still line up with the header's column, but the grid is
-   no longer centred: it takes the whole band and pads its left edge to reach
-   that alignment. The last column therefore runs all the way to the right
-   edge of the window, and its tint carries with it, so the block reads as a
-   banner attached to the panel rather than a card sitting inside it.
-   ========================================================================== */
-.sv-panel--wide .sv-panel-grid {
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 0 0 0 max(3.5vw, calc((100vw - 1400px) / 2));
-  grid-template-columns: 1fr 1fr minmax(360px, 30%);
-  column-gap: 48px;
-}
-.sv-panel--wide .sv-col { padding: 34px 0 34px; }
-
-.sv-panel--wide .sv-rail {
-  align-self: stretch;
-  background: linear-gradient(135deg, #eff4fb 0%, #e8eff9 55%, #ece9f8 100%);
-  border: none;
-  border-left: 1px solid var(--sv-line);
-  border-radius: 0;
-  margin: 0;
-  padding: 30px max(3.5vw, calc((100vw - 1400px) / 2)) 32px 40px;
-  justify-content: center;
-}
-
-/* The photo fills the head of the block: out to the window edge on the right,
-   flush to the divider on the left, and twice the height it had. */
-.sv-illus {
-  margin: -30px calc(-1 * max(3.5vw, (100vw - 1400px) / 2)) 22px -40px;
-  border-radius: 0;
-  overflow: hidden;
-}
-.sv-illus img { height: 186px; }
-
-/* the new photographs are already cropped to the banner, so they centre */
-#sv-panel-vision .sv-illus img,
-#sv-panel-eyecare .sv-illus img,
-#sv-panel-about .sv-illus img,
-#sv-panel-patients .sv-illus img { object-position: 50% 45%; }
+.sv-illus img { display: block; width: 100%; height: 250px; object-fit: cover; }
+/* the photographs are cropped to the block already, so they centre */
+.sv-illus img { object-position: 50% 45%; }
 #sv-panel-about .sv-illus img { object-position: 50% 50%; }
 
-/* ==========================================================================
-   Very wide screens
-
-   The block's right padding tracked the container gutter, which is 20px at
-   1440 but 1220px at 4K — enough to crush its text to one word a line. It is
-   capped now. Past 1700px the item columns and the block also stop growing,
-   so the layout holds its proportions instead of stretching with the window,
-   and the photograph is never scaled past its own resolution.
-   ========================================================================== */
-.sv-panel--wide .sv-rail {
-  padding-right: min(max(3.5vw, calc((100vw - 1400px) / 2)), 80px);
-}
-.sv-illus {
-  margin-right: calc(-1 * min(max(3.5vw, (100vw - 1400px) / 2), 80px));
-}
-
-@media screen and (min-width: 1700px) {
-  .sv-panel--wide .sv-panel-grid {
-    grid-template-columns: minmax(320px, 440px) minmax(320px, 440px) 1fr 660px;
-  }
-  .sv-panel--wide .sv-rail { grid-column: 4; }
-}
-
-/* ==========================================================================
-   Wider image block
-
-   The block takes a bigger share of the panel so its photograph runs much
-   further across, and the photograph grows taller with it so the frame does
-   not turn into a letterbox slot.
-   ========================================================================== */
-.sv-panel--wide .sv-panel-grid { grid-template-columns: 1fr 1fr minmax(440px, 38%); }
-.sv-illus img { height: 214px; }
-
-@media screen and (min-width: 1700px) {
-  .sv-panel--wide .sv-panel-grid {
-    grid-template-columns: minmax(320px, 420px) minmax(320px, 420px) 1fr 880px;
-  }
-}
-
-/* The item columns were wider than their text, which pushed the block away
-   from the middle column. They hug their content now, the gutter tightens,
-   and the block picks up the width they give back. */
-.sv-panel--wide .sv-panel-grid {
-  grid-template-columns: minmax(280px, 372px) minmax(280px, 372px) 1fr;
-  column-gap: 32px;
-}
-.sv-panel--wide .sv-rail { padding-left: 30px; }
-
-@media screen and (min-width: 1700px) {
-  .sv-panel--wide .sv-panel-grid {
-    grid-template-columns: minmax(300px, 380px) minmax(300px, 380px) 1fr 880px;
-    column-gap: 32px;
-  }
-}
-
-/* the photo's left margin has to match the block's left padding exactly, or it
-   hangs past the block's edge */
-.sv-illus { margin-left: -30px; }
-
-/* ==========================================================================
-   The band floats clear of the header
-
-   A 14px transparent top border opens the gap without breaking the hover
-   path: the pointer is still inside the panel while it crosses, so the menu
-   does not flicker shut. background-clip keeps the white from painting into
-   that strip, and the hairline comes back as an inset shadow.
-   ========================================================================== */
-.sv-panel--wide {
-  border-top: 18px solid transparent;
-  background-clip: padding-box;
-  box-shadow:
-    inset 0 1px 0 var(--sv-line),
-    0 24px 48px -18px rgba(0, 54, 93, 0.28),
-    0 2px 12px -4px rgba(0, 54, 93, 0.12);
-}
-
-@media screen and (max-width: 1023px) {
-  .sv-panel--wide { border-top: none; box-shadow: none; }
-}
-
-/* ==========================================================================
-   A floating panel instead of a band
-
-   The panel stops at the header's column, gets rounded corners and a lifted
-   shadow, and sits 26px clear of the navbar. The image block still runs to
-   the panel's own right edge, so it keeps the bleeding-block character —
-   only now the edge it bleeds to is the panel's, not the window's.
-
-   The gap is bridged by a strip that belongs to the open trigger, so the
-   pointer can cross it without the menu closing. It exists only while that
-   trigger is open, or the four strips would overlap and hand the pointer to
-   the wrong panel.
-   ========================================================================== */
-/* margin, not a calc on top: the percentage there resolves against a box
-   that is not the one it looks like, and the gap came out at zero */
-.sv-panel--wide {
-  top: 100%;
-  margin-top: 26px;
-  left: 50% !important;
-  right: auto !important;
-  width: min(1400px, 93vw) !important;
-  max-width: none !important;
-  transform: translateX(-50%) translateY(-6px);
-  border: 1px solid var(--sv-line);
-  border-radius: 14px;
-  background-clip: border-box;
-  box-shadow:
-    0 26px 54px -20px rgba(0, 54, 93, 0.30),
-    0 6px 16px -8px rgba(0, 54, 93, 0.10);
-}
-.sv-trigger.sv-open .sv-panel--wide { transform: translateX(-50%) translateY(0); }
-.sv-trigger--wide.sv-open::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  height: 30px;
-}
-
-.sv-panel--wide .sv-panel-grid {
-  padding: 0 0 0 40px;
-  grid-template-columns: minmax(260px, 372px) minmax(260px, 372px) 1fr;
-  column-gap: 32px;
-}
-.sv-panel--wide .sv-col { padding: 32px 0 34px; }
-.sv-panel--wide .sv-rail {
-  align-self: stretch;
-  padding: 0 30px 26px;
-}
-.sv-illus { margin: 0 -30px 18px; }
-
-@media screen and (min-width: 1700px) {
-  .sv-panel--wide .sv-panel-grid {
-    grid-template-columns: minmax(300px, 380px) minmax(300px, 380px) 1fr;
-  }
-  .sv-panel--wide .sv-rail { grid-column: auto; }
-}
-
-@media screen and (max-width: 1023px) {
-  .sv-panel--wide {
-    position: static;
-    margin-top: 0;
-    left: auto !important;
-    width: auto !important;
-    transform: none !important;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-  }
-  .sv-trigger--wide.sv-open::after { display: none; }
-  .sv-panel--wide .sv-panel-grid { padding-left: 0; }
-  .sv-panel--wide .sv-rail { padding: 0 0 18px; }
-  .sv-illus { margin: 0 0 14px; }
-}
-
-/* ==========================================================================
-   Per the sketch: a narrower panel with air down both sides, the items in a
-   grid at the top, and the promo running across the foot as a banner.
-   ========================================================================== */
-.sv-panel--wide { width: min(1180px, 90vw) !important; }
-
-.sv-panel--wide .sv-panel-grid {
-  grid-template-columns: 1fr 1fr;
-  column-gap: 40px;
-  padding: 0 40px;
-}
-.sv-panel--wide .sv-col { padding: 32px 0 30px; }
-
-/* the block leaves the column and spans the foot of the panel */
-.sv-panel--wide .sv-rail {
-  grid-column: 1 / -1;
-  align-self: auto;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  gap: 0;
-  margin: 6px -40px 0;
-  padding: 0;
-  border-left: none;
-  border-top: 1px solid var(--sv-line);
-}
-.sv-illus {
-  margin: 0;
-  width: 42%;
-  max-width: 460px;
-  flex-shrink: 0;
-  border-radius: 0;
-}
-.sv-illus img { height: 100%; min-height: 186px; }
-.sv-rail-text {
-  display: block;
-  flex: 1;
-  padding: 26px 34px 28px;
-}
-.sv-rail-text .sv-rail-title { font-size: 22px; }
-.sv-rail-links { display: flex; flex-wrap: wrap; gap: 10px 26px; }
-.sv-rail-links li + li { margin-top: 0; }
-
-@media screen and (max-width: 1023px) {
-  .sv-panel--wide { width: auto !important; }
-  .sv-panel--wide .sv-panel-grid { padding: 0; }
-  .sv-panel--wide .sv-rail {
-    flex-direction: column;
-    margin: 10px 0 0;
-    border-top: none;
-  }
-  .sv-illus { width: auto; max-width: none; border-radius: 8px; }
-  .sv-illus img { height: 150px; min-height: 0; }
-  .sv-rail-text { padding: 16px 0 0; }
-}
-
-/* ==========================================================================
-   Back to the structure that worked: two columns of items with the block on
-   the right. The panel is wider than the last pass and the gutters between
-   columns are tighter, which is where that width comes from.
-   ========================================================================== */
-.sv-panel--wide { width: min(1500px, 93vw) !important; }
-
-.sv-panel--wide .sv-panel-grid {
-  grid-template-columns: minmax(260px, 374px) minmax(260px, 374px) 1fr;
-  column-gap: 26px;
-  padding: 0 0 0 36px;
-}
-.sv-panel--wide .sv-col { padding: 30px 0 32px; }
-
-.sv-panel--wide .sv-rail {
-  grid-column: auto;
-  align-self: stretch;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  border-top: none;
-  border-left: 1px solid var(--sv-line);
-}
-.sv-illus {
-  width: auto;
-  max-width: none;
-  margin: 0;
-  border-radius: 0;
-}
-.sv-illus img { height: 200px; min-height: 0; }
-.sv-rail-text { display: block; flex: 0 1 auto; padding: 22px 30px 26px; }
-.sv-rail-links { display: block; }
-.sv-rail-links li + li { margin-top: 10px; }
-
-@media screen and (max-width: 1023px) {
-  .sv-panel--wide .sv-panel-grid { padding: 0; }
-  .sv-panel--wide .sv-rail { border-left: none; }
-  .sv-illus { border-radius: 8px; }
-  .sv-illus img { height: 150px; }
-  .sv-rail-text { padding: 16px 0 0; }
-}
-
-/* ==========================================================================
-   The block's type carries the width
-
-   The title was set at 20px with a hard line break in it, so both lines
-   stopped well short of the block and the right half sat empty. The break is
-   gone and the display size is up to where the copy actually fills the
-   measure; the supporting text and links scale with it.
-   ========================================================================== */
-.sv-rail .sv-eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  margin-bottom: 14px;
-}
-.sv-rail-title {
-  font-size: 34px;
-  line-height: 1.1;
-  letter-spacing: -0.018em;
-  margin-bottom: 12px;
-}
-.sv-rail-body {
-  font-size: 16px;
-  line-height: 1.55;
-  max-width: 30ch;
-}
-.sv-rail .sv-btn {
-  font-size: 14px;
-  padding: 12px 22px;
-  border-radius: 6px;
-}
-.sv-rail-links a { font-size: 14.5px; }
-.sv-rail-links li + li { margin-top: 12px; }
-
-@media screen and (max-width: 1200px) {
-  .sv-rail-title { font-size: 28px; }
-  .sv-rail-body { font-size: 15px; }
-}
-@media screen and (max-width: 1023px) {
-  .sv-rail-title { font-size: 24px; }
-}
-
-/* an earlier rule set the title from .sv-rail-text, which outranked the size
-   above; this matches that weight and takes the display size up to where the
-   line actually fills the block */
-.sv-rail .sv-rail-title,
-.sv-rail-text .sv-rail-title { font-size: 38px; line-height: 1.08; letter-spacing: -0.02em; }
-.sv-rail .sv-rail-body { font-size: 16px; max-width: 32ch; }
-
-@media screen and (max-width: 1300px) {
-  .sv-rail .sv-rail-title,
-  .sv-rail-text .sv-rail-title { font-size: 32px; }
-}
-@media screen and (max-width: 1023px) {
-  .sv-rail .sv-rail-title,
-  .sv-rail-text .sv-rail-title { font-size: 26px; }
-}
-
-/* the supporting line runs on one line, and each link carries its own icon */
-.sv-rail .sv-rail-body {
-  max-width: none;
-  white-space: nowrap;
-}
-.sv-rail-links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-.sv-link-ico {
-  width: 17px;
-  height: 17px;
-  flex-shrink: 0;
-  color: var(--sv-blue);
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-@media screen and (max-width: 1200px) {
-  .sv-rail .sv-rail-body { white-space: normal; }
-}
-
-/* one line where it fits, rather than forced: nowrap pushed the sentence past
-   the block's padding in the narrower of the two layouts */
-.sv-rail .sv-rail-body {
-  white-space: normal;
-  max-width: none;
-  font-size: 15.5px;
-  text-wrap: balance;
-}
-.sv-nowrap { white-space: nowrap; }
-
-/* ==========================================================================
-   The heading sits inside the photograph
-
-   Eyebrow and title move over the image on a blue wash that deepens towards
-   the foot, so they stay legible on any frame. Taking them out of the text
-   column is what shortens the panel.
-   ========================================================================== */
-.sv-illus { position: relative; }
-.sv-illus img { display: block; }
 .sv-illus-caption {
   position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 22px 24px 20px;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 88, 148, 0.05) 0%,
-    rgba(0, 88, 148, 0.42) 45%,
-    rgba(0, 54, 93, 0.82) 100%
-  );
+  padding: 24px 24px 22px;
 }
+.sv-illus-caption::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #ffffff 0%, #d8d8d8 38%, #6f6f6f 72%, #2a2a2a 100%);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.sv-illus-caption > * { position: relative; z-index: 1; }
 .sv-illus-caption .sv-eyebrow {
   display: block;
   color: rgba(255, 255, 255, 0.88);
+  letter-spacing: 0.14em;
   padding-left: 0;
   margin: 0 0 6px;
 }
-.sv-illus-caption .sv-rail-title,
-.sv-illus-caption .sv-rail-text .sv-rail-title {
+.sv-illus-caption .sv-rail-title {
   display: block;
   color: #fff;
   font-size: 30px;
@@ -1214,127 +559,107 @@
   margin: 0;
   text-shadow: 0 1px 2px rgba(0, 30, 55, 0.35);
 }
-.sv-illus img { height: 232px; }
-.sv-rail-text { padding-top: 20px; }
-
-@media screen and (max-width: 1300px) {
-  .sv-illus-caption .sv-rail-title { font-size: 26px; }
-}
-@media screen and (max-width: 1023px) {
-  .sv-illus-caption { padding: 18px 18px 16px; }
-  .sv-illus-caption .sv-rail-title { font-size: 23px; }
-  .sv-illus img { height: 190px; }
-}
-
-/* ==========================================================================
-   Caption over a multiplied grey, not a blue tint
-
-   The wash is a white-to-charcoal gradient set to multiply, so it darkens the
-   photograph rather than staining it: white leaves the image untouched at the
-   top and the charcoal end carries the type at the foot. The description sits
-   in the caption now too, which takes the last of the copy out of the column
-   below.
-   ========================================================================== */
-.sv-illus { isolation: isolate; }
-.sv-illus-caption {
-  background: none;
-  justify-content: flex-end;
-  padding: 24px 24px 22px;
-}
-.sv-illus-caption::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #d8d8d8 38%,
-    #6f6f6f 72%,
-    #2a2a2a 100%
-  );
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-.sv-illus-caption > * { position: relative; z-index: 1; }
 .sv-illus-caption .sv-rail-body {
   display: block;
   color: rgba(255, 255, 255, 0.92);
   font-size: 15px;
   line-height: 1.5;
   margin: 8px 0 0;
-  max-width: none;
+  text-wrap: balance;
 }
-.sv-illus img { height: 250px; }
-.sv-rail-text { padding-top: 22px; }
+.sv-nowrap { white-space: nowrap; }
 
-/* the block centred its column, which floated the photo off the panel's top
-   edge once the copy moved into the image */
-.sv-panel--wide .sv-rail { justify-content: flex-start; }
-
-/* the button sits 4px closer to the photograph */
-.sv-rail-text { padding-top: 18px; }
-.sv-rail .sv-btn { margin-top: 0; }
-
-/* ==========================================================================
-   Button beside the links, not above them
-
-   The action moves to the right of the link list and both start at the same
-   height, so the block loses the button's whole row. If the pair cannot fit
-   side by side the button wraps under, rather than overflowing.
-   ========================================================================== */
+/* Under the photo: the links on the left, the one action level with them on
+   the right. If the pair cannot fit side by side the button wraps under. */
 .sv-rail-text {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px 20px;
+  padding: 18px 30px 26px;
 }
-.sv-rail-links { order: 1; flex: 1 1 auto; margin-top: 0; }
-.sv-rail .sv-btn { order: 2; flex: 0 0 auto; align-self: flex-start; margin: 0; }
-.sv-rail-links li:first-child a { padding-top: 0; }
+/* the links take whatever the button leaves, down to 150px; below that the
+   button wraps under them instead of squeezing them to a word a line */
+.sv-rail-links { flex: 1 1 150px; min-width: 0; margin-top: 0; }
+.sv-rail-links li + li { margin-top: 12px; }
+.sv-rail-links a { display: inline-flex; align-items: center; font-size: 14.5px; }
+.sv-rail .sv-btn {
+  flex: 0 0 auto;
+  font-size: 14px;
+  padding: 12px 22px;
+  border-radius: 6px;
+}
 
-/* the link list was demanding its full natural width, which pushed the button
-   onto its own line; a zero basis lets it take what is left instead */
-.sv-rail-links { flex: 1 1 0; min-width: 0; }
+@media screen and (min-width: 1024px) {
+  /* panels place themselves against the whole header, not its column */
+  .sv-header .sv-inner { position: static; }
+
+  .sv-trigger--wide .sv-panel--wide {
+    top: 100%;
+    left: 50%;
+    right: auto;
+    width: min(1500px, 93vw);
+    max-width: none;
+    margin-top: 26px;
+    transform: translateX(-50%) translateY(-6px);
+    border-radius: 14px;
+    box-shadow:
+      0 26px 54px -20px rgba(0, 54, 93, 0.30),
+      0 6px 16px -8px rgba(0, 54, 93, 0.10);
+  }
+  .sv-trigger.sv-open .sv-panel--wide { transform: translateX(-50%) translateY(0); }
+
+  /* bridges the 26px gap so the pointer can cross it without the panel
+     closing; it exists only on the open trigger, or the four strips would
+     overlap and hand the pointer to the wrong panel */
+  .sv-trigger--wide.sv-open::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 30px;
+  }
+
+  .sv-panel--wide .sv-panel-grid {
+    padding-left: 36px;
+    /* the block never drops below 340px, or its button is cut off at the
+       narrow end of desktop */
+    grid-template-columns: minmax(220px, 374px) minmax(220px, 374px) minmax(340px, 1fr);
+    column-gap: 26px;
+  }
+  .sv-panel--wide .sv-col { padding: 30px 0 32px; }
+
+  .sv-panel--wide .sv-rail {
+    justify-content: flex-start;
+    background: linear-gradient(135deg, #eff4fb 0%, #e8eff9 55%, #ece9f8 100%);
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .sv-illus-caption .sv-rail-title { font-size: 26px; }
+}
+
+@media screen and (max-width: 1023px) {
+  .sv-rail { background: none; padding: 0; }
+  .sv-illus { border-radius: 8px; }
+  .sv-illus img { height: 190px; }
+  .sv-illus-caption { padding: 18px 18px 16px; }
+  .sv-illus-caption .sv-rail-title { font-size: 23px; }
+  .sv-rail-text { padding: 16px 0 0; }
+}
 </style>
 <style>
   html { min-height: 100%; }
-  body { margin: 0; min-height: 100vh; background: #fff; overflow-x: hidden; }
+  body { margin: 0; min-height: 100vh; background: #fff; }
 </style>
 </head>
 <body>
 
 <!-- ===================== Silk Vision navigation ===================== -->
 <div id="sv-header-wrap">
-	<svg class="sv-sprite" aria-hidden="true" focusable="false"><defs>
-		<!-- One 24px grid, one stroke weight, one shape per idea. Each glyph is
-		     drawn from the anatomy or the object involved, never a generic
-		     stand-in, and carries no detail that dies at 22px. -->
-		<symbol id="i-lasik" viewBox="0 0 24 24"><path d="M2.6 13.6s3.8-5.4 9.4-5.4 9.4 5.4 9.4 5.4-3.8 5.4-9.4 5.4-9.4-5.4-9.4-5.4Z"/><circle cx="12" cy="13.6" r="2.4"/><path d="M12 2.6v3.2"/></symbol>
-		<symbol id="i-prk" viewBox="0 0 24 24"><path d="M3 18.4c0-5 4-9 9-9s9 4 9 9"/><path d="M6.6 13.4c1.8-1.2 9-1.2 10.8 0" stroke-dasharray="2 2.4"/><path d="M12 2.6v3.4"/></symbol>
-		<symbol id="i-touchup" viewBox="0 0 24 24"><path d="M20.6 12a8.6 8.6 0 1 1-2.8-6.4"/><path d="M21 3.4V8h-4.6"/><circle cx="12" cy="12" r="2.4"/></symbol>
-		<symbol id="i-icl" viewBox="0 0 24 24"><path d="M2.6 12s3.8-5.4 9.4-5.4S21.4 12 21.4 12s-3.8 5.4-9.4 5.4S2.6 12 2.6 12Z"/><ellipse cx="12" cy="12" rx="4.4" ry="2.8"/></symbol>
-		<symbol id="i-rle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.8"/><path d="M16.8 12c2.8-2 5-1 5 1.8"/><path d="M7.2 12c-2.8 2-5 1-5-1.8"/></symbol>
-		<symbol id="i-lal" viewBox="0 0 24 24"><circle cx="12" cy="14.6" r="4.4"/><path d="M16.4 14.6c2.6-1.8 4.6-.8 4.6 1.7"/><path d="M7.6 14.6c-2.6 1.8-4.6.8-4.6-1.7"/><path d="M12 2.8v3.2M8.3 4.2l1.5 2.5M15.7 4.2l-1.5 2.5"/></symbol>
-		<symbol id="i-cataract" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path d="M7.4 13.8c1.9-2.3 7.3-2.3 9.2 0"/><path d="M8.6 9.8c1.7-1.5 5.1-1.5 6.8 0"/></symbol>
-		<symbol id="i-cornea" viewBox="0 0 24 24"><path d="M2.8 18.6h18.4"/><path d="M5 18.6a7 7 0 0 1 14 0"/><path d="M8.6 18.6a3.4 3.4 0 0 1 6.8 0"/></symbol>
-		<symbol id="i-glaucoma" viewBox="0 0 24 24"><path d="M2.6 12s3.8-5.4 9.4-5.4S21.4 12 21.4 12s-3.8 5.4-9.4 5.4S2.6 12 2.6 12Z"/><path d="M12 15.2V9.2"/><path d="M9.9 11.3 12 9.2l2.1 2.1"/></symbol>
-		<symbol id="i-dryeye" viewBox="0 0 24 24"><path d="M2.4 12.4s3.8-5.4 9.4-5.4c2.2 0 4.1.8 5.6 1.9"/><path d="M2.4 12.4s2.6 3.8 7.4 5.2"/><circle cx="10.6" cy="12.4" r="2.6"/><path d="M18.8 13.4s2.4 2.8 2.4 4.1a2.4 2.4 0 0 1-4.8 0c0-1.3 2.4-4.1 2.4-4.1Z"/></symbol>
-		<symbol id="i-keratoconus" viewBox="0 0 24 24"><path d="M2.8 18.6h18.4"/><path d="M6 18.6a6 6 0 0 1 12 0" stroke-dasharray="2 2.4"/><path d="M6.6 18.6 12 5.8l5.4 12.8"/></symbol>
-		<symbol id="i-pterygium" viewBox="0 0 24 24"><path d="M2.6 12s3.8-5.4 9.4-5.4S21.4 12 21.4 12s-3.8 5.4-9.4 5.4S2.6 12 2.6 12Z"/><circle cx="13.2" cy="12" r="2.8"/><path d="M2.9 12 9 10.2v3.6Z"/></symbol>
-		<symbol id="i-doctor" viewBox="0 0 24 24"><circle cx="12" cy="7.8" r="3.4"/><path d="M5 20.6a7 7 0 0 1 14 0"/><path d="M15.6 15.8v2.9M14.1 17.2h3"/></symbol>
-		<symbol id="i-practice" viewBox="0 0 24 24"><path d="M4 20.6V10l8-5.6 8 5.6v10.6"/><path d="M12 12.2v4.6M9.7 14.5h4.6"/><path d="M2.6 20.6h18.8"/></symbol>
-		<symbol id="i-quote" viewBox="0 0 24 24"><path d="M4 4.6h16v11.2H10l-6 4.6V4.6Z"/><path d="M8.4 9h7.2M8.4 12.2h4.6"/></symbol>
-		<symbol id="i-blog" viewBox="0 0 24 24"><path d="M6 3.2h7.6L19 8.6v12.2H6Z"/><path d="M13.4 3.2v5.4H19"/><path d="M9 12.6h7M9 16.4h4.6"/></symbol>
-		<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.2s7-6.3 7-11.3a7 7 0 1 0-14 0c0 5 7 11.3 7 11.3Z"/><circle cx="12" cy="9.8" r="2.5"/></symbol>
-		<symbol id="i-surgery" viewBox="0 0 24 24"><path d="M12 3.6a4.8 4.8 0 0 1 4.8 4.8c0 1.7-2.1 2.7-4.8 2.7s-4.8-1-4.8-2.7A4.8 4.8 0 0 1 12 3.6Z"/><path d="M12 11.4v7.2M8.8 20.6h6.4"/></symbol>
-		<symbol id="i-forms" viewBox="0 0 24 24"><rect x="4.6" y="4.6" width="14.8" height="16.8" rx="2.4"/><rect x="9" y="2.6" width="6" height="4" rx="1.3"/><path d="m9.2 13.8 2 2 3.9-4"/></symbol>
-		<symbol id="i-card" viewBox="0 0 24 24"><rect x="2.6" y="5.6" width="18.8" height="12.8" rx="2.4"/><path d="M2.6 10h18.8"/><path d="M6.2 14.6h4"/></symbol>
-		<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.8 19.4 6v6c0 4.3-3.1 7.4-7.4 9.2C7.7 19.4 4.6 16.3 4.6 12V6L12 2.8Z"/><path d="m9.1 12.2 2.2 2.2 4-4.2"/></symbol>
-		<symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="4.4" width="18" height="12.4" rx="2.4"/><path d="M9.2 20.6h5.6M12 16.8v3.8"/><rect x="10" y="9.6" width="4" height="3.6" rx="1"/><path d="M10.9 9.6v-.9a1.1 1.1 0 0 1 2.2 0v.9"/></symbol>
-		<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.6 2.6 5.3 5.8.9-4.2 4 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4 5.8-.9L12 3.6Z"/></symbol>
-	</defs></svg>
-
 	<div class="sv-utility">
 		<div class="sv-inner">
 			<div class="sv-utility-left">
@@ -1344,7 +669,7 @@
 			<div class="sv-utility-right">
 				<span class="sv-phone">
 					<svg viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"></path></svg>
-					Call or text <a href="tel:7038769700">(703) 876-9700</a>
+					<span class="sv-phone-label">Call or text</span> <a href="tel:7038769700">(703) 876-9700</a>
 				</span>
 				<a class="sv-book" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344" target="_blank" rel="noopener">Book a free consultation</a>
 			</div>
@@ -1374,13 +699,10 @@
 								<p class="sv-eyebrow">Reshape the cornea</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/silk-vision-lasik-eye-surgery-center">
-										
 										<span class="sv-text"><span class="sv-item">LASIK</span><span class="sv-note">Laser reshaping, next-day recovery</span></span></a></li>
 									<li><a href="https://www.silkvision.net/photorefractive-keratectomy-prk">
-										
 										<span class="sv-text"><span class="sv-item">PRK</span><span class="sv-note">No flap — works with thin corneas</span></span></a></li>
 									<li><a href="https://www.silkvision.net/visual-rejuvenation">
-										
 										<span class="sv-text"><span class="sv-item">LASIK touch-ups</span><span class="sv-note">Refine a correction from years ago</span></span></a></li>
 								</ul>
 							</div>
@@ -1388,27 +710,22 @@
 								<p class="sv-eyebrow">Work with the lens</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/evo-icl-welcome-future-vision">
-										
 										<span class="sv-text"><span class="sv-item">EVO ICL</span><span class="sv-note">An added lens, your cornea untouched</span></span></a></li>
 									<li><a href="https://www.silkvision.net/refractive-lens-surgery-alternative-lasik">
-										
 										<span class="sv-text"><span class="sv-item">Lens replacement (RLE)</span><span class="sv-note">Swaps the natural lens, no cataracts later</span></span></a></li>
 									<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
-										
 										<span class="sv-text"><span class="sv-item">Light adjustable lens</span><span class="sv-note">Tuned to your eyes after surgery</span></span></a></li>
 								</ul>
 							</div>
 							<aside class="sv-rail">
 								<span class="sv-illus"><img src="./assets/pic-lens.jpg" alt="An implanted lens seen through the iris" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Not sure which</span><span class="sv-rail-title">Which one fits your eyes?</span><span class="sv-rail-body">Six questions, about two minutes.</span></span></span>
 								<span class="sv-rail-text">
-									
-									
-									<a class="sv-btn" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
 									<ul class="sv-rail-links">
 										<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">Am I a LASIK candidate?</a></li>
 										<li><a href="https://www.silkvision.net/cost-lasik-surgery-explained">What LASIK costs</a></li>
 										<li><a href="https://www.silkvision.net/lasik-resources">Patient resources</a></li>
 									</ul>
+									<a class="sv-btn" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
 								</span>
 							</aside>
 						</div>
@@ -1426,13 +743,10 @@
 								<p class="sv-eyebrow">Cataract care</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/cataract-surgery-and-cataract-removal">
-										
 										<span class="sv-text"><span class="sv-item">Cataract surgery</span><span class="sv-note">Replaces a clouded lens</span></span></a></li>
 									<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
-										
 										<span class="sv-text"><span class="sv-item">Light adjustable lens</span><span class="sv-note">Tuned to your eyes after surgery</span></span></a></li>
 									<li><a href="https://www.silkvision.net/visual-rejuvenation">
-										
 										<span class="sv-text"><span class="sv-item">Cataract touch-ups</span><span class="sv-note">Sharpen vision after surgery</span></span></a></li>
 								</ul>
 							</div>
@@ -1440,33 +754,26 @@
 								<p class="sv-eyebrow">Conditions we treat</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/advanced-cornea-care-northern-virginia">
-										
 										<span class="sv-text"><span class="sv-item">Cornea</span><span class="sv-note">Transplants and corneal disease</span></span></a></li>
 									<li><a href="https://www.silkvision.net/glaucoma">
-										
 										<span class="sv-text"><span class="sv-item">Glaucoma</span><span class="sv-note">Keep the vision you still have</span></span></a></li>
 									<li><a href="https://www.silkvision.net/eye-care/dry-eyes">
-										
 										<span class="sv-text"><span class="sv-item">Dry eyes</span><span class="sv-note">Treatment beyond artificial tears</span></span></a></li>
 									<li><a href="https://www.silkvision.net/keratoconus">
-										
 										<span class="sv-text"><span class="sv-item">Keratoconus</span><span class="sv-note">Cross-linking stops it progressing</span></span></a></li>
 									<li><a href="https://www.silkvision.net/pterygium">
-										
 										<span class="sv-text"><span class="sv-item">Pterygium</span><span class="sv-note">Removes growth on the eye's surface</span></span></a></li>
 								</ul>
 							</div>
 							<aside class="sv-rail">
 								<span class="sv-illus"><img src="./assets/pic-exam.jpg" alt="A patient at the slit lamp during an eye exam" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Start here</span><span class="sv-rail-title">Bring us your symptoms</span><span class="sv-rail-body">Annandale and Manassas, weekdays 8:30&ndash;4:30.</span></span></span>
 								<span class="sv-rail-text">
-									
-									
-									<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a>
 									<ul class="sv-rail-links">
 										<li><a href="https://www.silkvision.net/services-overview">All services</a></li>
 										<li><a href="https://www.silkvision.net/locations">Locations and hours</a></li>
 										<li><a href="https://www.silkvision.net/accepted-insurance">Accepted insurance</a></li>
 									</ul>
+									<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a>
 								</span>
 							</aside>
 						</div>
@@ -1484,13 +791,10 @@
 								<p class="sv-eyebrow">The practice</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">
-										
 										<span class="sv-text"><span class="sv-item">Wesam Silk, M.D.</span><span class="sv-note">26,000+ procedures performed</span></span></a></li>
 									<li><a href="https://www.silkvision.net/trusted-eye-physicians-and-surgeons-northern-virginia">
-										
 										<span class="sv-text"><span class="sv-item">About Silk Vision</span><span class="sv-note">Who we are and how we work</span></span></a></li>
 									<li><a href="https://www.silkvision.net/you-are-candidate-office-based-surgery">
-										
 										<span class="sv-text"><span class="sv-item">Office-based surgery</span><span class="sv-note">Your procedure in our own suite</span></span></a></li>
 								</ul>
 							</div>
@@ -1498,26 +802,21 @@
 								<p class="sv-eyebrow">See for yourself</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/testimonials">
-										
 										<span class="sv-text"><span class="sv-item">Patient stories</span><span class="sv-note">In their own words</span></span></a></li>
 									<li><a href="https://www.silkvision.net/blog">
-										
 										<span class="sv-text"><span class="sv-item">Blog</span><span class="sv-note">Answers to what patients ask</span></span></a></li>
 									<li><a href="https://www.silkvision.net/locations">
-										
 										<span class="sv-text"><span class="sv-item">Locations</span><span class="sv-note">Annandale and Manassas</span></span></a></li>
 								</ul>
 							</div>
 							<aside class="sv-rail">
 								<span class="sv-illus"><img src="./assets/pic-phoropter.jpg" alt="A patient behind a phoropter during an eye exam" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Your surgeon</span><span class="sv-rail-title">One surgeon, 26,000 procedures</span><span class="sv-rail-body">Twenty years of eye surgery in Northern Virginia.</span></span></span>
 								<span class="sv-rail-text">
-									
-									
-									<a class="sv-btn" href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">Meet Dr. Silk</a>
 									<ul class="sv-rail-links">
 										<li><a href="https://www.silkvision.net/testimonials">Read patient stories</a></li>
 										<li><a href="https://www.silkvision.net/locations">Locations and hours</a></li>
 									</ul>
+									<a class="sv-btn" href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">Meet Dr. Silk</a>
 								</span>
 							</aside>
 						</div>
@@ -1535,13 +834,10 @@
 								<p class="sv-eyebrow">Before your visit</p>
 								<ul class="sv-list">
 									<li><a href="https://www.silkvision.net/registration-consent-forms">
-										
 										<span class="sv-text"><span class="sv-item">Registration forms</span><span class="sv-note">Fill them in before you arrive</span></span></a></li>
 									<li><a href="https://www.silkvision.net/accepted-insurance">
-										
 										<span class="sv-text"><span class="sv-item">Accepted insurance</span><span class="sv-note">Plans we work with</span></span></a></li>
 									<li><a href="https://www.silkvision.net/financing">
-										
 										<span class="sv-text"><span class="sv-item">Financing</span><span class="sv-note">Payment plans and 0% options</span></span></a></li>
 								</ul>
 							</div>
@@ -1549,23 +845,19 @@
 								<p class="sv-eyebrow">Your account</p>
 								<ul class="sv-list">
 									<li><a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL" target="_blank" rel="noopener">
-										
 										<span class="sv-text"><span class="sv-item">Patient portal</span><span class="sv-note">Records, bills and results</span></span></a></li>
 									<li><a href="https://www.silkvision.net/leave-review">
-										
 										<span class="sv-text"><span class="sv-item">Leave a review</span><span class="sv-note">Tell us how it went</span></span></a></li>
 								</ul>
 							</div>
 							<aside class="sv-rail">
 								<span class="sv-illus"><img src="./assets/pic-booking.jpg" alt="Two patients looking at a laptop together" loading="lazy"><span class="sv-illus-caption"><span class="sv-eyebrow">Ready when you are</span><span class="sv-rail-title">Questions before you book?</span><span class="sv-rail-body">Call or text <span class="sv-nowrap">(703) 876-9700</span>, weekdays 8:30&ndash;4:30.</span></span></span>
 								<span class="sv-rail-text">
-									
-									
-									<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
 									<ul class="sv-rail-links">
 										<li><a href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment</a></li>
 										<li><a href="https://www.silkvision.net/special-offers">Current offers</a></li>
 									</ul>
+									<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
 								</span>
 							</aside>
 						</div>
