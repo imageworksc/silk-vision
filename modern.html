@@ -397,40 +397,47 @@
 }
 .sv-panel-foot .sv-btn { width: 100%; }
 
+/* Inside the panels the buttons are outlines, so the row they sit under stays
+   the strongest thing; on the navy block the outline is white */
+.sv-panel .sv-btn {
+  background: transparent;
+  border-color: var(--plum-500);
+  color: var(--plum-500);
+}
+.sv-rail .sv-btn {
+  border-color: rgb(255 255 255 / .7);
+  color: #fff;
+}
+.sv-rail .sv-btn:hover { border-color: #fff; }
+
 /* --- Mobile -------------------------------------------------------------- */
 .sv-burger {
   display: none;
   align-items: center;
-  gap: 8px;
-  min-height: var(--tap);
-  min-width: var(--tap);
-  padding: 0 14px;
-  border: 1px solid var(--hairline);
+  justify-content: center;
+  width: var(--tap);
+  height: var(--tap);
+  margin-right: -10px;
+  padding: 0;
+  border: none;
   border-radius: var(--r-md);
   background: transparent;
   color: var(--blue-500);
-  font-family: var(--font-ui);
-  font-size: 16px;
-  font-weight: 700;
   cursor: pointer;
 }
-.sv-burger:hover { background: var(--pale-100); }
 .sv-burger svg {
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.8;
   stroke-linecap: round;
 }
-/* one mark and one word at a time, swapped off aria-expanded, so what a
-   screen reader hears and what the eye sees can never disagree */
-.sv-burger .sv-ico-close,
-.sv-burger .sv-burger-open { display: none; }
-.sv-burger[aria-expanded="true"] .sv-ico-menu,
-.sv-burger[aria-expanded="true"] .sv-burger-shut { display: none; }
-.sv-burger[aria-expanded="true"] .sv-ico-close,
-.sv-burger[aria-expanded="true"] .sv-burger-open { display: inline; }
+/* icon only: the bars become a cross off aria-expanded, so what a screen
+   reader hears and what the eye sees can never disagree */
+.sv-burger .sv-ico-close { display: none; }
+.sv-burger[aria-expanded="true"] .sv-ico-menu { display: none; }
+.sv-burger[aria-expanded="true"] .sv-ico-close { display: block; }
 .sv-mobile-only { display: none; }
 
 @media screen and (min-width: 1024px) {
@@ -553,7 +560,6 @@
   .sv-phone-label,
   .sv-topbar .sv-arrow { display: none; }
   .sv-topbar-group { gap: 16px; }
-  .sv-burger { padding: 0 12px; }
 }
 
 /* the oldest small phones: the two links stack rather than run off the edge */
@@ -610,10 +616,9 @@
 				<img src="./assets/logo.png" alt="Silk Vision &amp; Surgical Center" width="206" height="51">
 			</a>
 
-			<button class="sv-burger" id="sv-burger" type="button" aria-expanded="false" aria-controls="sv-nav">
+			<button class="sv-burger" id="sv-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="sv-nav">
 				<svg class="sv-ico-menu" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
 				<svg class="sv-ico-close" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg>
-				<span class="sv-burger-shut">Menu</span><span class="sv-burger-open">Close</span>
 			</button>
 
 			<nav class="sv-nav" id="sv-nav" aria-label="Main navigation">
