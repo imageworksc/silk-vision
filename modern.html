@@ -244,10 +244,10 @@
 }
 
 /* Mega panels are floating cards, not bands: 940px, 12px clear of the
-   header and lined up with the right edge of the nav. The navy feature leads
-   on the left, so the panel opens on its strongest element; in the markup it
-   comes last, which keeps it after the items for a screen reader and on a
-   phone. */
+   header and lined up with the right edge of the nav. The items come first,
+   on the left, where the eye starts; the navy block that holds the next step
+   closes the panel on the right, in the same order as the markup, so what a
+   keyboard or a screen reader reaches next is always what is seen next. */
 .sv-panel--wide {
   top: calc(100% + 12px);
   right: 0;
@@ -262,12 +262,10 @@
 .sv-trigger.sv-open .sv-panel--wide { transform: translateY(0) scale(1); }
 .sv-panel-grid {
   display: grid;
-  grid-template-columns: 300px 1fr 1fr;
+  grid-template-columns: 1fr 1fr 300px;
 }
 .sv-panel-grid .sv-col { padding: 30px 18px 28px; }
-.sv-panel-grid .sv-col:first-child { grid-column: 2; grid-row: 1; padding-left: 26px; }
-.sv-panel-grid .sv-col:nth-child(2) { grid-column: 3; grid-row: 1; padding-right: 26px; }
-.sv-panel-grid .sv-rail { grid-column: 1; grid-row: 1; }
+.sv-panel-grid .sv-col:first-child { padding-left: 26px; }
 
 /* the rows rise into place one after another as the panel opens */
 @keyframes sv-rise {
@@ -456,7 +454,8 @@
 .sv-burger .sv-ico-close { display: none; }
 .sv-burger[aria-expanded="true"] .sv-ico-menu { display: none; }
 .sv-burger[aria-expanded="true"] .sv-ico-close { display: block; }
-.sv-mobile-only { display: none; }
+.sv-mobile-only,
+.sv-extra-links { display: none; }
 
 @media screen and (min-width: 1024px) {
   /* mega panels line up with the header's column */
@@ -477,7 +476,7 @@
   .sv-nav-btn { padding: 0 9px; }
   .sv-nav-btn::after { left: 9px; right: 9px; }
   .sv-panel--wide { width: 880px; }
-  .sv-panel-grid { grid-template-columns: 270px 1fr 1fr; }
+  .sv-panel-grid { grid-template-columns: 1fr 1fr 270px; }
 }
 
 @media screen and (max-width: 1023px) {
@@ -535,9 +534,7 @@
   .sv-panel--wide { width: auto; max-width: none; border-radius: 0; overflow: visible; }
   .sv-panel-grid { grid-template-columns: 1fr; gap: 20px; padding: 18px 0 22px; }
   .sv-panel-grid .sv-col,
-  .sv-panel-grid .sv-col:first-child,
-  .sv-panel-grid .sv-col:nth-child(2),
-  .sv-panel-grid .sv-rail { grid-column: auto; grid-row: auto; padding: 0; }
+  .sv-panel-grid .sv-col:first-child { padding: 0; }
   .sv-panel-grid .sv-rail { padding: 24px 22px 20px; border-radius: var(--r-lg); }
   .sv-panel--list { padding: 16px 0 20px; }
   .sv-list a { padding: 12px 10px; }
@@ -560,14 +557,26 @@
 @media screen and (min-width: 601px) and (max-width: 1023px) {
   .sv-panel-grid { grid-template-columns: 1fr 1fr; column-gap: 24px; row-gap: 12px; padding: 32px 0 24px; }
   .sv-panel-grid .sv-col,
-  .sv-panel-grid .sv-col:first-child,
-  .sv-panel-grid .sv-col:nth-child(2) { padding-bottom: 20px; }
+  .sv-panel-grid .sv-col:first-child { padding-bottom: 20px; }
   .sv-panel-grid .sv-rail { grid-column: 1 / -1; }
 }
 
-/* below 768px the top bar keeps only the phone and the booking link */
+/* below 768px the top bar keeps only the phone and the booking link; the
+   other two move into the menu, as plain rows under the sections */
 @media screen and (max-width: 767px) {
   .sv-topbar-left { display: none; }
+  .sv-extra-links { display: block; }
+  .sv-extra-links a {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    padding: 0 4px;
+    border-bottom: 1px solid var(--hairline);
+    font-family: var(--font-ui);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--grey-900);
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -678,9 +687,6 @@ html.sv-lock { overflow: hidden; }
 									<li><a href="https://www.silkvision.net/refractive-lens-surgery-alternative-lasik">
 										<span class="sv-item">Lens replacement (RLE)</span>
 										<span class="sv-note">Swaps the natural lens, no cataracts later</span></a></li>
-									<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
-										<span class="sv-item">Light adjustable lens</span>
-										<span class="sv-note">Tuned to your eyes after surgery</span></a></li>
 								</ul>
 							</div>
 							<aside class="sv-rail">
@@ -746,8 +752,6 @@ html.sv-lock { overflow: hidden; }
 								<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Book a visit</a>
 								<ul class="sv-rail-links">
 									<li><a href="https://www.silkvision.net/services-overview">All services <span class="sv-arrow" aria-hidden="true"></span></a></li>
-									<li><a href="https://www.silkvision.net/locations">Locations and hours <span class="sv-arrow" aria-hidden="true"></span></a></li>
-									<li><a href="https://www.silkvision.net/accepted-insurance">Accepted insurance <span class="sv-arrow" aria-hidden="true"></span></a></li>
 								</ul>
 							</aside>
 						</div>
@@ -807,6 +811,12 @@ html.sv-lock { overflow: hidden; }
 						</div>
 					</div>
 				</div>
+
+				<!-- the top bar drops these two below 768px, so the menu carries them -->
+				<ul class="sv-extra-links">
+					<li><a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL">Pay bill online</a></li>
+					<li><a href="https://www.silkvision.net/special-offers">Special offers</a></li>
+				</ul>
 
 				<a class="sv-btn sv-contact" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Contact</a>
 				<a class="sv-btn sv-call sv-mobile-only" href="tel:7038769700">Call or text (703) 876-9700</a>
