@@ -530,8 +530,19 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+/* tablets keep the two item columns side by side; the navy block runs
+   across the foot of the panel */
+@media screen and (min-width: 601px) and (max-width: 1023px) {
+  .sv-panel-grid { grid-template-columns: 1fr 1fr; column-gap: 24px; }
+  .sv-panel-grid .sv-rail { grid-column: 1 / -1; }
+}
+
+/* below 768px the top bar keeps only the phone and the booking link */
+@media screen and (max-width: 767px) {
   .sv-topbar-left { display: none; }
+}
+
+@media screen and (max-width: 600px) {
   .sv-topbar .sv-inner { justify-content: space-between; }
   .sv-topbar { font-size: 14px; }
   .sv-logo img { width: 150px; }
