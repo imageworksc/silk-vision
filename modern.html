@@ -56,9 +56,11 @@
   --tap: 44px;
   --shell: 1248px;
 
+  /* only the header row stays on screen: the top bar scrolls away with the
+     page, so the sticky part is 44px shorter (69px on a phone, not 113) */
   position: -webkit-sticky;
   position: sticky;
-  top: 0;
+  top: -44px;
   z-index: 900;
   font-family: var(--font-copy);
   color: var(--grey-900);
@@ -583,6 +585,7 @@
 
 /* the oldest small phones: the two links stack rather than run off the edge */
 @media screen and (max-width: 359px) {
+  #sv-header-wrap { top: -88px; }
   .sv-topbar .sv-inner,
   .sv-topbar-group { flex-wrap: wrap; justify-content: center; row-gap: 0; }
 }
@@ -601,8 +604,11 @@
 @media (prefers-reduced-motion: reduce) {
   #sv-header-wrap *,
   #sv-header-wrap *::before,
-  #sv-header-wrap *::after { transition: none !important; }
+  #sv-header-wrap *::after { transition: none !important; animation: none !important; }
 }
+
+/* set on <html> while the phone menu is open, so the page behind stays put */
+html.sv-lock { overflow: hidden; }
 </style>
 <style>
   html { min-height: 100%; }
@@ -616,7 +622,7 @@
 	<div class="sv-topbar">
 		<div class="sv-inner">
 			<div class="sv-topbar-group sv-topbar-left">
-				<a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL" target="_blank" rel="noopener">Pay bill online</a>
+				<a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL">Pay bill online</a>
 				<a href="https://www.silkvision.net/special-offers">Special offers</a>
 			</div>
 			<div class="sv-topbar-group">
@@ -624,7 +630,7 @@
 					<svg class="sv-phone-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.6 3.6 6.4 3a1.8 1.8 0 0 0-2.1 1.1C3.4 6.6 3.9 9.8 6.6 13.4s5.8 6 8.6 6.6a1.8 1.8 0 0 0 2-1.3l.6-2.1a1.8 1.8 0 0 0-1-2.1l-2.3-1a1.8 1.8 0 0 0-2 .4l-.7.8a10 10 0 0 1-4.2-4.3l.8-.7a1.8 1.8 0 0 0 .4-2L9.9 4.6a1.8 1.8 0 0 0-1.3-1Z"/></svg>
 					<span class="sv-phone-label">Call or text</span> (703) 876-9700
 				</a>
-				<a class="sv-book" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344" target="_blank" rel="noopener">Book a free consultation <span class="sv-arrow" aria-hidden="true"></span></a>
+				<a class="sv-book" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a free consultation <span class="sv-arrow" aria-hidden="true"></span></a>
 			</div>
 		</div>
 	</div>
@@ -790,7 +796,7 @@
 								<span class="sv-note">Payment plans and 0% options</span></a></li>
 							<li><a href="https://www.silkvision.net/accepted-insurance">
 								<span class="sv-item">Accepted insurance</span></a></li>
-							<li><a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL" target="_blank" rel="noopener">
+							<li><a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL">
 								<span class="sv-item">Patient portal</span>
 								<span class="sv-note">Records, bills and results</span></a></li>
 							<li><a href="https://www.silkvision.net/leave-review">
@@ -818,10 +824,22 @@
 	var burger = document.getElementById('sv-burger');
 	var nav = document.getElementById('sv-nav');
 	var desktop = window.matchMedia('(min-width: 1024px)');
-	var hoverTimer;
+	var openTimer, closeTimer;
+	// From rest, a panel waits a moment before opening, so a pointer that is
+	// only crossing the nav on its way to Contact does not flash panels open.
+	// Moving from one open panel to the next switches at once.
+	var HOVER_OPEN = 120;
+	// and a short grace period before closing, so a slightly off-target path
+	// does not snap the panel shut mid-reach
+	var HOVER_CLOSE = 140;
 
-	function setOpen(trigger, open) {
+	function isOpen(trigger) { return trigger.classList.contains('sv-open'); }
+
+	// byHover marks a panel the pointer opened, so a click on it keeps it
+	// open instead of toggling it shut, and leaving it closes it again
+	function setOpen(trigger, open, byHover) {
 		trigger.classList.toggle('sv-open', open);
+		trigger.svByHover = open && !!byHover;
 		var btn = trigger.querySelector('.sv-nav-btn');
 		if (btn) { btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
 	}
@@ -830,35 +848,50 @@
 		triggers.forEach(function (t) { if (t !== except) { setOpen(t, false); } });
 	}
 
-	function closeNav() {
+	function setNav(open) {
 		if (!nav || !burger) { return; }
-		nav.classList.remove('sv-nav-open');
-		burger.setAttribute('aria-expanded', 'false');
+		nav.classList.toggle('sv-nav-open', open);
+		burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+		// the page behind the open menu does not scroll
+		document.documentElement.classList.toggle('sv-lock', open);
+		if (!open) { closeAll(null); }
 	}
 
 	triggers.forEach(function (trigger) {
 		var btn = trigger.querySelector('.sv-nav-btn');
 
-		trigger.addEventListener('mouseenter', function () {
-			if (!desktop.matches) { return; }
-			clearTimeout(hoverTimer);
-			closeAll(trigger);
-			setOpen(trigger, true);
+		// hover is for a mouse only: on a touch screen the tap would fire both
+		// the hover and the click, and the click would undo the hover
+		trigger.addEventListener('pointerenter', function (e) {
+			if (e.pointerType !== 'mouse' || !desktop.matches) { return; }
+			clearTimeout(closeTimer);
+			clearTimeout(openTimer);
+			if (isOpen(trigger)) { return; }
+			var delay = triggers.some(isOpen) ? 0 : HOVER_OPEN;
+			openTimer = setTimeout(function () {
+				closeAll(trigger);
+				setOpen(trigger, true, true);
+			}, delay);
 		});
-		// a short grace period so a slightly off-target mouse path does not
-		// snap the panel shut mid-reach
-		trigger.addEventListener('mouseleave', function () {
-			if (!desktop.matches) { return; }
-			clearTimeout(hoverTimer);
-			hoverTimer = setTimeout(function () { setOpen(trigger, false); }, 140);
+		trigger.addEventListener('pointerleave', function (e) {
+			if (e.pointerType !== 'mouse' || !desktop.matches) { return; }
+			clearTimeout(openTimer);
+			// a panel opened by click or keyboard stays until it is closed
+			if (!trigger.svByHover) { return; }
+			closeTimer = setTimeout(function () { setOpen(trigger, false); }, HOVER_CLOSE);
 		});
 
 		btn.addEventListener('click', function (e) {
 			e.preventDefault();
-			var isOpen = trigger.classList.contains('sv-open');
-			clearTimeout(hoverTimer);
+			clearTimeout(openTimer);
+			clearTimeout(closeTimer);
+			if (isOpen(trigger) && trigger.svByHover) {
+				trigger.svByHover = false;
+				return;
+			}
+			var open = !isOpen(trigger);
 			closeAll(trigger);
-			setOpen(trigger, !isOpen);
+			setOpen(trigger, open);
 		});
 
 		trigger.addEventListener('focusout', function (e) {
@@ -869,27 +902,32 @@
 
 	if (burger && nav) {
 		burger.addEventListener('click', function () {
-			var open = !nav.classList.contains('sv-nav-open');
-			nav.classList.toggle('sv-nav-open', open);
-			burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-			if (!open) { closeAll(null); }
+			setNav(!nav.classList.contains('sv-nav-open'));
 		});
 	}
 
 	document.addEventListener('click', function (e) {
-		if (!wrap.contains(e.target)) { closeAll(null); closeNav(); }
+		if (!wrap.contains(e.target)) { closeAll(null); setNav(false); }
 	});
 
+	// Escape closes the innermost thing that is open and hands focus back to
+	// the control that opened it, so a keyboard user is never left on <body>
 	document.addEventListener('keydown', function (e) {
-		if (e.key === 'Escape' || e.keyCode === 27) {
+		if (e.key !== 'Escape' && e.keyCode !== 27) { return; }
+		var focus = document.activeElement;
+		var open = triggers.filter(isOpen)[0];
+		if (open) {
 			closeAll(null);
-			closeNav();
+			if (open.contains(focus)) { open.querySelector('.sv-nav-btn').focus(); }
+		} else if (nav && nav.classList.contains('sv-nav-open')) {
+			setNav(false);
+			if (nav.contains(focus)) { burger.focus(); }
 		}
 	});
 
 	var onChange = function () {
 		closeAll(null);
-		if (desktop.matches) { closeNav(); }
+		if (desktop.matches) { setNav(false); }
 	};
 	if (desktop.addEventListener) { desktop.addEventListener('change', onChange); }
 	else if (desktop.addListener) { desktop.addListener(onChange); }
