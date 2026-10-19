@@ -9,7 +9,7 @@ built from the practice's own colours, type and photography.
 | [simple.html](https://imageworksc.github.io/silk-vision/simple.html) | Same as index, with the descriptions removed |
 | [full-width.html](https://imageworksc.github.io/silk-vision/full-width.html) | Floating panels up to 1500px wide; items in the header's column, photo block on the right set off by a hairline |
 | [banner.html](https://imageworksc.github.io/silk-vision/banner.html) | Floating panels; the photo block runs flush to the panel's edges on a soft tint |
-| [ziplyft.html](https://imageworksc.github.io/silk-vision/ziplyft.html) | In the style of the [Ziplyft page](https://imageworksc.github.io/silkvision-ziplyft/): dark navy top bar, Poppins + Inter, mega panels as full-width bands ending in a deep navy card, rows that answer the pointer with a purple title and a sliding arrow |
+| [modern.html](https://imageworksc.github.io/silk-vision/modern.html) | Dark navy top bar, Poppins + Inter, mega panels as full-width bands ending in a deep navy card, rows that answer the pointer with a purple title and a sliding arrow |
 
 ## Shared design
 
@@ -23,8 +23,8 @@ built from the practice's own colours, type and photography.
 
 All CSS is scoped to `#sv-header-wrap` / `.sv-*`, so any version can be dropped into the
 live theme. index, simple, full-width and banner start with the same shared rules, and
-full-width and banner add one section of their own at the end; ziplyft has its own token
-set, taken from the Ziplyft page.
+full-width and banner add one section of their own at the end; modern has its own token
+set.
 
 ## Breakpoints
 
@@ -36,5 +36,5 @@ set, taken from the Ziplyft page.
 
 ## Files
 
-- `index.html`, `simple.html`, `full-width.html`, `banner.html`, `ziplyft.html` — one self-contained page each
+- `index.html`, `simple.html`, `full-width.html`, `banner.html`, `modern.html` — one self-contained page each
 - `assets/` — logo and the photographs used in the panels
