@@ -9,7 +9,7 @@ built from the practice's own colours, type and photography.
 | [simple.html](https://imageworksc.github.io/silk-vision/simple.html) | Same as index, with the descriptions removed |
 | [full-width.html](https://imageworksc.github.io/silk-vision/full-width.html) | Floating panels up to 1500px wide; items in the header's column, photo block on the right set off by a hairline |
 | [banner.html](https://imageworksc.github.io/silk-vision/banner.html) | Floating panels; the photo block runs flush to the panel's edges on a soft tint |
-| [modern.html](https://imageworksc.github.io/silk-vision/modern.html) | Dark navy top bar, Poppins + Inter, mega panels as 940px floating cards led by a deep navy block on the left, rows that rise in on opening; hover is a subtle wash on the nav and on every row, and buttons lift |
+| [modern.html](https://imageworksc.github.io/silk-vision/modern.html) | Dark navy top bar, Poppins + Inter, mega panels as 940px floating cards led by a deep navy block on the left, rows that rise in on opening; the nav underlines on hover, rows answer the pointer with a purple bar down their left edge, and buttons lift |
 
 ## Shared design
 
