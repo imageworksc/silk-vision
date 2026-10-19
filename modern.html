@@ -540,7 +540,10 @@
 /* tablets keep the two item columns side by side; the navy block runs
    across the foot of the panel */
 @media screen and (min-width: 601px) and (max-width: 1023px) {
-  .sv-panel-grid { grid-template-columns: 1fr 1fr; column-gap: 24px; }
+  .sv-panel-grid { grid-template-columns: 1fr 1fr; column-gap: 24px; row-gap: 12px; padding: 32px 0 24px; }
+  .sv-panel-grid .sv-col,
+  .sv-panel-grid .sv-col:first-child,
+  .sv-panel-grid .sv-col:nth-child(2) { padding-bottom: 20px; }
   .sv-panel-grid .sv-rail { grid-column: 1 / -1; }
 }
 
