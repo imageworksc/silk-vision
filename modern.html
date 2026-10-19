@@ -193,8 +193,7 @@
   transform: scaleX(0);
   transition: transform var(--t-mid) var(--ease);
 }
-.sv-nav-btn:hover::after,
-.sv-trigger.sv-open .sv-nav-btn::after { transform: scaleX(1); }
+.sv-nav-btn:hover::after { transform: scaleX(1); }
 .sv-trigger.sv-open .sv-chevron { transform: rotate(180deg); }
 
 /* Buttons: purple, 10px corners, an arrow that slides on hover */
@@ -241,20 +240,43 @@
   transition: opacity var(--t-fast) var(--ease), transform var(--t-mid) var(--ease), visibility 0s;
 }
 
-/* Mega panels run as a band across the window, flush under the header */
+/* Mega panels are floating cards, not bands: 940px, 12px clear of the
+   header and lined up with the right edge of the nav. The navy feature leads
+   on the left, so the panel opens on its strongest element; in the markup it
+   comes last, which keeps it after the items for a screen reader and on a
+   phone. */
 .sv-panel--wide {
-  top: 100%;
-  left: 0;
+  top: calc(100% + 12px);
   right: 0;
-  border-top: 1px solid var(--hairline);
+  width: 940px;
+  max-width: 100%;
+  border-radius: var(--r-lg);
   box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  transform: translateY(-8px) scale(.985);
+  transform-origin: top right;
 }
+.sv-trigger.sv-open .sv-panel--wide { transform: translateY(0) scale(1); }
 .sv-panel-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr minmax(320px, 380px);
-  gap: 40px;
-  padding: 36px 0 40px;
+  grid-template-columns: 300px 1fr 1fr;
 }
+.sv-panel-grid .sv-col { padding: 30px 18px 28px; }
+.sv-panel-grid .sv-col:first-child { grid-column: 2; grid-row: 1; padding-left: 26px; }
+.sv-panel-grid .sv-col:nth-child(2) { grid-column: 3; grid-row: 1; padding-right: 26px; }
+.sv-panel-grid .sv-rail { grid-column: 1; grid-row: 1; }
+
+/* the rows rise into place one after another as the panel opens */
+@keyframes sv-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.sv-trigger.sv-open .sv-list li { animation: sv-rise var(--t-mid) var(--ease) both; }
+.sv-trigger.sv-open .sv-list li:nth-child(2) { animation-delay: 40ms; }
+.sv-trigger.sv-open .sv-list li:nth-child(3) { animation-delay: 80ms; }
+.sv-trigger.sv-open .sv-list li:nth-child(4) { animation-delay: 120ms; }
+.sv-trigger.sv-open .sv-list li:nth-child(5) { animation-delay: 160ms; }
+.sv-trigger.sv-open .sv-list li:nth-child(6) { animation-delay: 200ms; }
 
 /* List panels hang under their own trigger; the strip bridges the gap so the
    pointer can cross it without the panel closing */
@@ -265,10 +287,10 @@
   top: 100%;
   left: -20px;
   right: -20px;
-  height: 20px;
+  height: 30px;
 }
 .sv-panel--list {
-  top: calc(100% + 17px);
+  top: calc(100% + 28px);
   left: -8px;
   width: 340px;
   padding: 20px 14px 16px;
@@ -334,8 +356,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 28px 28px 26px;
-  border-radius: var(--r-lg);
+  padding: 30px 28px 26px;
   background: var(--ink-700);
   color: var(--on-dark-soft);
 }
@@ -354,7 +375,9 @@
   font-size: 16px;
   line-height: 1.6;
 }
-.sv-rail .sv-btn { margin-top: 22px; }
+/* the button fills the card's width, so a long label wraps instead of
+   running out of a narrow card */
+.sv-rail .sv-btn { align-self: stretch; margin-top: 22px; white-space: normal; text-align: center; }
 .sv-rail-links {
   align-self: stretch;
   margin-top: 22px;
@@ -419,10 +442,28 @@
 .sv-burger[aria-expanded="true"] .sv-burger-open { display: inline; }
 .sv-mobile-only { display: none; }
 
+@media screen and (min-width: 1024px) {
+  /* mega panels line up with the header's column */
+  .sv-header > .sv-inner { position: relative; }
+  /* the open trigger is a pill, so it is clear which panel is showing */
+  .sv-trigger.sv-open .sv-nav-btn { background: var(--pale-100); border-radius: var(--r-md); }
+  /* a strip from the trigger down to the card, so the pointer can cross the
+     gap without the panel closing; only the open trigger has one */
+  .sv-trigger.sv-open:not(.sv-trigger--list)::after {
+    content: '';
+    position: absolute;
+    top: calc(100% - 16px);
+    left: 0;
+    right: 0;
+    height: 30px;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .sv-nav-btn { padding: 0 9px; }
   .sv-nav-btn::after { left: 9px; right: 9px; }
-  .sv-panel-grid { gap: 28px; grid-template-columns: 1fr 1fr 320px; }
+  .sv-panel--wide { width: 880px; }
+  .sv-panel-grid { grid-template-columns: 270px 1fr 1fr; }
 }
 
 @media screen and (max-width: 1023px) {
@@ -477,11 +518,16 @@
     transition: none;
   }
   .sv-trigger.sv-open .sv-panel { display: block; }
-  .sv-panel-grid { width: auto; max-width: none; grid-template-columns: 1fr; gap: 20px; padding: 18px 0 22px; }
+  .sv-panel--wide { width: auto; max-width: none; border-radius: 0; overflow: visible; }
+  .sv-panel-grid { grid-template-columns: 1fr; gap: 20px; padding: 18px 0 22px; }
+  .sv-panel-grid .sv-col,
+  .sv-panel-grid .sv-col:first-child,
+  .sv-panel-grid .sv-col:nth-child(2),
+  .sv-panel-grid .sv-rail { grid-column: auto; grid-row: auto; padding: 0; }
+  .sv-panel-grid .sv-rail { padding: 24px 22px 20px; border-radius: var(--r-lg); }
   .sv-panel--list { padding: 16px 0 20px; }
   .sv-list a { padding: 12px 10px; }
   .sv-eyebrow { padding-left: 10px; }
-  .sv-rail { padding: 24px 22px 20px; }
   .sv-rail-title { font-size: 23px; }
   .sv-panel-foot { padding: 16px 0 0; }
 
@@ -579,7 +625,7 @@
 						Vision Correction <span class="sv-chevron" aria-hidden="true"></span>
 					</button>
 					<div class="sv-panel sv-panel--wide" id="sv-panel-vision">
-						<div class="sv-inner sv-panel-grid">
+						<div class="sv-panel-grid">
 							<div class="sv-col">
 								<p class="sv-eyebrow">Reshape the cornea</p>
 								<ul class="sv-list">
@@ -629,7 +675,7 @@
 						Eye Care <span class="sv-chevron" aria-hidden="true"></span>
 					</button>
 					<div class="sv-panel sv-panel--wide" id="sv-panel-eyecare">
-						<div class="sv-inner sv-panel-grid">
+						<div class="sv-panel-grid">
 							<div class="sv-col">
 								<p class="sv-eyebrow">Cataract care</p>
 								<ul class="sv-list">
