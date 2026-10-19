@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Silk Vision — Navigation, Ziplyft style</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.silkvision.net/favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<style id="sv-navbar-styles">
+/* ==========================================================================
+   Silk Vision — navigation, Ziplyft style
+
+   Built on the tokens of the Ziplyft page (imageworksc.github.io/
+   silkvision-ziplyft): a dark navy top bar, Poppins for every title and
+   control, Inter for everything that is read, purple only where something
+   happens, and no gradients anywhere.
+
+   What makes it stand out is contrast, not decoration: each mega panel ends
+   in a deep navy card that holds the next step, and every row answers a
+   pointer with a wash, a purple title and an arrow that slides in. What keeps
+   it easy is the reading size: the reader is usually past sixty, so nothing
+   that is read is set below 16px and every target is at least 44px tall.
+
+   Scoped to #sv-header-wrap / .sv-* so nothing leaks into the host page.
+   ========================================================================== */
+#sv-header-wrap {
+  /* blues */
+  --ink-900: #001325;
+  --ink-700: #013559;
+  --blue-500: #005894;
+  --blue-400: #1e7fbe;
+  --cyan-300: #6cc5f0;
+  --pale-100: #e7eef4;
+  /* purple: the action colour */
+  --plum-600: #6a006a;
+  --plum-500: #800080;
+  /* neutrals */
+  --paper: #f5f8fb;
+  --grey-700: #45575b;
+  --grey-900: #2a3538;
+  --hairline: rgb(1 53 89 / .12);
+  --on-dark-soft: rgb(255 255 255 / .8);
+  /* type */
+  --font-ui: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-copy: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* shape, depth, motion */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --shadow-lg: 0 6px 16px rgb(1 53 89 / .1), 0 28px 60px rgb(1 53 89 / .17);
+  --ease: cubic-bezier(.22, .9, .3, 1);
+  --ease-spring: cubic-bezier(.34, 1.4, .5, 1);
+  --t-fast: .2s;
+  --t-mid: .38s;
+  --tap: 44px;
+  --shell: 1248px;
+
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  font-family: var(--font-copy);
+  color: var(--grey-900);
+}
+#sv-header-wrap *,
+#sv-header-wrap *::before,
+#sv-header-wrap *::after { box-sizing: border-box; }
+/* :where() keeps these resets at zero specificity, so the .sv-* rules below
+   set their own margins and colours without fighting an ID selector */
+:where(#sv-header-wrap) a { text-decoration: none; color: inherit; }
+:where(#sv-header-wrap) p { margin: 0; }
+:where(#sv-header-wrap) ul { list-style: none; margin: 0; padding: 0; }
+#sv-header-wrap button { font-family: inherit; }
+#sv-header-wrap :focus-visible {
+  outline: 3px solid var(--blue-400);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+.sv-inner {
+  width: var(--shell);
+  max-width: calc(100% - 40px);
+  margin: 0 auto;
+}
+
+/* Arrow and chevron are drawn once, as masks, so they take currentColor */
+.sv-arrow,
+.sv-chevron {
+  flex: none;
+  display: inline-block;
+  background: currentColor;
+  -webkit-mask: var(--mask) center / contain no-repeat;
+  mask: var(--mask) center / contain no-repeat;
+}
+.sv-arrow {
+  width: 18px;
+  height: 18px;
+  --mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h15M13 6l6 6-6 6'/%3E%3C/svg%3E");
+  transition: transform var(--t-mid) var(--ease-spring);
+}
+.sv-chevron {
+  width: 14px;
+  height: 14px;
+  --mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 9 7 7 7-7'/%3E%3C/svg%3E");
+  transition: transform var(--t-mid) var(--ease);
+}
+.sv-phone-ico {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* --- Top bar ------------------------------------------------------------- */
+.sv-topbar {
+  background: var(--ink-900);
+  color: var(--on-dark-soft);
+  font-family: var(--font-ui);
+  font-size: 14.5px;
+  font-weight: 600;
+}
+.sv-topbar .sv-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.sv-topbar-group { display: flex; align-items: center; gap: 24px; }
+.sv-topbar a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  min-height: var(--tap);
+  transition: color var(--t-fast) var(--ease);
+}
+.sv-topbar a:hover { color: var(--cyan-300); }
+.sv-topbar .sv-book { color: #fff; }
+.sv-topbar .sv-book:hover { color: var(--cyan-300); }
+.sv-topbar .sv-book:hover .sv-arrow { transform: translateX(4px); }
+.sv-topbar .sv-arrow { width: 16px; height: 16px; }
+
+/* --- Header row ---------------------------------------------------------- */
+.sv-header {
+  position: relative;
+  background: rgb(255 255 255 / .94);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--hairline);
+}
+.sv-header > .sv-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 0;
+}
+.sv-logo { display: inline-flex; align-items: center; min-height: var(--tap); flex-shrink: 0; }
+.sv-logo img { display: block; width: 184px; height: auto; transition: transform var(--t-mid) var(--ease); }
+.sv-logo:hover img { transform: scale(1.03); }
+
+.sv-nav { display: flex; align-items: center; gap: 8px; }
+.sv-nav-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: var(--tap);
+  padding: 0 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--blue-500);
+  white-space: nowrap;
+}
+/* the underline grows from the centre, as on the Ziplyft page */
+.sv-nav-btn::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--plum-500);
+  transform: scaleX(0);
+  transition: transform var(--t-mid) var(--ease);
+}
+.sv-nav-btn:hover::after,
+.sv-trigger.sv-open .sv-nav-btn::after { transform: scaleX(1); }
+.sv-trigger.sv-open .sv-chevron { transform: rotate(180deg); }
+
+/* Buttons: purple, 10px corners, an arrow that slides on hover */
+.sv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 2px solid transparent;
+  border-radius: var(--r-md);
+  background: var(--plum-500);
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  line-height: 1.25;
+  white-space: nowrap;
+  transition: transform var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease);
+}
+.sv-btn:hover { background: var(--plum-600); transform: translateY(-2px); }
+.sv-btn:active { transform: translateY(0); }
+.sv-btn:hover .sv-arrow { transform: translateX(4px); }
+.sv-contact { margin-left: 12px; }
+
+/* --- Panels -------------------------------------------------------------- */
+.sv-panel {
+  position: absolute;
+  z-index: 10;
+  background: #fff;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity var(--t-fast) var(--ease), transform var(--t-mid) var(--ease), visibility 0s linear var(--t-fast);
+}
+.sv-trigger.sv-open .sv-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition: opacity var(--t-fast) var(--ease), transform var(--t-mid) var(--ease), visibility 0s;
+}
+
+/* Mega panels run as a band across the window, flush under the header */
+.sv-panel--wide {
+  top: 100%;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--hairline);
+  box-shadow: var(--shadow-lg);
+}
+.sv-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr minmax(320px, 380px);
+  gap: 40px;
+  padding: 36px 0 40px;
+}
+
+/* List panels hang under their own trigger; the strip bridges the gap so the
+   pointer can cross it without the panel closing */
+.sv-trigger--list { position: relative; }
+.sv-trigger--list::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -20px;
+  right: -20px;
+  height: 20px;
+}
+.sv-panel--list {
+  top: calc(100% + 17px);
+  left: -8px;
+  width: 340px;
+  padding: 20px 14px 16px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
+}
+.sv-panel--right { left: auto; right: -8px; }
+
+.sv-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  padding-left: 14px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--blue-500);
+}
+.sv-eyebrow::before {
+  content: '';
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--plum-500);
+}
+
+/* Rows: name in Poppins, the one fact under it in Inter. On a pointer the
+   row takes a wash, the name turns purple and an arrow slides in. */
+.sv-list li + li { margin-top: 2px; }
+.sv-list a {
+  display: block;
+  padding: 12px 14px;
+  border-radius: var(--r-md);
+  transition: background-color var(--t-fast) var(--ease);
+}
+.sv-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-ui);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--blue-500);
+  transition: color var(--t-fast) var(--ease);
+}
+.sv-item .sv-arrow {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity var(--t-fast) var(--ease), transform var(--t-mid) var(--ease-spring);
+}
+.sv-note {
+  display: block;
+  margin-top: 3px;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -.01em;
+  color: var(--grey-700);
+}
+.sv-list a:hover,
+.sv-list a:focus-visible { background: var(--paper); }
+.sv-list a:hover .sv-item,
+.sv-list a:focus-visible .sv-item { color: var(--plum-500); }
+.sv-list a:hover .sv-arrow,
+.sv-list a:focus-visible .sv-arrow { opacity: 1; transform: translateX(0); }
+
+/* The rail: a deep navy card that holds the panel's next step */
+.sv-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 28px 28px 26px;
+  border-radius: var(--r-lg);
+  background: var(--ink-700);
+  color: var(--on-dark-soft);
+}
+.sv-rail .sv-eyebrow { padding-left: 0; color: var(--cyan-300); }
+.sv-rail .sv-eyebrow::before { background: var(--cyan-300); }
+.sv-rail-title {
+  font-family: var(--font-ui);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -.02em;
+  color: #fff;
+  text-wrap: balance;
+}
+.sv-rail-body {
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.sv-rail .sv-btn { margin-top: 22px; }
+.sv-rail-links {
+  align-self: stretch;
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgb(255 255 255 / .16);
+}
+.sv-rail-links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: var(--tap);
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  transition: color var(--t-fast) var(--ease);
+}
+.sv-rail-links .sv-arrow { width: 16px; height: 16px; color: var(--cyan-300); }
+.sv-rail-links a:hover { color: var(--cyan-300); }
+.sv-rail-links a:hover .sv-arrow { transform: translateX(4px); }
+
+.sv-panel-foot {
+  margin: 12px 0 0;
+  padding: 16px 14px 4px;
+  border-top: 1px solid var(--hairline);
+}
+.sv-panel-foot .sv-btn { width: 100%; }
+
+/* --- Mobile -------------------------------------------------------------- */
+.sv-burger {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--tap);
+  min-width: var(--tap);
+  padding: 0 14px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--blue-500);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.sv-burger:hover { background: var(--pale-100); }
+.sv-burger svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+/* one mark and one word at a time, swapped off aria-expanded, so what a
+   screen reader hears and what the eye sees can never disagree */
+.sv-burger .sv-ico-close,
+.sv-burger .sv-burger-open { display: none; }
+.sv-burger[aria-expanded="true"] .sv-ico-menu,
+.sv-burger[aria-expanded="true"] .sv-burger-shut { display: none; }
+.sv-burger[aria-expanded="true"] .sv-ico-close,
+.sv-burger[aria-expanded="true"] .sv-burger-open { display: inline; }
+.sv-mobile-only { display: none; }
+
+@media screen and (max-width: 1200px) {
+  .sv-nav-btn { padding: 0 9px; }
+  .sv-nav-btn::after { left: 9px; right: 9px; }
+  .sv-panel-grid { gap: 28px; grid-template-columns: 1fr 1fr 320px; }
+}
+
+@media screen and (max-width: 1023px) {
+  .sv-burger { display: inline-flex; }
+  .sv-header > .sv-inner { padding: 12px 0; }
+  .sv-logo img { width: 164px; }
+
+  .sv-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    max-height: calc(100vh - 120px);
+    max-height: calc(100dvh - 120px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 8px 20px 28px;
+    background: #fff;
+    border-top: 1px solid var(--hairline);
+    box-shadow: var(--shadow-lg);
+  }
+  .sv-nav.sv-nav-open { display: flex; }
+
+  .sv-trigger--list::after { display: none; }
+  .sv-nav-btn {
+    width: 100%;
+    justify-content: space-between;
+    min-height: 60px;
+    padding: 0 4px;
+    border-bottom: 1px solid var(--hairline);
+    font-size: 18px;
+  }
+  .sv-nav-btn::after { display: none; }
+  .sv-trigger.sv-open .sv-nav-btn { color: var(--plum-500); }
+
+  .sv-panel {
+    position: static;
+    display: none;
+    width: auto;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+    transition: none;
+  }
+  .sv-trigger.sv-open .sv-panel { display: block; }
+  .sv-panel-grid { width: auto; max-width: none; grid-template-columns: 1fr; gap: 20px; padding: 18px 0 22px; }
+  .sv-panel--list { padding: 16px 0 20px; }
+  .sv-list a { padding: 12px 10px; }
+  .sv-eyebrow { padding-left: 10px; }
+  .sv-rail { padding: 24px 22px 20px; }
+  .sv-rail-title { font-size: 23px; }
+  .sv-panel-foot { padding: 16px 0 0; }
+
+  .sv-contact { margin: 24px 0 0; }
+  .sv-mobile-only { display: inline-flex; }
+  .sv-call {
+    margin-top: 12px;
+    background: transparent;
+    border-color: var(--hairline);
+    color: var(--blue-500);
+  }
+  .sv-call:hover { background: var(--pale-100); }
+}
+
+@media screen and (max-width: 600px) {
+  .sv-topbar-left { display: none; }
+  .sv-topbar .sv-inner { justify-content: space-between; }
+  .sv-topbar { font-size: 14px; }
+  .sv-logo img { width: 150px; }
+}
+
+/* the number alone, so the bar fits a 360px phone without scrolling sideways */
+@media screen and (max-width: 440px) {
+  .sv-phone-label,
+  .sv-topbar .sv-arrow { display: none; }
+  .sv-topbar-group { gap: 16px; }
+  .sv-burger { padding: 0 12px; }
+}
+
+/* the oldest small phones: the two links stack rather than run off the edge */
+@media screen and (max-width: 359px) {
+  .sv-topbar .sv-inner,
+  .sv-topbar-group { flex-wrap: wrap; justify-content: center; row-gap: 0; }
+}
+
+/* --- Very large screens -------------------------------------------------
+   At 100% scaling a 4K or 5K display is 3840–5120 CSS px wide, and a header
+   set in px shrinks to a thin strip across the middle. Past 2400px the whole
+   header scales up in steps, so it keeps the proportions it has at 1920. */
+@media screen and (min-width: 2400px) { #sv-header-wrap { zoom: 1.25; } }
+@media screen and (min-width: 2880px) { #sv-header-wrap { zoom: 1.5; } }
+@media screen and (min-width: 3360px) { #sv-header-wrap { zoom: 1.75; } }
+@media screen and (min-width: 3840px) { #sv-header-wrap { zoom: 2; } }
+@media screen and (min-width: 4480px) { #sv-header-wrap { zoom: 2.33; } }
+@media screen and (min-width: 5120px) { #sv-header-wrap { zoom: 2.67; } }
+
+@media (prefers-reduced-motion: reduce) {
+  #sv-header-wrap *,
+  #sv-header-wrap *::before,
+  #sv-header-wrap *::after { transition: none !important; }
+}
+</style>
+<style>
+  html { min-height: 100%; }
+  body { margin: 0; min-height: 100vh; background: #fff; }
+</style>
+</head>
+<body>
+
+<!-- ===================== Silk Vision navigation ===================== -->
+<div id="sv-header-wrap">
+	<div class="sv-topbar">
+		<div class="sv-inner">
+			<div class="sv-topbar-group sv-topbar-left">
+				<a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL" target="_blank" rel="noopener">Pay bill online</a>
+				<a href="https://www.silkvision.net/special-offers">Special offers</a>
+			</div>
+			<div class="sv-topbar-group">
+				<a href="tel:7038769700">
+					<svg class="sv-phone-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.6 3.6 6.4 3a1.8 1.8 0 0 0-2.1 1.1C3.4 6.6 3.9 9.8 6.6 13.4s5.8 6 8.6 6.6a1.8 1.8 0 0 0 2-1.3l.6-2.1a1.8 1.8 0 0 0-1-2.1l-2.3-1a1.8 1.8 0 0 0-2 .4l-.7.8a10 10 0 0 1-4.2-4.3l.8-.7a1.8 1.8 0 0 0 .4-2L9.9 4.6a1.8 1.8 0 0 0-1.3-1Z"/></svg>
+					<span class="sv-phone-label">Call or text</span> (703) 876-9700
+				</a>
+				<a class="sv-book" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344" target="_blank" rel="noopener">Book a free consultation <span class="sv-arrow" aria-hidden="true"></span></a>
+			</div>
+		</div>
+	</div>
+
+	<header class="sv-header" role="banner" aria-label="Site header">
+		<div class="sv-inner">
+			<a class="sv-logo" href="https://www.silkvision.net/">
+				<img src="./assets/logo.png" alt="Silk Vision &amp; Surgical Center" width="206" height="51">
+			</a>
+
+			<button class="sv-burger" id="sv-burger" type="button" aria-expanded="false" aria-controls="sv-nav">
+				<svg class="sv-ico-menu" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+				<svg class="sv-ico-close" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg>
+				<span class="sv-burger-shut">Menu</span><span class="sv-burger-open">Close</span>
+			</button>
+
+			<nav class="sv-nav" id="sv-nav" aria-label="Main navigation">
+
+				<!-- Vision Correction -->
+				<div class="sv-trigger" data-sv-trigger>
+					<button class="sv-nav-btn" type="button" aria-expanded="false" aria-controls="sv-panel-vision">
+						Vision Correction <span class="sv-chevron" aria-hidden="true"></span>
+					</button>
+					<div class="sv-panel sv-panel--wide" id="sv-panel-vision">
+						<div class="sv-inner sv-panel-grid">
+							<div class="sv-col">
+								<p class="sv-eyebrow">Reshape the cornea</p>
+								<ul class="sv-list">
+									<li><a href="https://www.silkvision.net/silk-vision-lasik-eye-surgery-center">
+										<span class="sv-item">LASIK <span class="sv-arrow" aria-hidden="true"></span></span>
+										<span class="sv-note">Laser reshaping, next-day recovery</span></a></li>
+									<li><a href="https://www.silkvision.net/photorefractive-keratectomy-prk">
+										<span class="sv-item">PRK <span class="sv-arrow" aria-hidden="true"></span></span>
+										<span class="sv-note">No flap — works with thin corneas</span></a></li>
+									<li><a href="https://www.silkvision.net/visual-rejuvenation">
+										<span class="sv-item">LASIK touch-ups <span class="sv-arrow" aria-hidden="true"></span></span>
+										<span class="sv-note">Refine a correction from years ago</span></a></li>
+								</ul>
+							</div>
+							<div class="sv-col">
+								<p class="sv-eyebrow">Work with the lens</p>
+								<ul class="sv-list">
+									<li><a href="https://www.silkvision.net/evo-icl-welcome-future-vision">
+										<span class="sv-item">EVO ICL <span class="sv-arrow" aria-hidden="true"></span></span>
+										<span class="sv-note">An added lens, your cornea untouched</span></a></li>
+									<li><a href="https://www.silkvision.net/refractive-lens-surgery-alternative-lasik">
+										<span class="sv-item">Lens replacement (RLE) <span class="sv-arrow" aria-hidden="true"></span></span>
+										<span class="sv-note">Swaps the natural lens, no cataracts later</span></a></li>
+									<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
+										<span class="sv-item">Light adjustable lens <span class="sv-arrow" aria-hidden="true"></span></span>
+										<span class="sv-note">Tuned to your eyes after surgery</span></a></li>
+								</ul>
+							</div>
+							<aside class="sv-rail">
+								<p class="sv-eyebrow">Not sure which</p>
+								<p class="sv-rail-title">Which one fits your eyes?</p>
+								<p class="sv-rail-body">Six questions, about two minutes.</p>
+								<a class="sv-btn" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test <span class="sv-arrow" aria-hidden="true"></span></a>
+								<ul class="sv-rail-links">
+									<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">Am I a LASIK candidate? <span class="sv-arrow" aria-hidden="true"></span></a></li>
+									<li><a href="https://www.silkvision.net/cost-lasik-surgery-explained">What LASIK costs <span class="sv-arrow" aria-hidden="true"></span></a></li>
+									<li><a href="https://www.silkvision.net/lasik-resources">Patient resources <span class="sv-arrow" aria-hidden="true"></span></a></li>
+								</ul>
+							</aside>
+						</div>
+					</div>
+				</div>
+
+				<!-- Eye Care -->
+				<div class="sv-trigger" data-sv-trigger>
+					<button class="sv-nav-btn" type="button" aria-expanded="false" aria-controls="sv-panel-eyecare">
+						Eye Care <span class="sv-chevron" aria-hidden="true"></span>
+					</button>
+					<div class="sv-panel sv-panel--wide" id="sv-panel-eyecare">
+						<div class="sv-inner sv-panel-grid">
+							<div class="sv-col">
+								<p class="sv-eyebrow">Cataract care</p>
+								<ul class="sv-list">
+									<li><a href="https://www.silkvision.net/cataract-surgery-and-cataract-removal">
+										<span class="sv-item">Cataract surgery <span class="sv-arrow" aria-hidden="true"></span></span>
+										<span class="sv-note">Replaces a clouded lens</span></a></li>
+									<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
+										<span class="sv-item">Light adjustable lens <span class="sv-arrow" aria-hidden="true"></span></span>
+										<span class="sv-note">Tuned to your eyes after surgery</span></a></li>
+									<li><a href="https://www.silkvision.net/visual-rejuvenation">
+										<span class="sv-item">Cataract touch-ups <span class="sv-arrow" aria-hidden="true"></span></span>
+										<span class="sv-note">Sharpen vision after surgery</span></a></li>
+								</ul>
+							</div>
+							<div class="sv-col">
+								<p class="sv-eyebrow">Conditions we treat</p>
+								<ul class="sv-list">
+									<li><a href="https://www.silkvision.net/advanced-cornea-care-northern-virginia">
+										<span class="sv-item">Cornea <span class="sv-arrow" aria-hidden="true"></span></span>
+										<span class="sv-note">Transplants and corneal disease</span></a></li>
+									<li><a href="https://www.silkvision.net/glaucoma">
+										<span class="sv-item">Glaucoma <span class="sv-arrow" aria-hidden="true"></span></span>
+										<span class="sv-note">Keep the vision you still have</span></a></li>
+									<li><a href="https://www.silkvision.net/eye-care/dry-eyes">
+										<span class="sv-item">Dry eyes <span class="sv-arrow" aria-hidden="true"></span></span>
+										<span class="sv-note">Treatment beyond artificial tears</span></a></li>
+									<li><a href="https://www.silkvision.net/keratoconus">
+										<span class="sv-item">Keratoconus <span class="sv-arrow" aria-hidden="true"></span></span>
+										<span class="sv-note">Cross-linking stops it progressing</span></a></li>
+									<li><a href="https://www.silkvision.net/pterygium">
+										<span class="sv-item">Pterygium <span class="sv-arrow" aria-hidden="true"></span></span>
+										<span class="sv-note">Removes growth on the eye's surface</span></a></li>
+								</ul>
+							</div>
+							<aside class="sv-rail">
+								<p class="sv-eyebrow">Start here</p>
+								<p class="sv-rail-title">Bring us your symptoms</p>
+								<p class="sv-rail-body">Annandale and Manassas, weekdays 8:30&ndash;4:30.</p>
+								<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an appointment <span class="sv-arrow" aria-hidden="true"></span></a>
+								<ul class="sv-rail-links">
+									<li><a href="https://www.silkvision.net/services-overview">All services <span class="sv-arrow" aria-hidden="true"></span></a></li>
+									<li><a href="https://www.silkvision.net/locations">Locations and hours <span class="sv-arrow" aria-hidden="true"></span></a></li>
+									<li><a href="https://www.silkvision.net/accepted-insurance">Accepted insurance <span class="sv-arrow" aria-hidden="true"></span></a></li>
+								</ul>
+							</aside>
+						</div>
+					</div>
+				</div>
+
+				<!-- About -->
+				<div class="sv-trigger sv-trigger--list" data-sv-trigger>
+					<button class="sv-nav-btn" type="button" aria-expanded="false" aria-controls="sv-panel-about">
+						About <span class="sv-chevron" aria-hidden="true"></span>
+					</button>
+					<div class="sv-panel sv-panel--list" id="sv-panel-about">
+						<p class="sv-eyebrow">The practice</p>
+						<ul class="sv-list">
+							<li><a href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">
+								<span class="sv-item">Wesam Silk, M.D. <span class="sv-arrow" aria-hidden="true"></span></span>
+								<span class="sv-note">26,000+ procedures performed</span></a></li>
+							<li><a href="https://www.silkvision.net/trusted-eye-physicians-and-surgeons-northern-virginia">
+								<span class="sv-item">About Silk Vision <span class="sv-arrow" aria-hidden="true"></span></span></a></li>
+							<li><a href="https://www.silkvision.net/testimonials">
+								<span class="sv-item">Patient stories <span class="sv-arrow" aria-hidden="true"></span></span></a></li>
+							<li><a href="https://www.silkvision.net/blog">
+								<span class="sv-item">Blog <span class="sv-arrow" aria-hidden="true"></span></span></a></li>
+							<li><a href="https://www.silkvision.net/locations">
+								<span class="sv-item">Locations <span class="sv-arrow" aria-hidden="true"></span></span>
+								<span class="sv-note">Annandale and Manassas</span></a></li>
+							<li><a href="https://www.silkvision.net/you-are-candidate-office-based-surgery">
+								<span class="sv-item">Office-based surgery <span class="sv-arrow" aria-hidden="true"></span></span></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Patients -->
+				<div class="sv-trigger sv-trigger--list" data-sv-trigger>
+					<button class="sv-nav-btn" type="button" aria-expanded="false" aria-controls="sv-panel-patients">
+						Patients <span class="sv-chevron" aria-hidden="true"></span>
+					</button>
+					<div class="sv-panel sv-panel--list sv-panel--right" id="sv-panel-patients">
+						<p class="sv-eyebrow">Before your visit</p>
+						<ul class="sv-list">
+							<li><a href="https://www.silkvision.net/registration-consent-forms">
+								<span class="sv-item">Registration forms <span class="sv-arrow" aria-hidden="true"></span></span>
+								<span class="sv-note">Fill them in before you arrive</span></a></li>
+							<li><a href="https://www.silkvision.net/financing">
+								<span class="sv-item">Financing <span class="sv-arrow" aria-hidden="true"></span></span>
+								<span class="sv-note">Payment plans and 0% options</span></a></li>
+							<li><a href="https://www.silkvision.net/accepted-insurance">
+								<span class="sv-item">Accepted insurance <span class="sv-arrow" aria-hidden="true"></span></span></a></li>
+							<li><a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL" target="_blank" rel="noopener">
+								<span class="sv-item">Patient portal <span class="sv-arrow" aria-hidden="true"></span></span>
+								<span class="sv-note">Records, bills and results</span></a></li>
+							<li><a href="https://www.silkvision.net/leave-review">
+								<span class="sv-item">Leave a review <span class="sv-arrow" aria-hidden="true"></span></span></a></li>
+						</ul>
+						<div class="sv-panel-foot">
+							<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation <span class="sv-arrow" aria-hidden="true"></span></a>
+						</div>
+					</div>
+				</div>
+
+				<a class="sv-btn sv-contact" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Contact <span class="sv-arrow" aria-hidden="true"></span></a>
+				<a class="sv-btn sv-call sv-mobile-only" href="tel:7038769700">Call or text (703) 876-9700</a>
+			</nav>
+		</div>
+	</header>
+</div>
+
+<script id="sv-navbar-script">
+(function () {
+	var wrap = document.getElementById('sv-header-wrap');
+	if (!wrap) { return; }
+
+	var triggers = [].slice.call(wrap.querySelectorAll('[data-sv-trigger]'));
+	var burger = document.getElementById('sv-burger');
+	var nav = document.getElementById('sv-nav');
+	var desktop = window.matchMedia('(min-width: 1024px)');
+	var hoverTimer;
+
+	function setOpen(trigger, open) {
+		trigger.classList.toggle('sv-open', open);
+		var btn = trigger.querySelector('.sv-nav-btn');
+		if (btn) { btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+	}
+
+	function closeAll(except) {
+		triggers.forEach(function (t) { if (t !== except) { setOpen(t, false); } });
+	}
+
+	function closeNav() {
+		if (!nav || !burger) { return; }
+		nav.classList.remove('sv-nav-open');
+		burger.setAttribute('aria-expanded', 'false');
+	}
+
+	triggers.forEach(function (trigger) {
+		var btn = trigger.querySelector('.sv-nav-btn');
+
+		trigger.addEventListener('mouseenter', function () {
+			if (!desktop.matches) { return; }
+			clearTimeout(hoverTimer);
+			closeAll(trigger);
+			setOpen(trigger, true);
+		});
+		// a short grace period so a slightly off-target mouse path does not
+		// snap the panel shut mid-reach
+		trigger.addEventListener('mouseleave', function () {
+			if (!desktop.matches) { return; }
+			clearTimeout(hoverTimer);
+			hoverTimer = setTimeout(function () { setOpen(trigger, false); }, 140);
+		});
+
+		btn.addEventListener('click', function (e) {
+			e.preventDefault();
+			var isOpen = trigger.classList.contains('sv-open');
+			clearTimeout(hoverTimer);
+			closeAll(trigger);
+			setOpen(trigger, !isOpen);
+		});
+
+		trigger.addEventListener('focusout', function (e) {
+			if (!desktop.matches) { return; }
+			if (!trigger.contains(e.relatedTarget)) { setOpen(trigger, false); }
+		});
+	});
+
+	if (burger && nav) {
+		burger.addEventListener('click', function () {
+			var open = !nav.classList.contains('sv-nav-open');
+			nav.classList.toggle('sv-nav-open', open);
+			burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+			if (!open) { closeAll(null); }
+		});
+	}
+
+	document.addEventListener('click', function (e) {
+		if (!wrap.contains(e.target)) { closeAll(null); closeNav(); }
+	});
+
+	document.addEventListener('keydown', function (e) {
+		if (e.key === 'Escape' || e.keyCode === 27) {
+			closeAll(null);
+			closeNav();
+		}
+	});
+
+	var onChange = function () {
+		closeAll(null);
+		if (desktop.matches) { closeNav(); }
+	};
+	if (desktop.addEventListener) { desktop.addEventListener('change', onChange); }
+	else if (desktop.addListener) { desktop.addListener(onChange); }
+})();
+</script>
+<!-- =================== end Silk Vision navigation =================== -->
+</body>
+</html>
