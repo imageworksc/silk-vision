@@ -1,6 +1,6 @@
 # Silk Vision — Navigation
 
-Five versions of a mega-menu navigation for [silkvision.net](https://www.silkvision.net/),
+Six versions of a mega-menu navigation for [silkvision.net](https://www.silkvision.net/),
 built from the practice's own colours, type and photography.
 
 | Page | Panels |
@@ -10,6 +10,7 @@ built from the practice's own colours, type and photography.
 | [full-width.html](https://imageworksc.github.io/silk-vision/full-width.html) | Floating panels up to 1500px wide; items in the header's column, photo block on the right set off by a hairline |
 | [banner.html](https://imageworksc.github.io/silk-vision/banner.html) | Floating panels; the photo block runs flush to the panel's edges on a soft tint |
 | [modern.html](https://imageworksc.github.io/silk-vision/modern.html) | Dark navy top bar, Poppins + Inter, mega panels as 940px floating cards led by a deep navy block on the left, rows that rise in on opening; hover is a purple line under the words, and purple buttons lift |
+| [modern-hover.html](https://imageworksc.github.io/silk-vision/modern-hover.html) | Same as modern, but the rows answer the pointer with a purple bar down their left edge and the text steps right |
 
 ## Shared design
 
@@ -36,5 +37,5 @@ set.
 
 ## Files
 
-- `index.html`, `simple.html`, `full-width.html`, `banner.html`, `modern.html` — one self-contained page each
+- `index.html`, `simple.html`, `full-width.html`, `banner.html`, `modern.html`, `modern-hover.html` — one self-contained page each
 - `assets/` — logo and the photographs used in the panels
