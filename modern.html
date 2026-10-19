@@ -279,9 +279,6 @@
 .sv-panel--right { left: auto; right: -8px; }
 
 .sv-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
   margin: 0 0 12px;
   padding-left: 14px;
   font-family: var(--font-ui);
@@ -290,13 +287,6 @@
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--blue-500);
-}
-.sv-eyebrow::before {
-  content: '';
-  width: 18px;
-  height: 2px;
-  border-radius: 999px;
-  background: var(--plum-500);
 }
 
 /* Rows: name in Poppins, the one fact under it in Inter. On a pointer the
@@ -350,7 +340,6 @@
   color: var(--on-dark-soft);
 }
 .sv-rail .sv-eyebrow { padding-left: 0; color: var(--cyan-300); }
-.sv-rail .sv-eyebrow::before { background: var(--cyan-300); }
 .sv-rail-title {
   font-family: var(--font-ui);
   font-size: 26px;
