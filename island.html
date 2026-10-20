@@ -45,7 +45,9 @@
   --ease: cubic-bezier(.22, .9, .3, 1);
   --t-fast: .18s;
   --tap: 44px;
-  --side: max(24px, calc((100% - 1400px) / 2));   /* content column inset */
+  /* content column: 1180px, so the logo and Contact sit close to the tabs
+     rather than out at the corners of a wide screen */
+  --side: max(24px, calc((100% - 1180px) / 2));
   --strip: 40px;   /* height of the blue strip, which scrolls away */
 
   position: -webkit-sticky;
