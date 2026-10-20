@@ -266,6 +266,29 @@
 .sv-preview-body { margin-top: 2px; font-size: 14px; line-height: 1.4; color: var(--grey-500); }
 .sv-preview-links { margin-top: auto; padding: 6px 0 2px; }
 
+/* Vision Correction has only five rows, so its preview runs along the foot
+   instead of down the side: photo on the left, text beside it, the links
+   in one row beneath the text. That keeps the panel as short as its list. */
+@media screen and (min-width: 1024px) {
+  #sv-panel-vision { grid-template-columns: 1fr 1fr; width: 660px; }
+  #sv-panel-vision .sv-preview {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    column-gap: 16px;
+  }
+  #sv-panel-vision .sv-preview img { grid-row: 1 / span 2; height: 100%; min-height: 110px; }
+  #sv-panel-vision .sv-preview-text { padding: 6px 0 0; }
+  #sv-panel-vision .sv-preview-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 4px;
+    margin: 0 0 0 -6px;
+    padding: 4px 0 0;
+  }
+  #sv-panel-vision .sv-more { gap: 6px; }
+}
+
 /* small links: the panel's next step, the extra pages, the old top strip */
 .sv-more {
   display: flex;
