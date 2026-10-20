@@ -10,7 +10,7 @@ built from the practice's own colours, type and photography.
 | [full-width.html](https://imageworksc.github.io/silk-vision/full-width.html) | Floating panels up to 1500px wide; items in the header's column, photo block on the right set off by a hairline |
 | [banner.html](https://imageworksc.github.io/silk-vision/banner.html) | Floating panels; the photo block runs flush to the panel's edges on a soft tint |
 | [modern.html](https://imageworksc.github.io/silk-vision/modern.html) | Dark navy top bar, Poppins + Inter, mega panels as 940px floating cards closed by a deep navy block on the right, rows that rise in on opening; the nav underlines on hover, rows answer the pointer with a purple bar down their left edge, and buttons lift |
-| [island.html](https://imageworksc.github.io/silk-vision/island.html) | A quiet single bar in the manner of wrangle.ai: no strip above it (phone, Contact and Book a consultation at its right end, Pay bill online and Special offers in the Patients panel), small white panels under their own tab with grey icon tiles, and a photo preview card closing the two large panels |
+| [island.html](https://imageworksc.github.io/silk-vision/island.html) | A quiet single bar in the manner of wrangle.ai: no strip above it (phone, Contact and Book a consultation at its right end, Pay bill online and Special offers in the Patients panel), small white panels under their own tab, rows whose words step right on hover, and a photo preview card closing the two large panels |
 
 ## Shared design
 
