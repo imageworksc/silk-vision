@@ -12,17 +12,16 @@
 /* ==========================================================================
    Silk Vision — navigation, single bar
 
-   A quiet, full-width bar in the manner of wrangle.ai: logo and tabs on the
-   left, plain text links and one button on the right, and nothing above it.
-   Everything the old top strip carried lives in the bar or in a panel: the
-   phone number and Book a consultation at the right end, Pay bill online and
-   Special offers in the Patients panel.
+   A thin brand-blue strip carries the phone number and Book a consultation;
+   under it, a quiet white bar in the manner of wrangle.ai: logo on the left,
+   the tabs centred on the page, Contact as the one button on the right. Pay
+   bill online and Special offers live in the Patients panel.
 
    Panels are small white cards under their own tab, laid out as a row of
    columns, one per group; each row is a name and, where it helps, one line
    under it.
-   Colour is held back for what matters: blue for the brand, purple only for
-   the one button.
+   Colour is held back for what matters: blue for the brand, purple for the
+   group labels and the one button.
 
    Same text, colours and type as modern.html (Poppins for titles and
    controls, Inter for what is read). Scoped to #sv-header-wrap / .sv-*.
@@ -35,7 +34,6 @@
   --paper: #f5f8fb;
   --tile: #eef2f6;
   --grey-500: #5f7276;
-  --grey-700: #45575b;
   --grey-900: #2a3538;
   --hairline: rgb(1 53 89 / .1);
   --font-ui: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -48,10 +46,11 @@
   --t-fast: .18s;
   --tap: 44px;
   --side: max(24px, calc((100% - 1400px) / 2));   /* content column inset */
+  --strip: 40px;   /* height of the blue strip, which scrolls away */
 
   position: -webkit-sticky;
   position: sticky;
-  top: 0;
+  top: calc(-1 * var(--strip));
   z-index: 900;
   font-family: var(--font-copy);
   color: var(--grey-900);
@@ -69,21 +68,51 @@
   border-radius: var(--r-sm);
 }
 
-/* --- The bar ------------------------------------------------------------- */
-.sv-bar {
-  position: relative;
+/* --- The strip ----------------------------------------------------------- */
+.sv-strip {
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: flex-end;
+  gap: 24px;
+  height: var(--strip);
+  padding: 0 var(--side);
+  background: var(--blue-500);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(255 255 255 / .88);
+}
+.sv-strip a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+  white-space: nowrap;
+  transition: color var(--t-fast) var(--ease);
+}
+.sv-strip a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.sv-strip svg { width: 15px; height: 15px; fill: currentColor; flex: none; }
+.sv-strip .sv-book { font-weight: 600; color: #fff; }
+.sv-strip .sv-book::after { content: '\2192'; transition: transform var(--t-fast) var(--ease); }
+.sv-strip .sv-book:hover::after { transform: translateX(3px); }
+
+/* --- The bar ------------------------------------------------------------- */
+/* three columns: logo, tabs, button; the outer two share what is left, so
+   the tabs sit on the centre line of the page */
+.sv-bar {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
   padding: 18px var(--side);
   background: #fff;
   border-bottom: 1px solid var(--hairline);
 }
-.sv-logo { display: inline-flex; align-items: center; min-height: var(--tap); flex-shrink: 0; margin-right: 22px; }
+.sv-logo { display: inline-flex; align-items: center; justify-self: start; min-height: var(--tap); }
 .sv-logo img { display: block; width: 160px; height: auto; }
 
-/* the tabs take the space between the logo and the actions, centred in it */
-.sv-nav { flex: 1; display: flex; align-items: center; justify-content: center; gap: 2px; }
+.sv-nav { display: flex; align-items: center; gap: 2px; }
 .sv-nav-btn {
   display: inline-flex;
   align-items: center;
@@ -114,32 +143,15 @@
 }
 .sv-trigger.sv-open .sv-caret { transform: rotate(180deg); }
 
-/* --- Right end: phone, Contact, Book a consultation ---------------------- */
-.sv-actions { display: flex; align-items: center; gap: 4px; margin-left: auto; }
-.sv-textlink {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: var(--tap);
-  padding: 0 12px;
-  border-radius: var(--r-md);
-  font-family: var(--font-ui);
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--grey-700);
-  white-space: nowrap;
-  transition: color var(--t-fast) var(--ease);
-}
-.sv-textlink:hover { color: var(--blue-500); }
-.sv-phone svg { width: 16px; height: 16px; fill: currentColor; flex: none; }
+/* --- Right end: Contact ------------------------------------------------ */
+.sv-actions { display: flex; align-items: center; justify-self: end; }
 
 .sv-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 42px;
-  margin-left: 8px;
-  padding: 0 18px;
+  padding: 0 22px;
   border: none;
   border-radius: var(--r-md);
   background: var(--plum-500);
@@ -262,48 +274,27 @@
 .sv-burger[aria-expanded="true"] .sv-ico-menu { display: none; }
 .sv-burger[aria-expanded="true"] .sv-ico-close { display: block; }
 
-/* the phone keeps its number as its name when only the icon shows */
-.sv-visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
-
 /* on a touch screen every row is at least a fingertip tall */
 @media (pointer: coarse) {
   .sv-list a { display: flex; flex-direction: column; justify-content: center; min-height: var(--tap); }
 }
 
 @media screen and (max-width: 1279px) {
-  .sv-phone .sv-phone-number {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
-  .sv-phone { padding: 0 10px; }
   .sv-panel--wide { width: 780px; }
 }
 @media screen and (max-width: 1120px) {
-  .sv-logo { margin-right: 10px; }
   .sv-logo img { width: 140px; }
   .sv-nav-btn { padding: 0 9px; }
-  .sv-textlink { padding: 0 9px; }
-  .sv-btn { padding: 0 14px; margin-left: 4px; }
+  .sv-btn { padding: 0 16px; }
 }
 
 @media screen and (max-width: 1023px) {
-  #sv-header-wrap { --side: 16px; }
-  .sv-bar { padding-top: 12px; padding-bottom: 12px; }
+  #sv-header-wrap { --side: 16px; --strip: var(--tap); }
+  .sv-strip { justify-content: space-between; }
+  .sv-bar { display: flex; justify-content: space-between; padding-top: 12px; padding-bottom: 12px; }
   .sv-logo img { width: 140px; }
-  .sv-burger { display: inline-flex; order: 1; margin-left: 4px; }
-  .sv-actions .sv-contact,
-  .sv-actions .sv-btn { display: none; }
+  .sv-burger { display: inline-flex; }
+  .sv-actions { display: none; }
 
   /* the menu is a sheet that drops from under the bar, edge to edge */
   .sv-nav {
@@ -375,6 +366,10 @@
   .sv-trigger.sv-open .sv-panel--wide,
   .sv-trigger.sv-open .sv-panel--pair { grid-template-columns: 1fr; }
 }
+/* on a narrow phone the strip shows the number alone */
+@media screen and (max-width: 440px) {
+  .sv-strip .sv-phone-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
 @media screen and (max-width: 380px) {
   .sv-logo img { width: 128px; }
 }
@@ -408,6 +403,11 @@ html.sv-lock { overflow: hidden; }
 
 <!-- ===================== Silk Vision navigation ===================== -->
 <div id="sv-header-wrap">
+	<div class="sv-strip">
+		<a class="sv-phone" href="tel:7038769700"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="sv-phone-label">Call or text</span> (703) 876-9700</a>
+		<a class="sv-book" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
+	</div>
+
 	<header class="sv-bar" role="banner" aria-label="Site header">
 		<a class="sv-logo" href="https://www.silkvision.net/">
 			<img src="./assets/logo.png" alt="Silk Vision &amp; Surgical Center" width="206" height="51">
@@ -600,12 +600,7 @@ html.sv-lock { overflow: hidden; }
 		</nav>
 
 		<div class="sv-actions">
-			<a class="sv-textlink sv-phone" href="tel:7038769700">
-				<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-				<span class="sv-visually-hidden">Call or text</span> <span class="sv-phone-number">(703) 876-9700</span>
-			</a>
-			<a class="sv-textlink sv-contact" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Contact</a>
-			<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
+			<a class="sv-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Contact</a>
 		</div>
 	</header>
 </div>
