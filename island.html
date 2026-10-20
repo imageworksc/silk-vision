@@ -95,9 +95,9 @@
   background: none;
   cursor: pointer;
   font-family: var(--font-ui);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
-  color: var(--grey-900);
+  color: var(--blue-500);
   white-space: nowrap;
   transition: background-color var(--t-fast) var(--ease);
 }
@@ -109,7 +109,7 @@
   height: 0;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
-  border-top: 5px solid var(--grey-500);
+  border-top: 5px solid currentColor;
   transition: transform var(--t-fast) var(--ease);
 }
 .sv-trigger.sv-open .sv-caret { transform: rotate(180deg); }
@@ -203,7 +203,7 @@
   font-weight: 600;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: var(--grey-500);
+  color: var(--plum-500);
 }
 
 /* Rows: a name and one line under it */
@@ -329,7 +329,7 @@
     justify-content: space-between;
     min-height: 54px;
     padding: 0 8px;
-    font-size: 16px;
+    font-size: 17px;
   }
   .sv-trigger + .sv-trigger { border-top: 1px solid var(--hairline); }
 
