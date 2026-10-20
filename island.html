@@ -16,11 +16,11 @@
    left, plain text links and one button on the right, and nothing above it.
    Everything the old top strip carried lives in the bar or in a panel: the
    phone number and Book a consultation at the right end, Pay bill online and
-   Special offers at the foot of the Patients panel.
+   Special offers in the Patients panel.
 
-   Panels are small white cards under their own tab. Each row is a name and
-   one line under it; the two large panels end in a preview
-   card on the right, a photograph with the panel's next step beneath it.
+   Panels are small white cards under their own tab, laid out as a row of
+   columns, one per group; each row is a name and, where it helps, one line
+   under it.
    Colour is held back for what matters: blue for the brand, purple only for
    the one button.
 
@@ -188,14 +188,13 @@
   right: -12px;
   height: 28px;
 }
-.sv-panel--list { width: 320px; }
+/* every panel is a row of columns, one per group, set off by hairlines */
+.sv-panel--pair,
+.sv-panel--wide { display: grid; grid-auto-columns: 1fr; grid-auto-flow: column; }
+.sv-panel--pair { width: 560px; }
+.sv-panel--wide { width: 860px; }
 .sv-panel--right { left: auto; right: -6px; }
-.sv-panel--wide {
-  display: grid;
-  grid-template-columns: 1fr 1fr 250px;
-  gap: 8px;
-  width: 920px;
-}
+.sv-col + .sv-col { border-left: 1px solid var(--hairline); padding-left: 6px; margin-left: 6px; }
 
 .sv-group-label {
   padding: 10px 10px 4px;
@@ -241,84 +240,6 @@
   color: var(--grey-500);
 }
 
-/* Preview card: a photograph with the panel's next step under it */
-.sv-preview {
-  display: flex;
-  flex-direction: column;
-  padding: 8px;
-  border-radius: var(--r-md);
-  background: var(--paper);
-}
-.sv-preview img {
-  display: block;
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-  border-radius: var(--r-sm);
-}
-#sv-panel-vision .sv-preview img { object-position: 50% 45%; }
-#sv-panel-eyecare .sv-preview img { object-position: 45% 40%; }
-.sv-preview-text { padding: 12px 6px 4px; }
-.sv-preview .sv-group-label { padding: 0 0 4px; }
-.sv-preview-title {
-  font-family: var(--font-ui);
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--ink-700);
-}
-.sv-preview-body { margin-top: 2px; font-size: 14px; line-height: 1.4; color: var(--grey-500); }
-.sv-preview-links { margin-top: auto; padding: 6px 0 2px; }
-
-/* Vision Correction has only five rows, so its preview runs along the foot
-   instead of down the side, in three parts: the photo, the question, and the
-   links stacked on the right the way they are in the other panel. That keeps
-   the panel as short as its list. */
-@media screen and (min-width: 1024px) {
-  #sv-panel-vision { grid-template-columns: 1fr 1fr; width: 700px; }
-  #sv-panel-vision .sv-preview {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 132px 1fr 230px;
-    align-items: center;
-    column-gap: 18px;
-    padding: 10px;
-  }
-  #sv-panel-vision .sv-preview img { height: 132px; }
-  #sv-panel-vision .sv-preview-text { padding: 0; }
-  #sv-panel-vision .sv-preview-links { padding: 0; }
-}
-
-/* small links: the panel's next step, the extra pages, the old top strip */
-.sv-more {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  min-height: 34px;
-  padding: 0 6px;
-  border-radius: var(--r-sm);
-  font-family: var(--font-ui);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--blue-500);
-}
-.sv-more::after {
-  content: '\2192';
-  color: var(--grey-500);
-  transition: transform var(--t-fast) var(--ease);
-}
-.sv-more { transition: padding-left .28s var(--ease); }
-.sv-more:hover { background: #fff; padding-left: 10px; }
-.sv-more:hover::after { transform: translateX(3px); }
-.sv-more--lead { color: var(--plum-500); font-weight: 600; }
-
-.sv-panel-foot {
-  margin: 6px 2px 0;
-  padding: 6px 4px 0;
-  border-top: 1px solid var(--hairline);
-}
-
 /* --- Phone and tablet ----------------------------------------------------- */
 .sv-burger,
 .sv-mobile-only { display: none; }
@@ -349,9 +270,9 @@
   white-space: nowrap;
 }
 
-/* on a touch screen every small link is a full fingertip tall */
+/* on a touch screen every row is at least a fingertip tall */
 @media (pointer: coarse) {
-  .sv-more { min-height: var(--tap); }
+  .sv-list a { display: flex; flex-direction: column; justify-content: center; min-height: var(--tap); }
 }
 
 @media screen and (max-width: 1279px) {
@@ -364,7 +285,7 @@
     white-space: nowrap;
   }
   .sv-phone { padding: 0 10px; }
-  .sv-panel--wide { width: 780px; grid-template-columns: 1fr 1fr 220px; }
+  .sv-panel--wide { width: 780px; }
 }
 @media screen and (max-width: 1120px) {
   .sv-logo { margin-right: 10px; }
@@ -414,7 +335,7 @@
 
   .sv-panel,
   .sv-panel--wide,
-  .sv-panel--list {
+  .sv-panel--pair {
     position: static;
     display: none;
     width: auto;
@@ -429,20 +350,11 @@
     transition: none;
   }
   .sv-trigger.sv-open .sv-panel { display: block; }
-  .sv-trigger.sv-open .sv-panel--wide { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; }
-  /* the preview runs across the foot: photo and text side by side, the
-     links in a full row beneath them */
-  .sv-panel--wide .sv-preview {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    column-gap: 14px;
-    margin-top: 6px;
-  }
-  .sv-panel--wide .sv-preview img { height: 100%; min-height: 96px; }
-  .sv-preview-text { align-self: center; padding: 4px 0; }
-  .sv-preview-links { grid-column: 1 / -1; padding: 6px 0 0; }
-  .sv-more { min-height: var(--tap); }
+  /* tablets: the groups sit two to a row */
+  .sv-trigger.sv-open .sv-panel--wide,
+  .sv-trigger.sv-open .sv-panel--pair { display: grid; grid-auto-flow: row; grid-template-columns: 1fr 1fr; gap: 4px 12px; }
+  .sv-col + .sv-col { border-left: none; padding-left: 0; margin-left: 0; }
+  .sv-list a { display: flex; flex-direction: column; justify-content: center; min-height: var(--tap); }
 
   .sv-mobile-only { display: flex; }
   .sv-mobile-actions {
@@ -456,12 +368,10 @@
   .sv-btn--line { background: #fff; color: var(--plum-500); box-shadow: inset 0 0 0 1.5px var(--plum-500); }
 }
 
-/* phones: one column, and the preview drops its photograph */
+/* phones: one group under the other */
 @media screen and (max-width: 640px) {
-  .sv-trigger.sv-open .sv-panel--wide { grid-template-columns: 1fr; }
-  .sv-panel--wide .sv-preview { grid-template-columns: 1fr; }
-  .sv-panel--wide .sv-preview img { display: none; }
-  .sv-preview-text { padding: 6px 6px 0; }
+  .sv-trigger.sv-open .sv-panel--wide,
+  .sv-trigger.sv-open .sv-panel--pair { grid-template-columns: 1fr; }
 }
 @media screen and (max-width: 380px) {
   .sv-logo img { width: 128px; }
@@ -541,20 +451,20 @@ html.sv-lock { overflow: hidden; }
 								<span class="sv-note">Swaps the natural lens, no cataracts later</span></a></li>
 						</ul>
 					</div>
-					<aside class="sv-preview">
-						<img src="./assets/pic-eye.jpg" alt="" loading="lazy">
-						<div class="sv-preview-text">
-							<p class="sv-group-label">Not sure which</p>
-							<p class="sv-preview-title">Which one fits your eyes?</p>
-							<p class="sv-preview-body">Six questions, about two minutes.</p>
-						</div>
-						<div class="sv-preview-links">
-							<a class="sv-more sv-more--lead" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the self-test</a>
-							<a class="sv-more" href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">Am I a LASIK candidate?</a>
-							<a class="sv-more" href="https://www.silkvision.net/cost-lasik-surgery-explained">What LASIK costs</a>
-							<a class="sv-more" href="https://www.silkvision.net/lasik-resources">Patient resources</a>
-						</div>
-					</aside>
+					<div class="sv-col">
+						<p class="sv-group-label">Not sure which</p>
+						<ul class="sv-list">
+							<li><a href="https://www.silkvision.net/lasik-self-evaluation-test">
+								<span class="sv-item">Take the self-test</span>
+								<span class="sv-note">Six questions, about two minutes.</span></a></li>
+							<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">
+								<span class="sv-item">Am I a LASIK candidate?</span></a></li>
+							<li><a href="https://www.silkvision.net/cost-lasik-surgery-explained">
+								<span class="sv-item">What LASIK costs</span></a></li>
+							<li><a href="https://www.silkvision.net/lasik-resources">
+								<span class="sv-item">Patient resources</span></a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 
@@ -598,18 +508,16 @@ html.sv-lock { overflow: hidden; }
 								<span class="sv-note">Removes growth on the eye's surface</span></a></li>
 						</ul>
 					</div>
-					<aside class="sv-preview">
-						<img src="./assets/pic-exam-solo.jpg" alt="" loading="lazy">
-						<div class="sv-preview-text">
-							<p class="sv-group-label">Start here</p>
-							<p class="sv-preview-title">Bring us your symptoms</p>
-							<p class="sv-preview-body">Annandale and Manassas, weekdays 8:30&ndash;4:30.</p>
-						</div>
-						<div class="sv-preview-links">
-							<a class="sv-more sv-more--lead" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Contact</a>
-							<a class="sv-more" href="https://www.silkvision.net/services-overview">All services</a>
-						</div>
-					</aside>
+					<div class="sv-col">
+						<p class="sv-group-label">Start here</p>
+						<ul class="sv-list">
+							<li><a href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">
+								<span class="sv-item">Contact</span>
+								<span class="sv-note">Annandale and Manassas, weekdays 8:30&ndash;4:30.</span></a></li>
+							<li><a href="https://www.silkvision.net/services-overview">
+								<span class="sv-item">All services</span></a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 
@@ -618,24 +526,31 @@ html.sv-lock { overflow: hidden; }
 				<button class="sv-nav-btn" type="button" aria-expanded="false" aria-controls="sv-panel-about">
 					About <span class="sv-caret" aria-hidden="true"></span>
 				</button>
-				<div class="sv-panel sv-panel--list" id="sv-panel-about">
-					<p class="sv-group-label">The practice</p>
-					<ul class="sv-list">
-						<li><a href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">
-							<span class="sv-item">Wesam Silk, M.D.</span>
-							<span class="sv-note">26,000+ procedures performed</span></a></li>
-						<li><a href="https://www.silkvision.net/trusted-eye-physicians-and-surgeons-northern-virginia">
-							<span class="sv-item">About Silk Vision</span></a></li>
-						<li><a href="https://www.silkvision.net/testimonials">
-							<span class="sv-item">Patient stories</span></a></li>
-						<li><a href="https://www.silkvision.net/blog">
-							<span class="sv-item">Blog</span></a></li>
-						<li><a href="https://www.silkvision.net/locations">
-							<span class="sv-item">Locations</span>
-							<span class="sv-note">Annandale and Manassas</span></a></li>
-						<li><a href="https://www.silkvision.net/you-are-candidate-office-based-surgery">
-							<span class="sv-item">Office-based surgery</span></a></li>
-					</ul>
+				<div class="sv-panel sv-panel--pair" id="sv-panel-about">
+					<div class="sv-col">
+						<p class="sv-group-label">The practice</p>
+						<ul class="sv-list">
+							<li><a href="https://www.silkvision.net/dr-wesam-silk-trusted-lasik-cataract-cornea-surgeon-northern-virginia">
+								<span class="sv-item">Wesam Silk, M.D.</span>
+								<span class="sv-note">26,000+ procedures performed</span></a></li>
+							<li><a href="https://www.silkvision.net/trusted-eye-physicians-and-surgeons-northern-virginia">
+								<span class="sv-item">About Silk Vision</span></a></li>
+							<li><a href="https://www.silkvision.net/you-are-candidate-office-based-surgery">
+								<span class="sv-item">Office-based surgery</span></a></li>
+						</ul>
+					</div>
+					<div class="sv-col">
+						<p class="sv-group-label">See for yourself</p>
+						<ul class="sv-list">
+							<li><a href="https://www.silkvision.net/testimonials">
+								<span class="sv-item">Patient stories</span></a></li>
+							<li><a href="https://www.silkvision.net/blog">
+								<span class="sv-item">Blog</span></a></li>
+							<li><a href="https://www.silkvision.net/locations">
+								<span class="sv-item">Locations</span>
+								<span class="sv-note">Annandale and Manassas</span></a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 
@@ -644,28 +559,35 @@ html.sv-lock { overflow: hidden; }
 				<button class="sv-nav-btn" type="button" aria-expanded="false" aria-controls="sv-panel-patients">
 					Patients <span class="sv-caret" aria-hidden="true"></span>
 				</button>
-				<div class="sv-panel sv-panel--list sv-panel--right" id="sv-panel-patients">
-					<p class="sv-group-label">Before your visit</p>
-					<ul class="sv-list">
-						<li><a href="https://www.silkvision.net/registration-consent-forms">
-							<span class="sv-item">Registration forms</span>
-							<span class="sv-note">Fill them in before you arrive</span></a></li>
-						<li><a href="https://www.silkvision.net/financing">
-							<span class="sv-item">Financing</span>
-							<span class="sv-note">Payment plans and 0% options</span></a></li>
-						<li><a href="https://www.silkvision.net/accepted-insurance">
-							<span class="sv-item">Accepted insurance</span></a></li>
-						<li><a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL">
-							<span class="sv-item">Patient portal</span>
-							<span class="sv-note">Records, bills and results</span></a></li>
-						<li><a href="https://www.silkvision.net/leave-review">
-							<span class="sv-item">Leave a review</span></a></li>
-					</ul>
-					<!-- what used to sit in the strip above the navbar -->
-					<div class="sv-panel-foot">
-						<a class="sv-more sv-more--lead" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
-						<a class="sv-more" href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL">Pay bill online</a>
-						<a class="sv-more" href="https://www.silkvision.net/special-offers">Special offers</a>
+				<div class="sv-panel sv-panel--pair sv-panel--right" id="sv-panel-patients">
+					<div class="sv-col">
+						<p class="sv-group-label">Before your visit</p>
+						<ul class="sv-list">
+							<li><a href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">
+								<span class="sv-item">Book a consultation</span></a></li>
+							<li><a href="https://www.silkvision.net/registration-consent-forms">
+								<span class="sv-item">Registration forms</span>
+								<span class="sv-note">Fill them in before you arrive</span></a></li>
+							<li><a href="https://www.silkvision.net/accepted-insurance">
+								<span class="sv-item">Accepted insurance</span></a></li>
+							<li><a href="https://www.silkvision.net/financing">
+								<span class="sv-item">Financing</span>
+								<span class="sv-note">Payment plans and 0% options</span></a></li>
+							<li><a href="https://www.silkvision.net/special-offers">
+								<span class="sv-item">Special offers</span></a></li>
+						</ul>
+					</div>
+					<div class="sv-col">
+						<p class="sv-group-label">Your account</p>
+						<ul class="sv-list">
+							<li><a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL">
+								<span class="sv-item">Patient portal</span>
+								<span class="sv-note">Records, bills and results</span></a></li>
+							<li><a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL">
+								<span class="sv-item">Pay bill online</span></a></li>
+							<li><a href="https://www.silkvision.net/leave-review">
+								<span class="sv-item">Leave a review</span></a></li>
+						</ul>
 					</div>
 				</div>
 			</div>
