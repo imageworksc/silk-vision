@@ -328,6 +328,36 @@
 .sv-panel--list .sv-foot .sv-btn { flex: 1 1 100%; }
 .sv-panel--list .sv-foot-links { padding-top: 10px; }
 
+/* Vision Correction and Eye Care: the foot strip sits on a photograph under
+   a navy scrim, heaviest behind the text on the left (.9) and easing to .68
+   on the right so the picture shows through. Even on a pure white pixel the
+   lightest end still gives white type about 5.5:1, so every line, the
+   button included, stays readable. */
+.sv-foot--photo {
+  position: relative;
+  isolation: isolate;
+  padding-top: 22px;
+  padding-bottom: 22px;
+  background: var(--ink-700) center / cover no-repeat;
+  border-top: none;
+  color: #fff;
+}
+#sv-panel-vision .sv-foot--photo { background-image: url("./assets/pic-lens.jpg"); background-position: 50% 45%; }
+#sv-panel-eyecare .sv-foot--photo { background-image: url("./assets/pic-exam-solo.jpg"); background-position: 45% 40%; }
+.sv-foot--photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgb(1 34 58 / .9) 0%, rgb(1 34 58 / .8) 50%, rgb(1 34 58 / .68) 100%);
+}
+.sv-foot--photo .sv-eyebrow { color: var(--cyan-300); }
+.sv-foot--photo .sv-foot-title { color: #fff; font-size: 19px; }
+.sv-foot--photo .sv-foot-body { color: rgb(255 255 255 / .86); }
+.sv-foot--photo .sv-btn { background: transparent; border-color: #fff; color: #fff; }
+.sv-foot--photo .sv-foot-links { border-top-color: rgb(255 255 255 / .2); }
+.sv-foot--photo .sv-foot-links a { color: #fff; }
+
 /* --- Phone and tablet ----------------------------------------------------- */
 .sv-burger,
 .sv-mobile-only { display: none; }
@@ -558,7 +588,7 @@ html.sv-lock { overflow: hidden; }
 							</ul>
 						</div>
 					</div>
-					<div class="sv-foot">
+					<div class="sv-foot sv-foot--photo">
 						<div class="sv-foot-text">
 							<p class="sv-eyebrow">Not sure which</p>
 							<p class="sv-foot-title">Which one fits your eyes?</p>
@@ -624,7 +654,7 @@ html.sv-lock { overflow: hidden; }
 							</ul>
 						</div>
 					</div>
-					<div class="sv-foot">
+					<div class="sv-foot sv-foot--photo">
 						<div class="sv-foot-text">
 							<p class="sv-eyebrow">Start here</p>
 							<p class="sv-foot-title">Bring us your symptoms</p>
