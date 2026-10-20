@@ -202,6 +202,8 @@
   font-family: var(--font-ui);
   font-size: 13px;
   font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
   color: var(--grey-500);
 }
 
@@ -217,10 +219,12 @@
 /* the words step 4px to the right as the row is pointed at; the note follows
    a beat later, so the pair moves as one soft motion rather than a jump */
 .sv-item,
-.sv-note { transition: transform .28s var(--ease); }
+.sv-note { transition: transform .28s var(--ease), color var(--t-fast) var(--ease); }
 .sv-note { transition-delay: .03s; }
 .sv-list a:hover :is(.sv-item, .sv-note),
 .sv-list a:focus-visible :is(.sv-item, .sv-note) { transform: translateX(4px); }
+.sv-list a:hover .sv-item,
+.sv-list a:focus-visible .sv-item { color: var(--plum-500); }
 .sv-item {
   display: block;
   font-family: var(--font-ui);
@@ -267,26 +271,22 @@
 .sv-preview-links { margin-top: auto; padding: 6px 0 2px; }
 
 /* Vision Correction has only five rows, so its preview runs along the foot
-   instead of down the side: photo on the left, text beside it, the links
-   in one row beneath the text. That keeps the panel as short as its list. */
+   instead of down the side, in three parts: the photo, the question, and the
+   links stacked on the right the way they are in the other panel. That keeps
+   the panel as short as its list. */
 @media screen and (min-width: 1024px) {
-  #sv-panel-vision { grid-template-columns: 1fr 1fr; width: 660px; }
+  #sv-panel-vision { grid-template-columns: 1fr 1fr; width: 700px; }
   #sv-panel-vision .sv-preview {
     grid-column: 1 / -1;
     display: grid;
-    grid-template-columns: 170px 1fr;
-    column-gap: 16px;
+    grid-template-columns: 132px 1fr 230px;
+    align-items: center;
+    column-gap: 18px;
+    padding: 10px;
   }
-  #sv-panel-vision .sv-preview img { grid-row: 1 / span 2; height: 100%; min-height: 110px; }
-  #sv-panel-vision .sv-preview-text { padding: 6px 0 0; }
-  #sv-panel-vision .sv-preview-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 4px;
-    margin: 0 0 0 -6px;
-    padding: 4px 0 0;
-  }
-  #sv-panel-vision .sv-more { gap: 6px; }
+  #sv-panel-vision .sv-preview img { height: 132px; }
+  #sv-panel-vision .sv-preview-text { padding: 0; }
+  #sv-panel-vision .sv-preview-links { padding: 0; }
 }
 
 /* small links: the panel's next step, the extra pages, the old top strip */
