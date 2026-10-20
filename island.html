@@ -12,9 +12,8 @@
 /* ==========================================================================
    Silk Vision — navigation, island
 
-   One floating bar instead of a bar on top of a bar: the header is a rounded
-   island inset from the edges of the window, and everything the old top
-   strip carried moves into it. The phone number and Book a consultation sit
+   One full-width bar instead of a bar on top of a bar: everything the old top
+   strip carried moves into it, and its content runs in a 1400px column. The phone number and Book a consultation sit
    at its right end; Pay bill online and Special offers move to the foot of
    the Patients panel, which is where a patient goes looking for them.
 
@@ -55,13 +54,12 @@
   --t-fast: .2s;
   --t-mid: .32s;
   --tap: 44px;
-  --gap: 12px;   /* the island's distance from the window edge */
+  --side: max(24px, calc((100% - 1400px) / 2));   /* content column inset */
 
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 900;
-  padding: var(--gap) var(--gap) 0;
   font-family: var(--font-copy);
   color: var(--grey-900);
 }
@@ -81,17 +79,14 @@
 /* --- The island ---------------------------------------------------------- */
 .sv-island {
   position: relative;
-  max-width: 1248px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 10px 10px 22px;
-  background: rgb(255 255 255 / .9);
+  padding: 14px var(--side);
+  background: rgb(255 255 255 / .92);
   -webkit-backdrop-filter: blur(16px) saturate(1.4);
   backdrop-filter: blur(16px) saturate(1.4);
-  border: 1px solid var(--hairline);
-  border-radius: var(--r-xl);
+  border-bottom: 1px solid var(--hairline);
   box-shadow: var(--shadow-island);
 }
 .sv-logo { display: inline-flex; align-items: center; min-height: var(--tap); flex-shrink: 0; margin-right: 18px; }
@@ -367,7 +362,7 @@
   .sv-nav-btn { padding: 0 11px; }
 }
 @media screen and (max-width: 1140px) {
-  .sv-island { padding-left: 16px; gap: 8px; }
+  .sv-island { gap: 8px; }
   .sv-logo { margin-right: 8px; }
   .sv-logo img { width: 140px; }
   .sv-nav { gap: 0; }
@@ -377,17 +372,17 @@
 }
 
 @media screen and (max-width: 1023px) {
-  #sv-header-wrap { --gap: 10px; }
-  .sv-island { padding: 8px 8px 8px 16px; gap: 4px; }
+  #sv-header-wrap { --side: 16px; }
+  .sv-island { padding-top: 10px; padding-bottom: 10px; padding-right: 8px; gap: 4px; }
   .sv-logo img { width: 148px; }
   .sv-burger { display: inline-flex; order: 1; }
   .sv-actions .sv-btn { display: none; }
 
-  /* the menu is a sheet that drops out of the island */
+  /* the menu is a sheet that drops from under the bar, edge to edge */
   .sv-nav {
     display: none;
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 1px);
     left: 0;
     right: 0;
     flex-direction: column;
@@ -397,10 +392,8 @@
     max-height: calc(100dvh - 96px);
     overflow-y: auto;
     overscroll-behavior: contain;
-    padding: 8px 16px 18px;
+    padding: 8px 16px 20px;
     background: #fff;
-    border: 1px solid var(--hairline);
-    border-radius: var(--r-xl);
     box-shadow: var(--shadow-lg);
   }
   .sv-nav.sv-nav-open { display: flex; }
