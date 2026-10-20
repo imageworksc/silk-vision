@@ -1,6 +1,6 @@
 # Silk Vision — Navigation
 
-Five versions of a mega-menu navigation for [silkvision.net](https://www.silkvision.net/),
+Six versions of a mega-menu navigation for [silkvision.net](https://www.silkvision.net/),
 built from the practice's own colours, type and photography.
 
 | Page | Panels |
@@ -10,6 +10,7 @@ built from the practice's own colours, type and photography.
 | [full-width.html](https://imageworksc.github.io/silk-vision/full-width.html) | Floating panels up to 1500px wide; items in the header's column, photo block on the right set off by a hairline |
 | [banner.html](https://imageworksc.github.io/silk-vision/banner.html) | Floating panels; the photo block runs flush to the panel's edges on a soft tint |
 | [modern.html](https://imageworksc.github.io/silk-vision/modern.html) | Dark navy top bar, Poppins + Inter, mega panels as 940px floating cards closed by a deep navy block on the right, rows that rise in on opening; the nav underlines on hover, rows answer the pointer with a purple bar down their left edge, and buttons lift |
+| [island.html](https://imageworksc.github.io/silk-vision/island.html) | Same text, colours and type as modern, laid out differently: one floating rounded bar with no strip above it (phone and Book a consultation at its right end, Pay bill online and Special offers in the Patients panel), compact panels under their own tab with a patterned swatch per row and a foot strip for the next step |
 
 ## Shared design
 
@@ -23,8 +24,8 @@ built from the practice's own colours, type and photography.
 
 All CSS is scoped to `#sv-header-wrap` / `.sv-*`, so any version can be dropped into the
 live theme. index, simple, full-width and banner start with the same shared rules, and
-full-width and banner add one section of their own at the end; modern has its own token
-set.
+full-width and banner add one section of their own at the end; modern and island have their own
+token set.
 
 ## Breakpoints
 
@@ -36,5 +37,5 @@ set.
 
 ## Files
 
-- `index.html`, `simple.html`, `full-width.html`, `banner.html`, `modern.html` — one self-contained page each
+- `index.html`, `simple.html`, `full-width.html`, `banner.html`, `modern.html`, `island.html` — one self-contained page each
 - `assets/` — logo and the photographs used in the panels
