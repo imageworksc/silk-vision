@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Silk Vision — Navigation, island</title>
+<title>Silk Vision — Navigation, single bar</title>
 <link rel="icon" type="image/png" sizes="32x32" href="https://www.silkvision.net/favicon-32x32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
 <style id="sv-navbar-styles">
 /* ==========================================================================
-   Silk Vision — navigation, island
+   Silk Vision — navigation, single bar
 
    One full-width bar instead of a bar on top of a bar: everything the old top
    strip carried moves into it, and its content runs in a 1400px column. The phone number and Book a consultation sit
@@ -26,18 +26,12 @@
    Scoped to #sv-header-wrap / .sv-* so nothing leaks into the host page.
    ========================================================================== */
 #sv-header-wrap {
-  --ink-900: #001325;
   --ink-700: #013559;
   --blue-500: #005894;
   --blue-400: #1e7fbe;
-  --cyan-400: #35a7e0;
   --cyan-300: #6cc5f0;
-  --pale-200: #ccdeea;
   --pale-100: #e7eef4;
-  --plum-600: #6a006a;
   --plum-500: #800080;
-  --plum-300: #c77dc7;
-  --plum-100: #f5e4f5;
   --paper: #f5f8fb;
   --grey-700: #45575b;
   --grey-900: #2a3538;
@@ -47,8 +41,7 @@
   --r-sm: 6px;
   --r-md: 10px;
   --r-lg: 14px;
-  --r-xl: 18px;
-  --shadow-island: 0 1px 2px rgb(1 53 89 / .06), 0 10px 30px -10px rgb(1 53 89 / .18);
+  --shadow-bar: 0 1px 2px rgb(1 53 89 / .06), 0 10px 30px -10px rgb(1 53 89 / .18);
   --shadow-lg: 0 6px 16px rgb(1 53 89 / .1), 0 28px 60px rgb(1 53 89 / .17);
   --ease: cubic-bezier(.22, .9, .3, 1);
   --t-fast: .2s;
@@ -76,8 +69,8 @@
   border-radius: var(--r-sm);
 }
 
-/* --- The island ---------------------------------------------------------- */
-.sv-island {
+/* --- The bar ------------------------------------------------------------- */
+.sv-bar {
   position: relative;
   display: flex;
   align-items: center;
@@ -87,7 +80,7 @@
   -webkit-backdrop-filter: blur(16px) saturate(1.4);
   backdrop-filter: blur(16px) saturate(1.4);
   border-bottom: 1px solid var(--hairline);
-  box-shadow: var(--shadow-island);
+  box-shadow: var(--shadow-bar);
 }
 .sv-logo { display: inline-flex; align-items: center; min-height: var(--tap); flex-shrink: 0; margin-right: 18px; }
 .sv-logo img { display: block; width: 168px; height: auto; }
@@ -148,7 +141,7 @@
 }
 .sv-phone-ico svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .sv-phone-text { display: flex; flex-direction: column; line-height: 1.15; }
-.sv-phone-label { font-size: 12.5px; color: var(--grey-700); }
+.sv-phone-label { font-size: 13px; color: var(--grey-700); }
 .sv-phone-number { font-family: var(--font-ui); font-size: 15px; font-weight: 600; color: var(--ink-700); white-space: nowrap; }
 
 .sv-btn {
@@ -222,9 +215,9 @@
   margin: 0 0 6px;
   padding: 0 10px;
   font-family: var(--font-ui);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: .14em;
+  letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--plum-500);
 }
@@ -358,6 +351,12 @@
 .sv-foot--photo .sv-foot-links { border-top-color: rgb(255 255 255 / .2); }
 .sv-foot--photo .sv-foot-links a { color: #fff; }
 
+/* on a touch screen every link in a foot strip is a full fingertip tall */
+@media (pointer: coarse), screen and (max-width: 1023px) {
+  .sv-foot-links { row-gap: 0; }
+  .sv-foot-links a { min-height: var(--tap); }
+}
+
 /* --- Phone and tablet ----------------------------------------------------- */
 .sv-burger,
 .sv-mobile-only { display: none; }
@@ -392,7 +391,7 @@
   .sv-nav-btn { padding: 0 11px; }
 }
 @media screen and (max-width: 1140px) {
-  .sv-island { gap: 8px; }
+  .sv-bar { gap: 8px; }
   .sv-logo { margin-right: 8px; }
   .sv-logo img { width: 140px; }
   .sv-nav { gap: 0; }
@@ -403,7 +402,7 @@
 
 @media screen and (max-width: 1023px) {
   #sv-header-wrap { --side: 16px; }
-  .sv-island { padding-top: 14px; padding-bottom: 14px; padding-right: 8px; gap: 4px; }
+  .sv-bar { padding-top: 14px; padding-bottom: 14px; padding-right: 8px; gap: 4px; }
   .sv-logo img { width: 148px; }
   .sv-burger { display: inline-flex; order: 1; }
   .sv-actions .sv-btn { display: none; }
@@ -456,6 +455,11 @@
   }
   .sv-trigger.sv-open .sv-panel { display: block; }
   .sv-col { padding: 14px 6px 8px; }
+
+  /* the menu's own foot already carries Book a consultation, so the copy in
+     the Patients panel would sit right above it twice */
+  #sv-panel-patients .sv-foot .sv-btn { display: none; }
+  #sv-panel-patients .sv-foot-links { padding-top: 0; border-top: none; }
 
   .sv-mobile-only { display: flex; }
   .sv-mobile-actions {
@@ -536,7 +540,7 @@ html.sv-lock { overflow: hidden; }
 		<symbol id="i-lock" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></symbol>
 		<symbol id="i-star" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></symbol>
 	</defs></svg>
-	<header class="sv-island" role="banner" aria-label="Site header">
+	<header class="sv-bar" role="banner" aria-label="Site header">
 		<a class="sv-logo" href="https://www.silkvision.net/">
 			<img src="./assets/logo.png" alt="Silk Vision &amp; Surgical Center" width="206" height="51">
 		</a>
