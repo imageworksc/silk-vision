@@ -82,7 +82,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px var(--side);
+  padding: 22px var(--side);
   background: rgb(255 255 255 / .92);
   -webkit-backdrop-filter: blur(16px) saturate(1.4);
   backdrop-filter: blur(16px) saturate(1.4);
@@ -179,7 +179,7 @@
 .sv-trigger { position: relative; }
 .sv-panel {
   position: absolute;
-  top: calc(100% + 18px);
+  top: calc(100% + 26px);
   left: -10px;
   z-index: 10;
   background: #fff;
@@ -207,7 +207,7 @@
   top: 100%;
   left: -16px;
   right: -16px;
-  height: 22px;
+  height: 30px;
 }
 .sv-panel--wide { width: 700px; }
 .sv-panel--list { width: 340px; }
@@ -403,7 +403,7 @@
 
 @media screen and (max-width: 1023px) {
   #sv-header-wrap { --side: 16px; }
-  .sv-island { padding-top: 10px; padding-bottom: 10px; padding-right: 8px; gap: 4px; }
+  .sv-island { padding-top: 14px; padding-bottom: 14px; padding-right: 8px; gap: 4px; }
   .sv-logo img { width: 148px; }
   .sv-burger { display: inline-flex; order: 1; }
   .sv-actions .sv-btn { display: none; }
@@ -418,8 +418,8 @@
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    max-height: calc(100vh - 96px);
-    max-height: calc(100dvh - 96px);
+    max-height: calc(100vh - 80px);
+    max-height: calc(100dvh - 80px);
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: 8px 16px 20px;
