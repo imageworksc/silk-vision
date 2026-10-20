@@ -10,7 +10,7 @@ built from the practice's own colours, type and photography.
 | [full-width.html](https://imageworksc.github.io/silk-vision/full-width.html) | Floating panels up to 1500px wide; items in the header's column, photo block on the right set off by a hairline |
 | [banner.html](https://imageworksc.github.io/silk-vision/banner.html) | Floating panels; the photo block runs flush to the panel's edges on a soft tint |
 | [modern.html](https://imageworksc.github.io/silk-vision/modern.html) | Dark navy top bar, Poppins + Inter, mega panels as 940px floating cards closed by a deep navy block on the right, rows that rise in on opening; the nav underlines on hover, rows answer the pointer with a purple bar down their left edge, and buttons lift |
-| [island.html](https://imageworksc.github.io/silk-vision/island.html) | Same text, colours and type as modern, laid out differently: one floating rounded bar with no strip above it (phone and Book a consultation at its right end, Pay bill online and Special offers in the Patients panel), compact panels under their own tab with a patterned swatch per row and a foot strip for the next step |
+| [island.html](https://imageworksc.github.io/silk-vision/island.html) | Same text, colours and type as modern, laid out differently: one floating rounded bar with no strip above it (phone and Book a consultation at its right end, Pay bill online and Special offers in the Patients panel), compact panels under their own tab with a blue line icon in a pale box per row and a foot strip for the next step |
 
 ## Shared design
 
