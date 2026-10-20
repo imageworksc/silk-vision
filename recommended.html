@@ -70,7 +70,9 @@
 :where(#sv-header-wrap) a { text-decoration: none; color: inherit; }
 :where(#sv-header-wrap) p { margin: 0; }
 :where(#sv-header-wrap) ul { list-style: none; margin: 0; padding: 0; }
-#sv-header-wrap button { font-family: inherit; }
+/* zero specificity, like the resets above: as a plain #id rule it outranked
+   .sv-nav-btn and set the tabs in Inter instead of Poppins */
+:where(#sv-header-wrap) button { font-family: inherit; }
 #sv-header-wrap :focus-visible {
   outline: 2px solid var(--blue-400);
   outline-offset: 2px;
