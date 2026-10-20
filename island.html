@@ -195,6 +195,8 @@
 .sv-panel--wide { width: 860px; }
 .sv-panel--right { left: auto; right: -6px; }
 .sv-col + .sv-col { border-left: 1px solid var(--hairline); padding-left: 6px; margin-left: 6px; }
+/* a second group in the same column starts a little clear of the first */
+.sv-list + .sv-group-label { margin-top: 10px; }
 
 .sv-group-label {
   padding: 10px 10px 4px;
@@ -473,21 +475,7 @@ html.sv-lock { overflow: hidden; }
 				<button class="sv-nav-btn" type="button" aria-expanded="false" aria-controls="sv-panel-eyecare">
 					Eye Care <span class="sv-caret" aria-hidden="true"></span>
 				</button>
-				<div class="sv-panel sv-panel--wide" id="sv-panel-eyecare">
-					<div class="sv-col">
-						<p class="sv-group-label">Cataract care</p>
-						<ul class="sv-list">
-							<li><a href="https://www.silkvision.net/cataract-surgery-and-cataract-removal">
-								<span class="sv-item">Cataract surgery</span>
-								<span class="sv-note">Replaces a clouded lens</span></a></li>
-							<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
-								<span class="sv-item">Light adjustable lens</span>
-								<span class="sv-note">Tuned to your eyes after surgery</span></a></li>
-							<li><a href="https://www.silkvision.net/visual-rejuvenation">
-								<span class="sv-item">Cataract touch-ups</span>
-								<span class="sv-note">Sharpen vision after surgery</span></a></li>
-						</ul>
-					</div>
+				<div class="sv-panel sv-panel--pair" id="sv-panel-eyecare">
 					<div class="sv-col">
 						<p class="sv-group-label">Conditions we treat</p>
 						<ul class="sv-list">
@@ -509,6 +497,18 @@ html.sv-lock { overflow: hidden; }
 						</ul>
 					</div>
 					<div class="sv-col">
+						<p class="sv-group-label">Cataract care</p>
+						<ul class="sv-list">
+							<li><a href="https://www.silkvision.net/cataract-surgery-and-cataract-removal">
+								<span class="sv-item">Cataract surgery</span>
+								<span class="sv-note">Replaces a clouded lens</span></a></li>
+							<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
+								<span class="sv-item">Light adjustable lens</span>
+								<span class="sv-note">Tuned to your eyes after surgery</span></a></li>
+							<li><a href="https://www.silkvision.net/visual-rejuvenation">
+								<span class="sv-item">Cataract touch-ups</span>
+								<span class="sv-note">Sharpen vision after surgery</span></a></li>
+						</ul>
 						<p class="sv-group-label">Start here</p>
 						<ul class="sv-list">
 							<li><a href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">
