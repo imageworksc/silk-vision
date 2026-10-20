@@ -43,6 +43,7 @@
   --r-lg: 12px;
   --shadow-card: 0 1px 2px rgb(1 53 89 / .05), 0 12px 32px -8px rgb(1 53 89 / .16);
   --ease: cubic-bezier(.22, .9, .3, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);   /* overshoots a little, then settles */
   --t-fast: .18s;
   --tap: 44px;
   /* content column: 1180px, so the logo and Contact sit close to the tabs
@@ -92,11 +93,21 @@
   white-space: nowrap;
   transition: color var(--t-fast) var(--ease);
 }
-.sv-strip a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
-.sv-strip svg { width: 15px; height: 15px; fill: currentColor; flex: none; }
+.sv-strip a:hover { color: #fff; }
+.sv-strip svg { width: 15px; height: 15px; fill: currentColor; flex: none; transform-origin: 50% 60%; }
+/* on hover the handset rings: a short shake, then still */
+@keyframes sv-ring {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(-16deg); }
+  40% { transform: rotate(13deg); }
+  60% { transform: rotate(-9deg); }
+  80% { transform: rotate(5deg); }
+}
+.sv-strip .sv-phone:hover svg { animation: sv-ring .6s var(--ease); }
+/* and the booking link's arrow springs ahead of the words */
 .sv-strip .sv-book { font-weight: 600; color: #fff; }
-.sv-strip .sv-book::after { content: '\2192'; transition: transform var(--t-fast) var(--ease); }
-.sv-strip .sv-book:hover::after { transform: translateX(3px); }
+.sv-strip .sv-book::after { content: '\2192'; transition: transform .35s var(--spring); }
+.sv-strip .sv-book:hover::after { transform: translateX(6px); }
 
 /* --- The bar ------------------------------------------------------------- */
 /* three columns: logo, tabs, button; the outer two share what is left, so
@@ -112,10 +123,13 @@
   border-bottom: 1px solid var(--hairline);
 }
 .sv-logo { display: inline-flex; align-items: center; justify-self: start; min-height: var(--tap); }
-.sv-logo img { display: block; width: 160px; height: auto; }
+.sv-logo img { display: block; width: 160px; height: auto; transition: transform .35s var(--spring); }
+.sv-logo:hover img { transform: scale(1.04); }
 
 .sv-nav { display: flex; align-items: center; gap: 2px; }
 .sv-nav-btn {
+  position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -130,10 +144,21 @@
   font-weight: 500;
   color: var(--blue-500);
   white-space: nowrap;
-  transition: background-color var(--t-fast) var(--ease);
 }
-.sv-nav-btn:hover,
-.sv-trigger.sv-open .sv-nav-btn { background: var(--tile); }
+/* the chip behind a tab grows out from its middle instead of just appearing */
+.sv-nav-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--tile);
+  opacity: 0;
+  transform: scale(.7);
+  transition: opacity var(--t-fast) var(--ease), transform .35s var(--spring);
+}
+.sv-nav-btn:hover::before,
+.sv-trigger.sv-open .sv-nav-btn::before { opacity: 1; transform: none; }
 /* a small solid caret, turned over while the panel is open */
 .sv-caret {
   width: 0;
@@ -141,9 +166,11 @@
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
   border-top: 5px solid currentColor;
-  transition: transform var(--t-fast) var(--ease);
+  transition: transform .35s var(--spring);
 }
 .sv-trigger.sv-open .sv-caret { transform: rotate(180deg); }
+/* pointing at a closed tab nudges its caret down, towards the panel */
+.sv-trigger:not(.sv-open) .sv-nav-btn:hover .sv-caret { transform: translateY(2px); }
 
 /* --- Right end: Contact ------------------------------------------------ */
 .sv-actions { display: flex; align-items: center; justify-self: end; }
@@ -163,9 +190,9 @@
   font-weight: 600;
   white-space: nowrap;
   box-shadow: 0 1px 2px rgb(1 53 89 / .12);
-  transition: transform var(--t-fast) var(--ease);
+  transition: transform .35s var(--spring), box-shadow .35s var(--ease);
 }
-.sv-btn:hover { transform: translateY(-2px); }
+.sv-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px -8px rgb(128 0 128 / .55); }
 .sv-btn:active { transform: translateY(0); }
 
 /* --- Panels -------------------------------------------------------------- */
