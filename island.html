@@ -18,7 +18,7 @@
    at its right end; Pay bill online and Special offers move to the foot of
    the Patients panel, which is where a patient goes looking for them.
 
-   Panels drop straight under their own tab, compact, with a blue line icon
+   Panels drop straight under their own tab, compact, with a solid blue icon
    in a pale box beside every row and a strip along the foot that carries
    the panel's next step.
 
@@ -265,8 +265,8 @@
 /* a row with no note is one line: the name centres on the icon */
 .sv-list a:not(:has(.sv-note)) .sv-ico-box { grid-row: auto; }
 
-/* Icons: a blue line drawing in a pale rounded box; on hover the box fills
-   blue and the drawing turns white */
+/* Icons: a solid blue glyph in a pale rounded box; on hover the box fills
+   blue and the glyph turns white */
 .sv-ico-box {
   grid-row: 1 / span 2;
   display: grid;
@@ -281,11 +281,7 @@
 .sv-ico {
   width: 22px;
   height: 22px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  fill: currentColor;
 }
 .sv-list a:hover .sv-ico-box,
 .sv-list a:focus-visible .sv-ico-box { background: var(--blue-500); color: #fff; }
@@ -490,31 +486,32 @@ html.sv-lock { overflow: hidden; }
 <!-- ===================== Silk Vision navigation ===================== -->
 <div id="sv-header-wrap">
 	<svg class="sv-sprite" aria-hidden="true" focusable="false"><defs>
-		<!-- one 24px grid, one stroke weight; each glyph is drawn from the anatomy
-		     or the object involved -->
-		<symbol id="i-lasik" viewBox="0 0 24 24"><path d="M2.6 13.6s3.8-5.4 9.4-5.4 9.4 5.4 9.4 5.4-3.8 5.4-9.4 5.4-9.4-5.4-9.4-5.4Z"/><circle cx="12" cy="13.6" r="2.4"/><path d="M12 2.6v3.2"/></symbol>
-		<symbol id="i-prk" viewBox="0 0 24 24"><path d="M3 18.4c0-5 4-9 9-9s9 4 9 9"/><path d="M6.6 13.4c1.8-1.2 9-1.2 10.8 0" stroke-dasharray="2 2.4"/><path d="M12 2.6v3.4"/></symbol>
-		<symbol id="i-touchup" viewBox="0 0 24 24"><path d="M20.6 12a8.6 8.6 0 1 1-2.8-6.4"/><path d="M21 3.4V8h-4.6"/><circle cx="12" cy="12" r="2.4"/></symbol>
-		<symbol id="i-icl" viewBox="0 0 24 24"><path d="M2.6 12s3.8-5.4 9.4-5.4S21.4 12 21.4 12s-3.8 5.4-9.4 5.4S2.6 12 2.6 12Z"/><ellipse cx="12" cy="12" rx="4.4" ry="2.8"/></symbol>
-		<symbol id="i-rle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.8"/><path d="M16.8 12c2.8-2 5-1 5 1.8"/><path d="M7.2 12c-2.8 2-5 1-5-1.8"/></symbol>
-		<symbol id="i-lal" viewBox="0 0 24 24"><circle cx="12" cy="14.6" r="4.4"/><path d="M16.4 14.6c2.6-1.8 4.6-.8 4.6 1.7"/><path d="M7.6 14.6c-2.6 1.8-4.6.8-4.6-1.7"/><path d="M12 2.8v3.2M8.3 4.2l1.5 2.5M15.7 4.2l-1.5 2.5"/></symbol>
-		<symbol id="i-cataract" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path d="M7.4 13.8c1.9-2.3 7.3-2.3 9.2 0"/><path d="M8.6 9.8c1.7-1.5 5.1-1.5 6.8 0"/></symbol>
-		<symbol id="i-cornea" viewBox="0 0 24 24"><path d="M2.8 18.6h18.4"/><path d="M5 18.6a7 7 0 0 1 14 0"/><path d="M8.6 18.6a3.4 3.4 0 0 1 6.8 0"/></symbol>
-		<symbol id="i-glaucoma" viewBox="0 0 24 24"><path d="M2.6 12s3.8-5.4 9.4-5.4S21.4 12 21.4 12s-3.8 5.4-9.4 5.4S2.6 12 2.6 12Z"/><path d="M12 15.2V9.2"/><path d="M9.9 11.3 12 9.2l2.1 2.1"/></symbol>
-		<symbol id="i-dryeye" viewBox="0 0 24 24"><path d="M2.4 12.4s3.8-5.4 9.4-5.4c2.2 0 4.1.8 5.6 1.9"/><path d="M2.4 12.4s2.6 3.8 7.4 5.2"/><circle cx="10.6" cy="12.4" r="2.6"/><path d="M18.8 13.4s2.4 2.8 2.4 4.1a2.4 2.4 0 0 1-4.8 0c0-1.3 2.4-4.1 2.4-4.1Z"/></symbol>
-		<symbol id="i-keratoconus" viewBox="0 0 24 24"><path d="M2.8 18.6h18.4"/><path d="M6 18.6a6 6 0 0 1 12 0" stroke-dasharray="2 2.4"/><path d="M6.6 18.6 12 5.8l5.4 12.8"/></symbol>
-		<symbol id="i-pterygium" viewBox="0 0 24 24"><path d="M2.6 12s3.8-5.4 9.4-5.4S21.4 12 21.4 12s-3.8 5.4-9.4 5.4S2.6 12 2.6 12Z"/><circle cx="13.2" cy="12" r="2.8"/><path d="M2.9 12 9 10.2v3.6Z"/></symbol>
-		<symbol id="i-doctor" viewBox="0 0 24 24"><circle cx="12" cy="7.8" r="3.4"/><path d="M5 20.6a7 7 0 0 1 14 0"/><path d="M15.6 15.8v2.9M14.1 17.2h3"/></symbol>
-		<symbol id="i-practice" viewBox="0 0 24 24"><path d="M4 20.6V10l8-5.6 8 5.6v10.6"/><path d="M12 12.2v4.6M9.7 14.5h4.6"/><path d="M2.6 20.6h18.8"/></symbol>
-		<symbol id="i-quote" viewBox="0 0 24 24"><path d="M4 4.6h16v11.2H10l-6 4.6V4.6Z"/><path d="M8.4 9h7.2M8.4 12.2h4.6"/></symbol>
-		<symbol id="i-blog" viewBox="0 0 24 24"><path d="M6 3.2h7.6L19 8.6v12.2H6Z"/><path d="M13.4 3.2v5.4H19"/><path d="M9 12.6h7M9 16.4h4.6"/></symbol>
-		<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.2s7-6.3 7-11.3a7 7 0 1 0-14 0c0 5 7 11.3 7 11.3Z"/><circle cx="12" cy="9.8" r="2.5"/></symbol>
-		<symbol id="i-surgery" viewBox="0 0 24 24"><path d="M12 3.6a4.8 4.8 0 0 1 4.8 4.8c0 1.7-2.1 2.7-4.8 2.7s-4.8-1-4.8-2.7A4.8 4.8 0 0 1 12 3.6Z"/><path d="M12 11.4v7.2M8.8 20.6h6.4"/></symbol>
-		<symbol id="i-forms" viewBox="0 0 24 24"><rect x="4.6" y="4.6" width="14.8" height="16.8" rx="2.4"/><rect x="9" y="2.6" width="6" height="4" rx="1.3"/><path d="m9.2 13.8 2 2 3.9-4"/></symbol>
-		<symbol id="i-card" viewBox="0 0 24 24"><rect x="2.6" y="5.6" width="18.8" height="12.8" rx="2.4"/><path d="M2.6 10h18.8"/><path d="M6.2 14.6h4"/></symbol>
-		<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.8 19.4 6v6c0 4.3-3.1 7.4-7.4 9.2C7.7 19.4 4.6 16.3 4.6 12V6L12 2.8Z"/><path d="m9.1 12.2 2.2 2.2 4-4.2"/></symbol>
-		<symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="4.4" width="18" height="12.4" rx="2.4"/><path d="M9.2 20.6h5.6M12 16.8v3.8"/><rect x="10" y="9.6" width="4" height="3.6" rx="1"/><path d="M10.9 9.6v-.9a1.1 1.1 0 0 1 2.2 0v.9"/></symbol>
-		<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.6 2.6 5.3 5.8.9-4.2 4 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4 5.8-.9L12 3.6Z"/></symbol>
+		<!-- solid glyphs on a 24px grid. The general ones (person, house, pin,
+		     card and so on) are Material Icons, Apache 2.0; the eye-specific ones
+		     are drawn to match. Cut-outs use the even-odd rule. -->
+		<symbol id="i-lasik" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 6.5c-5 0-9.27 3.11-11 7.5 1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 9.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zM10.75 1h2.5v4h-2.5z"/></symbol>
+		<symbol id="i-prk" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M3 20a9 9 0 0 1 18 0zM10.75 2h2.5v6h-2.5z"/></symbol>
+		<symbol id="i-touchup" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/></symbol>
+		<symbol id="i-icl" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 7.5c3.9 0 7 2.24 7 5s-3.1 5-7 5-7-2.24-7-5 3.1-5 7-5zM1.5 11h3v3h-3zM19.5 11h3v3h-3z"/></symbol>
+		<symbol id="i-rle" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6.99 11 3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/></symbol>
+		<symbol id="i-lal" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 10.5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zM10.75 2h2.5v5h-2.5zM4.4 4.9l1.8-1.8 3.2 3.2-1.8 1.8zM19.6 4.9l-3.2 3.2-1.8-1.8 3.2-3.2z"/></symbol>
+		<symbol id="i-cataract" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zm-3 5.5a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5zm5.5 4a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5z"/></symbol>
+		<symbol id="i-cornea" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M2 20a10 10 0 0 1 20 0zm5 0a5 5 0 0 1 10 0z"/></symbol>
+		<symbol id="i-glaucoma" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 7.5 16 12h-2.6v4.5h-2.8V12H8z"/></symbol>
+		<symbol id="i-dryeye" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z"/></symbol>
+		<symbol id="i-keratoconus" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 3.5 19.5 19h-15zM2 20h20v2H2z"/></symbol>
+		<symbol id="i-pterygium" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM14 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8zM2.5 12 9.5 9.5v5z"/></symbol>
+		<symbol id="i-doctor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></symbol>
+		<symbol id="i-practice" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></symbol>
+		<symbol id="i-quote" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></symbol>
+		<symbol id="i-blog" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></symbol>
+		<symbol id="i-pin" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></symbol>
+		<symbol id="i-surgery" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19 3H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></symbol>
+		<symbol id="i-forms" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></symbol>
+		<symbol id="i-card" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></symbol>
+		<symbol id="i-shield" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></symbol>
+		<symbol id="i-lock" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></symbol>
+		<symbol id="i-star" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></symbol>
 	</defs></svg>
 	<header class="sv-island" role="banner" aria-label="Site header">
 		<a class="sv-logo" href="https://www.silkvision.net/">
