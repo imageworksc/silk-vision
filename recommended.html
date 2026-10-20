@@ -14,12 +14,12 @@
 
    island.html with the usability review applied: Book a consultation, the
    one action the practice most wants, is the button in the bar, and Contact
-   steps down to plain text beside it; the line under each row is a size
+   joins the tabs as a plain link; the line under each row is a size
    larger and a shade darker, for readers past sixty.
 
    A thin brand-blue strip carries the phone number; under it, a quiet white
    bar in the manner of wrangle.ai: logo on the left, the tabs centred on the
-   page, Contact and Book a consultation on the right. Pay
+   page with Contact as the last of them, Book a consultation on the right. Pay
    bill online and Special offers live in the Patients panel.
 
    Panels are small white cards under their own tab, laid out as a row of
@@ -176,23 +176,8 @@
 /* pointing at a closed tab nudges its caret down, towards the panel */
 .sv-trigger:not(.sv-open) .sv-nav-btn:hover .sv-caret { transform: translateY(2px); }
 
-/* --- Right end: Contact and Book a consultation ------------------------ */
-.sv-actions { display: flex; align-items: center; gap: 8px; justify-self: end; }
-/* Contact is plain text beside the button, so the button stays the one
-   thing to press */
-.sv-textlink {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--tap);
-  padding: 0 10px;
-  font-family: var(--font-ui);
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--blue-500);
-  white-space: nowrap;
-  transition: color var(--t-fast) var(--ease);
-}
-.sv-textlink:hover { color: var(--plum-500); }
+/* --- Right end: Book a consultation ------------------------------------ */
+.sv-actions { display: flex; align-items: center; justify-self: end; }
 
 .sv-btn {
   display: inline-flex;
@@ -371,7 +356,8 @@
     padding: 0 8px;
     font-size: 17px;
   }
-  .sv-trigger + .sv-trigger { border-top: 1px solid var(--hairline); }
+  .sv-trigger + .sv-trigger,
+  .sv-nav-item { border-top: 1px solid var(--hairline); }
 
   .sv-panel,
   .sv-panel--wide,
@@ -405,7 +391,6 @@
     border-top: 1px solid var(--hairline);
   }
   .sv-mobile-actions .sv-btn { width: 100%; margin: 0; min-height: var(--tap); }
-  .sv-btn--line { background: #fff; color: var(--plum-500); box-shadow: inset 0 0 0 1.5px var(--plum-500); }
 }
 
 /* phones: one group under the other */
@@ -638,15 +623,18 @@ html.sv-lock { overflow: hidden; }
 				</div>
 			</div>
 
-			<!-- on phones and tablets the actions live at the foot of the menu -->
+			<!-- Contact is a tab like the others, a plain link with no panel -->
+			<div class="sv-nav-item">
+				<a class="sv-nav-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Contact</a>
+			</div>
+
+			<!-- on phones and tablets the action lives at the foot of the menu -->
 			<div class="sv-mobile-only sv-mobile-actions">
 				<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
-				<a class="sv-btn sv-btn--line" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Contact</a>
 			</div>
 		</nav>
 
 		<div class="sv-actions">
-			<a class="sv-textlink" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Contact</a>
 			<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book a consultation</a>
 		</div>
 	</header>
