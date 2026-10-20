@@ -1,6 +1,6 @@
 # Silk Vision — Navigation
 
-Six versions of a mega-menu navigation for [silkvision.net](https://www.silkvision.net/),
+Seven versions of a mega-menu navigation for [silkvision.net](https://www.silkvision.net/),
 built from the practice's own colours, type and photography.
 
 | Page | Panels |
@@ -11,6 +11,7 @@ built from the practice's own colours, type and photography.
 | [banner.html](https://imageworksc.github.io/silk-vision/banner.html) | Floating panels; the photo block runs flush to the panel's edges on a soft tint |
 | [modern.html](https://imageworksc.github.io/silk-vision/modern.html) | Dark navy top bar, Poppins + Inter, mega panels as 940px floating cards closed by a deep navy block on the right, rows that rise in on opening; the nav underlines on hover, rows answer the pointer with a purple bar down their left edge, and buttons lift |
 | [island.html](https://imageworksc.github.io/silk-vision/island.html) | A brand-blue strip with the phone and Book a consultation over a quiet white bar in the manner of wrangle.ai: logo left, tabs centred on the page, Contact as the one button; small white panels under their own tab laid out as columns, one per group, with Pay bill online and Special offers under Patients; names turn purple and step right on hover |
+| [recommended.html](https://imageworksc.github.io/silk-vision/recommended.html) | island.html with the usability review applied: Book a consultation is the button in the bar, Contact a text link in the blue strip, and the line under each row is 15px in a darker grey |
 
 ## Shared design
 
@@ -24,8 +25,8 @@ built from the practice's own colours, type and photography.
 
 All CSS is scoped to `#sv-header-wrap` / `.sv-*`, so any version can be dropped into the
 live theme. index, simple, full-width and banner start with the same shared rules, and
-full-width and banner add one section of their own at the end; modern and island have their own
-token set.
+full-width and banner add one section of their own at the end; modern, island and recommended have
+their own token set.
 
 ## Breakpoints
 
@@ -37,5 +38,5 @@ token set.
 
 ## Files
 
-- `index.html`, `simple.html`, `full-width.html`, `banner.html`, `modern.html`, `island.html` — one self-contained page each
+- `index.html`, `simple.html`, `full-width.html`, `banner.html`, `modern.html`, `island.html`, `recommended.html` — one self-contained page each
 - `assets/` — logo and the photographs used in the panels
