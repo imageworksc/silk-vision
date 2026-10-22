@@ -11,7 +11,7 @@ built from the practice's own colours, type and photography.
 | [banner.html](https://imageworksc.github.io/silk-vision/banner.html) | Floating panels; the photo block runs flush to the panel's edges on a soft tint |
 | [modern.html](https://imageworksc.github.io/silk-vision/modern.html) | Dark navy top bar, Poppins + Inter, mega panels as 940px floating cards closed by a deep navy block on the right, rows that rise in on opening; the nav underlines on hover, rows answer the pointer with a purple bar down their left edge, and buttons lift |
 | [island.html](https://imageworksc.github.io/silk-vision/island.html) | A brand-blue strip with the phone and Book a consultation over a quiet white bar in the manner of wrangle.ai: logo left, tabs centred on the page, Contact as the one button; small white panels under their own tab laid out as columns, one per group, with Pay bill online and Special offers under Patients; names turn purple and step right on hover |
-| [recommended.html](https://imageworksc.github.io/silk-vision/recommended.html) | island.html with the usability review applied: Book a consultation is the button in the bar, Contact is the last tab of the menu, the blue strip carries the phone, and the line under each row is 15px in a darker grey |
+| [recommended.html](https://imageworksc.github.io/silk-vision/recommended.html) | island.html with the usability review applied: Book a consultation is the button in the bar, Contact is the last tab of the menu, the blue strip carries the phone, and the panels are set compact (14px names, 13px lines in a darker grey, 12px group labels) |
 
 ## Shared design
 
