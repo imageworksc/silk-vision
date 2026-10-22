@@ -295,8 +295,11 @@
 }
 .sv-sub-label::after { content: ''; flex: 1; height: 1px; background: var(--hairline); }
 
-/* the footer prompt: a question and one outlined action that fills on hover */
+/* The footer prompt: a question and one outlined action. The whole strip is
+   the target (the link's ::after covers it), so pointing anywhere on it fills
+   the strip purple and turns the button white, as in the 08-19 menu. */
 .sv-panel-foot {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -307,7 +310,10 @@
   background: var(--paper);
   font-size: 14px;
   color: var(--grey-700);
+  cursor: pointer;
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
 }
+.sv-panel-foot:hover { background: var(--plum-500); color: rgb(255 255 255 / .85); }
 .sv-foot-link {
   display: inline-flex;
   align-items: center;
@@ -320,9 +326,10 @@
   font-weight: 600;
   color: var(--plum-500);
   white-space: nowrap;
-  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform .35s var(--spring);
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), transform .35s var(--spring);
 }
-.sv-foot-link:hover { background: var(--plum-500); color: #fff; transform: translateY(-2px); }
+.sv-foot-link::after { content: ''; position: absolute; inset: 0; }
+.sv-panel-foot:hover .sv-foot-link { background: #fff; border-color: #fff; color: var(--plum-500); transform: translateY(-2px); }
 
 /* --- Phone and tablet ----------------------------------------------------- */
 .sv-burger,
