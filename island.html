@@ -276,6 +276,8 @@
   line-height: 1.3;
   color: var(--ink-700);
 }
+/* keeps a phrase on one line, so a wrap falls before it, not inside it */
+.sv-nowrap { white-space: nowrap; }
 .sv-note {
   display: block;
   margin-top: 3px;
@@ -483,7 +485,7 @@ html.sv-lock { overflow: hidden; }
 								<span class="sv-note">An added lens, your cornea untouched</span></a></li>
 							<li><a href="https://www.silkvision.net/refractive-lens-surgery-alternative-lasik">
 								<span class="sv-item">Lens replacement (RLE)</span>
-								<span class="sv-note">Swaps the natural lens, no cataracts later</span></a></li>
+								<span class="sv-note">Swaps the natural lens, <span class="sv-nowrap">no cataracts later</span></span></a></li>
 						</ul>
 					</div>
 					<div class="sv-col">
