@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Silk Vision — Navigation, 08-19 polished</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.silkvision.net/favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<style id="sv-navbar-styles">
+/* ==========================================================================
+   Silk Vision — navigation, 08-19 polished
+
+   The 08-19 menu with every word kept as written, set in the style of
+   recommended.html: a brand-blue strip for Pay Bill Online, Special Offers
+   and the phone; a quiet white bar with the logo on the left, the tabs
+   centred on the page and Book Your Free Consultation as the one button.
+   The two mega panels keep their columns, their Learn More list and their
+   footer prompt; About, Patients and Contact are plain tabs.
+
+   Poppins for titles and controls, Inter for what is read, blue for the
+   brand, purple for the group headings and the actions. Scoped to
+   #sv-header-wrap / .sv-*.
+   ========================================================================== */
+#sv-header-wrap {
+  --ink-700: #013559;
+  --blue-500: #005894;
+  --blue-400: #1e7fbe;
+  --plum-500: #800080;
+  --paper: #f5f8fb;
+  --tile: #eef2f6;
+  --grey-500: #5f7276;
+  --grey-700: #45575b;
+  --grey-900: #2a3538;
+  --hairline: rgb(1 53 89 / .1);
+  --font-ui: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-copy: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --shadow-card: 0 1px 2px rgb(1 53 89 / .05), 0 12px 32px -8px rgb(1 53 89 / .16);
+  --ease: cubic-bezier(.22, .9, .3, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);   /* overshoots a little, then settles */
+  --t-fast: .18s;
+  --tap: 44px;
+  /* content column: 1180px, so the logo and Contact sit close to the tabs
+     rather than out at the corners of a wide screen */
+  --side: max(24px, calc((100% - 1180px) / 2));
+  --strip: 40px;   /* height of the blue strip, which scrolls away */
+
+  position: -webkit-sticky;
+  position: sticky;
+  top: calc(-1 * var(--strip));
+  z-index: 900;
+  font-family: var(--font-copy);
+  color: var(--grey-900);
+}
+#sv-header-wrap *,
+#sv-header-wrap *::before,
+#sv-header-wrap *::after { box-sizing: border-box; }
+:where(#sv-header-wrap) a { text-decoration: none; color: inherit; }
+:where(#sv-header-wrap) p { margin: 0; }
+:where(#sv-header-wrap) ul { list-style: none; margin: 0; padding: 0; }
+/* zero specificity, like the resets above: as a plain #id rule it outranked
+   .sv-nav-btn and set the tabs in Inter instead of Poppins */
+:where(#sv-header-wrap) button { font-family: inherit; }
+#sv-header-wrap :focus-visible {
+  outline: 2px solid var(--blue-400);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+/* --- The strip ----------------------------------------------------------- */
+.sv-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: var(--strip);
+  padding: 0 var(--side);
+  background: var(--blue-500);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(255 255 255 / .88);
+}
+.sv-strip a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+  white-space: nowrap;
+  transition: color var(--t-fast) var(--ease);
+}
+.sv-strip a:hover { color: #fff; }
+.sv-strip-group { display: flex; align-items: center; gap: 24px; height: 100%; }
+.sv-strip svg { width: 15px; height: 15px; fill: currentColor; flex: none; transform-origin: 50% 60%; }
+/* on hover the handset rings: a short shake, then still */
+@keyframes sv-ring {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(-16deg); }
+  40% { transform: rotate(13deg); }
+  60% { transform: rotate(-9deg); }
+  80% { transform: rotate(5deg); }
+}
+.sv-strip .sv-phone:hover svg { animation: sv-ring .6s var(--ease); }
+
+/* --- The bar ------------------------------------------------------------- */
+/* three columns: logo, tabs, button; the outer two share what is left, so
+   the tabs sit on the centre line of the page */
+.sv-bar {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 18px var(--side);
+  background: #fff;
+  border-bottom: 1px solid var(--hairline);
+}
+.sv-logo { display: inline-flex; align-items: center; justify-self: start; min-height: var(--tap); }
+.sv-logo img { display: block; width: 160px; height: auto; transition: transform .35s var(--spring); }
+.sv-logo:hover img { transform: scale(1.04); }
+
+.sv-nav { display: flex; align-items: center; gap: 2px; }
+.sv-nav-btn {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 0 12px;
+  border: none;
+  border-radius: var(--r-md);
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--blue-500);
+  white-space: nowrap;
+}
+/* the chip behind a tab grows out from its middle instead of just appearing */
+.sv-nav-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--tile);
+  opacity: 0;
+  transform: scale(.7);
+  transition: opacity var(--t-fast) var(--ease), transform .35s var(--spring);
+}
+.sv-nav-btn:hover::before,
+.sv-trigger.sv-open .sv-nav-btn::before { opacity: 1; transform: none; }
+/* a small solid caret, turned over while the panel is open */
+.sv-caret {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  transition: transform .35s var(--spring);
+}
+.sv-trigger.sv-open .sv-caret { transform: rotate(180deg); }
+/* pointing at a closed tab nudges its caret down, towards the panel */
+.sv-trigger:not(.sv-open) .sv-nav-btn:hover .sv-caret { transform: translateY(2px); }
+
+/* --- Right end: Book a consultation ------------------------------------ */
+.sv-actions { display: flex; align-items: center; justify-self: end; }
+
+.sv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 22px;
+  border: none;
+  border-radius: var(--r-md);
+  background: var(--plum-500);
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform .35s var(--spring);
+}
+.sv-btn:hover { transform: translateY(-3px); }
+.sv-btn:active { transform: translateY(0); }
+
+/* --- Panels -------------------------------------------------------------- */
+.sv-trigger { position: relative; }
+.sv-panel {
+  position: absolute;
+  top: calc(100% + 24px);
+  left: -6px;
+  z-index: 10;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity var(--t-fast) var(--ease), transform var(--t-fast) var(--ease), visibility 0s linear var(--t-fast);
+}
+.sv-trigger.sv-open .sv-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  transition: opacity var(--t-fast) var(--ease), transform var(--t-fast) var(--ease), visibility 0s;
+}
+/* strip from the tab to its panel, so the pointer can cross the gap */
+.sv-trigger::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -12px;
+  right: -12px;
+  height: 28px;
+}
+/* every panel is a row of columns, one per group, set off by hairlines */
+/* a mega panel: two columns over a footer prompt that runs edge to edge */
+.sv-panel--mega { width: 640px; padding: 0; overflow: hidden; }
+.sv-panel-cols { display: grid; grid-template-columns: 1fr 1fr; padding: 14px 12px 10px; }
+.sv-col + .sv-col { border-left: 1px solid var(--hairline); padding-left: 10px; margin-left: 10px; }
+/* a second group in the same column starts a little clear of the first */
+.sv-list + .sv-group-label { margin-top: 16px; }
+
+.sv-group-label {
+  padding: 10px 12px 8px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--plum-500);
+}
+
+/* Rows: a name and one line under it */
+.sv-list a {
+  display: block;
+  padding: 12px;
+  border-radius: var(--r-md);
+  transition: background-color var(--t-fast) var(--ease);
+}
+.sv-list a:hover,
+.sv-list a:focus-visible { background: var(--paper); }
+/* the words step 4px to the right as the row is pointed at; the note follows
+   a beat later, so the pair moves as one soft motion rather than a jump */
+.sv-item,
+.sv-note { transition: transform .28s var(--ease), color var(--t-fast) var(--ease); }
+.sv-note { transition-delay: .03s; }
+.sv-list a:hover :is(.sv-item, .sv-note),
+.sv-list a:focus-visible :is(.sv-item, .sv-note) { transform: translateX(4px); }
+.sv-list a:hover .sv-item,
+.sv-list a:focus-visible .sv-item { color: var(--plum-500); }
+.sv-item {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink-700);
+}
+.sv-note {
+  display: block;
+  margin-top: 3px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--grey-700);
+}
+
+/* the third line under Lens Replacement: the lens names, a step quieter */
+.sv-note--brands { margin-top: 1px; font-size: 12.5px; color: var(--grey-500); }
+
+/* Learn More: a smaller heading inside a column, with a hairline after it */
+.sv-sub-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 12px 4px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--grey-500);
+}
+.sv-sub-label::after { content: ''; flex: 1; height: 1px; background: var(--hairline); }
+
+/* the footer prompt: a question and one outlined action that fills on hover */
+.sv-panel-foot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--hairline);
+  background: var(--paper);
+  font-size: 14px;
+  color: var(--grey-700);
+}
+.sv-foot-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1.5px solid var(--plum-500);
+  border-radius: var(--r-md);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--plum-500);
+  white-space: nowrap;
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform .35s var(--spring);
+}
+.sv-foot-link:hover { background: var(--plum-500); color: #fff; transform: translateY(-2px); }
+
+/* --- Phone and tablet ----------------------------------------------------- */
+.sv-burger,
+.sv-mobile-only { display: none; }
+.sv-burger {
+  align-items: center;
+  justify-content: center;
+  width: var(--tap);
+  height: var(--tap);
+  padding: 0;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  background: #fff;
+  color: var(--grey-900);
+  cursor: pointer;
+}
+.sv-burger svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.sv-burger .sv-ico-close { display: none; }
+.sv-burger[aria-expanded="true"] .sv-ico-menu { display: none; }
+.sv-burger[aria-expanded="true"] .sv-ico-close { display: block; }
+
+/* on a touch screen every row is at least a fingertip tall */
+@media (pointer: coarse) {
+  .sv-list a { display: flex; flex-direction: column; justify-content: center; min-height: var(--tap); }
+}
+
+@media screen and (max-width: 1279px) {
+}
+@media screen and (max-width: 1120px) {
+  .sv-logo img { width: 140px; }
+  .sv-nav-btn { padding: 0 9px; }
+  .sv-btn { padding: 0 16px; }
+}
+
+@media screen and (max-width: 1023px) {
+  #sv-header-wrap { --side: 16px; --strip: var(--tap); }
+  .sv-strip { justify-content: space-between; }
+  .sv-bar { display: flex; justify-content: space-between; padding-top: 12px; padding-bottom: 12px; }
+  .sv-logo img { width: 140px; }
+  .sv-burger { display: inline-flex; }
+  .sv-actions { display: none; }
+
+  /* the menu is a sheet that drops from under the bar, edge to edge */
+  .sv-nav {
+    display: none;
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    max-height: calc(100vh - 70px);
+    max-height: calc(100dvh - 70px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 8px 16px 20px;
+    background: #fff;
+    box-shadow: var(--shadow-card);
+  }
+  .sv-nav.sv-nav-open { display: flex; }
+
+  .sv-trigger::after { display: none; }
+  .sv-nav-btn {
+    width: 100%;
+    justify-content: space-between;
+    min-height: 54px;
+    padding: 0 8px;
+    font-size: 17px;
+  }
+  .sv-trigger + .sv-trigger,
+  .sv-nav-item { border-top: 1px solid var(--hairline); }
+
+  .sv-panel,
+  .sv-panel--mega {
+    position: static;
+    display: none;
+    width: auto;
+    margin: 2px 0 10px;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+    transition: none;
+  }
+  .sv-trigger.sv-open .sv-panel { display: block; }
+  /* tablets: the groups sit two to a row */
+  .sv-panel-cols { padding: 0; column-gap: 12px; }
+  .sv-panel-foot { justify-content: flex-start; margin: 10px 0 4px; border-radius: var(--r-lg); }
+  .sv-col + .sv-col { border-left: none; padding-left: 0; margin-left: 0; }
+  .sv-list a { display: flex; flex-direction: column; justify-content: center; min-height: var(--tap); }
+
+  .sv-mobile-only { display: flex; }
+  .sv-mobile-link { display: none; }
+  .sv-mobile-actions {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--hairline);
+  }
+  .sv-mobile-actions .sv-btn { width: 100%; margin: 0; min-height: var(--tap); }
+}
+
+/* below 768px the strip keeps only the phone; its two links move into the
+   menu, as plain rows above the booking button */
+@media screen and (max-width: 767px) {
+  .sv-strip-left { display: none; }
+  .sv-mobile-link {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    padding: 0 8px;
+    border-bottom: 1px solid var(--hairline);
+    font-family: var(--font-ui);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--blue-500);
+  }
+  .sv-mobile-actions { gap: 0; padding-top: 0; }
+  .sv-mobile-actions .sv-btn { margin-top: 16px; }
+}
+
+/* phones: one group under the other */
+@media screen and (max-width: 640px) {
+  .sv-panel-cols { grid-template-columns: 1fr; }
+}
+@media screen and (max-width: 380px) {
+  .sv-logo img { width: 128px; }
+}
+
+/* --- Very large screens -------------------------------------------------
+   At 100% scaling a 4K or 5K display is 3840–5120 CSS px wide, and a header
+   set in px shrinks to a thin strip across the middle. Past 2400px the whole
+   header scales up in steps, so it keeps the proportions it has at 1920. */
+@media screen and (min-width: 2400px) { #sv-header-wrap { zoom: 1.25; } }
+@media screen and (min-width: 2880px) { #sv-header-wrap { zoom: 1.5; } }
+@media screen and (min-width: 3360px) { #sv-header-wrap { zoom: 1.75; } }
+@media screen and (min-width: 3840px) { #sv-header-wrap { zoom: 2; } }
+@media screen and (min-width: 4480px) { #sv-header-wrap { zoom: 2.33; } }
+@media screen and (min-width: 5120px) { #sv-header-wrap { zoom: 2.67; } }
+
+@media (prefers-reduced-motion: reduce) {
+  #sv-header-wrap *,
+  #sv-header-wrap *::before,
+  #sv-header-wrap *::after { transition: none !important; animation: none !important; }
+}
+
+/* set on <html> while the phone menu is open, so the page behind stays put */
+html.sv-lock { overflow: hidden; }
+</style>
+<style>
+  html { min-height: 100%; }
+  body { margin: 0; min-height: 100vh; background: #fff; }
+</style>
+</head>
+<body>
+
+<!-- ===================== Silk Vision navigation ===================== -->
+<div id="sv-header-wrap">
+	<div class="sv-strip">
+		<div class="sv-strip-group sv-strip-left">
+			<a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL">Pay Bill Online</a>
+			<a href="https://www.silkvision.net/special-offers">Special Offers</a>
+		</div>
+		<a class="sv-phone" href="tel:7038769700"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="sv-phone-label">Call or Text:</span> (703) 876-9700</a>
+	</div>
+
+	<header class="sv-bar" role="banner" aria-label="Site header">
+		<a class="sv-logo" href="https://www.silkvision.net/">
+			<img src="./assets/logo.png" alt="Silk Vision &amp; Surgical Center" width="206" height="51">
+		</a>
+
+		<!-- before the nav in the markup, so Tab goes from the button straight into
+		     the menu it opens; on screen it sits at the far right -->
+		<button class="sv-burger" id="sv-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="sv-nav">
+			<svg class="sv-ico-menu" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+			<svg class="sv-ico-close" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg>
+		</button>
+
+		<nav class="sv-nav" id="sv-nav" aria-label="Main navigation">
+
+			<!-- Vision Correction -->
+			<div class="sv-trigger" data-sv-trigger>
+				<button class="sv-nav-btn" type="button" aria-expanded="false" aria-controls="sv-panel-vision">
+					Vision Correction <span class="sv-caret" aria-hidden="true"></span>
+				</button>
+				<div class="sv-panel sv-panel--mega" id="sv-panel-vision">
+					<div class="sv-panel-cols">
+						<div class="sv-col">
+							<p class="sv-group-label">Reshape the Cornea</p>
+							<ul class="sv-list">
+							<li><a href="https://www.silkvision.net/silk-vision-lasik-eye-surgery-center">
+								<span class="sv-item">LASIK Surgery</span></a></li>
+							<li><a href="https://www.silkvision.net/photorefractive-keratectomy-prk">
+								<span class="sv-item">PRK</span>
+								<span class="sv-note">Photorefractive Keratectomy</span></a></li>
+							</ul>
+							<p class="sv-sub-label">Learn More</p>
+							<ul class="sv-list">
+							<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">
+								<span class="sv-item">Is LASIK Right for You?</span></a></li>
+							<li><a href="https://www.silkvision.net/visual-rejuvenation">
+								<span class="sv-item">LASIK Touch-Ups</span></a></li>
+							<li><a href="https://www.silkvision.net/cost-lasik-surgery-explained">
+								<span class="sv-item">LASIK Cost</span></a></li>
+							<li><a href="https://www.silkvision.net/lasik-resources">
+								<span class="sv-item">LASIK Resources</span></a></li>
+							</ul>
+						</div>
+						<div class="sv-col">
+							<p class="sv-group-label">Work with the Lens</p>
+							<ul class="sv-list">
+							<li><a href="https://www.silkvision.net/evo-icl-welcome-future-vision">
+								<span class="sv-item">EVO ICL</span>
+								<span class="sv-note">Keep Your Natural Lens</span></a></li>
+							<li><a href="https://www.silkvision.net/refractive-lens-surgery-alternative-lasik">
+								<span class="sv-item">Lens Replacement (RLE)</span>
+								<span class="sv-note">Replace Your Natural Lens</span>
+								<span class="sv-note sv-note--brands">LAL, PanOptix, Vivity, and more</span></a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="sv-panel-foot">
+						<span>Not sure which fits?</span>
+						<a class="sv-foot-link" href="https://www.silkvision.net/lasik-self-evaluation-test">Take the Self-Test &rarr;</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Eye Care -->
+			<div class="sv-trigger" data-sv-trigger>
+				<button class="sv-nav-btn" type="button" aria-expanded="false" aria-controls="sv-panel-eyecare">
+					Eye Care <span class="sv-caret" aria-hidden="true"></span>
+				</button>
+				<div class="sv-panel sv-panel--mega" id="sv-panel-eyecare">
+					<div class="sv-panel-cols">
+						<div class="sv-col">
+							<p class="sv-group-label">Cataract Care</p>
+							<ul class="sv-list">
+							<li><a href="https://www.silkvision.net/cataract-surgery-and-cataract-removal">
+								<span class="sv-item">Cataract Surgery</span></a></li>
+							<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
+								<span class="sv-item">Light Adjustable Lens</span>
+								<span class="sv-note">Fine-tuned after surgery</span></a></li>
+							<li><a href="https://www.silkvision.net/visual-rejuvenation">
+								<span class="sv-item">Cataract Touch-Ups</span></a></li>
+							</ul>
+						</div>
+						<div class="sv-col">
+							<p class="sv-group-label">Conditions We Treat</p>
+							<ul class="sv-list">
+							<li><a href="https://www.silkvision.net/advanced-cornea-care-northern-virginia">
+								<span class="sv-item">Cornea</span></a></li>
+							<li><a href="https://www.silkvision.net/glaucoma">
+								<span class="sv-item">Glaucoma</span></a></li>
+							<li><a href="https://www.silkvision.net/eye-care/dry-eyes">
+								<span class="sv-item">Dry Eyes</span></a></li>
+							<li><a href="https://www.silkvision.net/keratoconus">
+								<span class="sv-item">Keratoconus</span>
+								<span class="sv-note">Progressive thinning of the cornea</span></a></li>
+							<li><a href="https://www.silkvision.net/pterygium">
+								<span class="sv-item">Pterygium</span>
+								<span class="sv-note">Growth on the surface of the eye</span></a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="sv-panel-foot">
+						<span>Ready to be seen?</span>
+						<a class="sv-foot-link" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Request an Appointment &rarr;</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- About, Patients and Contact are plain tabs with no panel -->
+			<div class="sv-nav-item">
+				<a class="sv-nav-btn" href="https://www.silkvision.net/trusted-eye-physicians-and-surgeons-northern-virginia">About</a>
+			</div>
+			<div class="sv-nav-item">
+				<a class="sv-nav-btn" href="https://www.silkvision.net/registration-consent-forms">Patients</a>
+			</div>
+			<div class="sv-nav-item">
+				<a class="sv-nav-btn" href="https://w31qe7s2lq5.typeform.com/SilkVisionForm">Contact</a>
+			</div>
+
+			<!-- on phones and tablets the strip drops its two links, so the menu carries them, and the booking button sits at its foot -->
+			<div class="sv-mobile-only sv-mobile-actions">
+				<a class="sv-mobile-link" href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL">Pay Bill Online</a>
+				<a class="sv-mobile-link" href="https://www.silkvision.net/special-offers">Special Offers</a>
+				<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book Your Free Consultation</a>
+			</div>
+		</nav>
+
+		<div class="sv-actions">
+			<a class="sv-btn" href="https://www.mypatientvisit.com/onlinescheduling/#/scheduler/schedule?practiceid=b46123f5-99ee-4f66-969c-fe650949c344">Book Your Free Consultation</a>
+		</div>
+	</header>
+</div>
+
+<script id="sv-navbar-script">
+(function () {
+	var wrap = document.getElementById('sv-header-wrap');
+	if (!wrap) { return; }
+
+	var triggers = [].slice.call(wrap.querySelectorAll('[data-sv-trigger]'));
+	var burger = document.getElementById('sv-burger');
+	var nav = document.getElementById('sv-nav');
+	var desktop = window.matchMedia('(min-width: 1024px)');
+	var openTimer, closeTimer;
+	// From rest, a panel waits a moment before opening, so a pointer that is
+	// only crossing the nav on its way to the buttons does not flash panels
+	// open. Moving from one open panel to the next switches at once.
+	var HOVER_OPEN = 120;
+	// and a short grace period before closing, so a slightly off-target path
+	// does not snap the panel shut mid-reach
+	var HOVER_CLOSE = 140;
+
+	function isOpen(trigger) { return trigger.classList.contains('sv-open'); }
+
+	// byHover marks a panel the pointer opened, so a click on it keeps it
+	// open instead of toggling it shut, and leaving it closes it again
+	function setOpen(trigger, open, byHover) {
+		trigger.classList.toggle('sv-open', open);
+		trigger.svByHover = open && !!byHover;
+		var btn = trigger.querySelector('.sv-nav-btn');
+		if (btn) { btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+	}
+
+	// A panel drops from its own tab, so on a narrow desktop the wider ones
+	// can run past the right edge of the window, and a closed panel still
+	// takes up room, which gave the page a sideways scroll. Every panel is
+	// measured and slid back in on load and whenever the window changes size.
+	function keepInView(panel) {
+		panel.style.marginLeft = '';
+		if (!desktop.matches) { return; }
+		var over = panel.getBoundingClientRect().right - (document.documentElement.clientWidth - 16);
+		if (over > 0) { panel.style.marginLeft = -Math.ceil(over) + 'px'; }
+	}
+	function placePanels() {
+		[].forEach.call(wrap.querySelectorAll('.sv-panel'), keepInView);
+	}
+	var placing;
+	window.addEventListener('resize', function () {
+		cancelAnimationFrame(placing);
+		placing = requestAnimationFrame(placePanels);
+	});
+	placePanels();
+	// the web fonts change the width of the tabs, so measure again once they land
+	if (document.fonts && document.fonts.ready) { document.fonts.ready.then(placePanels); }
+
+	function closeAll(except) {
+		triggers.forEach(function (t) { if (t !== except) { setOpen(t, false); } });
+	}
+
+	function setNav(open) {
+		if (!nav || !burger) { return; }
+		nav.classList.toggle('sv-nav-open', open);
+		burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+		// the page behind the open menu does not scroll
+		document.documentElement.classList.toggle('sv-lock', open);
+		if (!open) { closeAll(null); }
+	}
+
+	triggers.forEach(function (trigger) {
+		var btn = trigger.querySelector('.sv-nav-btn');
+
+		// hover is for a mouse only: on a touch screen the tap would fire both
+		// the hover and the click, and the click would undo the hover
+		trigger.addEventListener('pointerenter', function (e) {
+			if (e.pointerType !== 'mouse' || !desktop.matches) { return; }
+			clearTimeout(closeTimer);
+			clearTimeout(openTimer);
+			if (isOpen(trigger)) { return; }
+			var delay = triggers.some(isOpen) ? 0 : HOVER_OPEN;
+			openTimer = setTimeout(function () {
+				closeAll(trigger);
+				setOpen(trigger, true, true);
+			}, delay);
+		});
+		trigger.addEventListener('pointerleave', function (e) {
+			if (e.pointerType !== 'mouse' || !desktop.matches) { return; }
+			clearTimeout(openTimer);
+			// a panel opened by click or keyboard stays until it is closed
+			if (!trigger.svByHover) { return; }
+			closeTimer = setTimeout(function () { setOpen(trigger, false); }, HOVER_CLOSE);
+		});
+
+		btn.addEventListener('click', function (e) {
+			e.preventDefault();
+			clearTimeout(openTimer);
+			clearTimeout(closeTimer);
+			if (isOpen(trigger) && trigger.svByHover) {
+				trigger.svByHover = false;
+				return;
+			}
+			var open = !isOpen(trigger);
+			closeAll(trigger);
+			setOpen(trigger, open);
+		});
+
+		trigger.addEventListener('focusout', function (e) {
+			if (!desktop.matches) { return; }
+			if (!trigger.contains(e.relatedTarget)) { setOpen(trigger, false); }
+		});
+	});
+
+	if (burger && nav) {
+		burger.addEventListener('click', function () {
+			setNav(!nav.classList.contains('sv-nav-open'));
+		});
+	}
+
+	document.addEventListener('click', function (e) {
+		if (!wrap.contains(e.target)) { closeAll(null); setNav(false); }
+	});
+
+	// Escape closes the innermost thing that is open and hands focus back to
+	// the control that opened it, so a keyboard user is never left on <body>
+	document.addEventListener('keydown', function (e) {
+		if (e.key !== 'Escape' && e.keyCode !== 27) { return; }
+		var focus = document.activeElement;
+		var open = triggers.filter(isOpen)[0];
+		if (open) {
+			closeAll(null);
+			if (open.contains(focus)) { open.querySelector('.sv-nav-btn').focus(); }
+		} else if (nav && nav.classList.contains('sv-nav-open')) {
+			setNav(false);
+			if (nav.contains(focus)) { burger.focus(); }
+		}
+	});
+
+	var onChange = function () {
+		closeAll(null);
+		if (desktop.matches) { setNav(false); }
+	};
+	if (desktop.addEventListener) { desktop.addEventListener('change', onChange); }
+	else if (desktop.addListener) { desktop.addListener(onChange); }
+})();
+</script>
+<!-- =================== end Silk Vision navigation =================== -->
+</body>
+</html>
