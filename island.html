@@ -402,6 +402,9 @@
 }
 @media screen and (max-width: 380px) {
   .sv-logo img { width: 128px; }
+  /* the smallest phones: the strip tightens so both links still fit */
+  .sv-strip { gap: 12px; font-size: 13px; }
+  .sv-strip .sv-book::after { display: none; }
 }
 
 /* --- Very large screens -------------------------------------------------
@@ -662,18 +665,29 @@ html.sv-lock { overflow: hidden; }
 		trigger.svByHover = open && !!byHover;
 		var btn = trigger.querySelector('.sv-nav-btn');
 		if (btn) { btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
-		if (open) { keepInView(trigger.querySelector('.sv-panel')); }
 	}
 
 	// A panel drops from its own tab, so on a narrow desktop the wider ones
-	// can run past the right edge of the window; slide them back in.
+	// can run past the right edge of the window, and a closed panel still
+	// takes up room, which gave the page a sideways scroll. Every panel is
+	// measured and slid back in on load and whenever the window changes size.
 	function keepInView(panel) {
-		if (!panel) { return; }
 		panel.style.marginLeft = '';
 		if (!desktop.matches) { return; }
 		var over = panel.getBoundingClientRect().right - (document.documentElement.clientWidth - 16);
 		if (over > 0) { panel.style.marginLeft = -Math.ceil(over) + 'px'; }
 	}
+	function placePanels() {
+		[].forEach.call(wrap.querySelectorAll('.sv-panel'), keepInView);
+	}
+	var placing;
+	window.addEventListener('resize', function () {
+		cancelAnimationFrame(placing);
+		placing = requestAnimationFrame(placePanels);
+	});
+	placePanels();
+	// the web fonts change the width of the tabs, so measure again once they land
+	if (document.fonts && document.fonts.ready) { document.fonts.ready.then(placePanels); }
 
 	function closeAll(except) {
 		triggers.forEach(function (t) { if (t !== except) { setOpen(t, false); } });
