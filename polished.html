@@ -3,21 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Silk Vision — Navigation, 08-19 polished</title>
+<title>Silk Vision — Navigation, polished</title>
 <link rel="icon" type="image/png" sizes="32x32" href="https://www.silkvision.net/favicon-32x32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
 <style id="sv-navbar-styles">
 /* ==========================================================================
-   Silk Vision — navigation, 08-19 polished
+   Silk Vision — navigation, polished
 
-   The 08-19 menu with every word kept as written, set in the style of
+   The 11-11 menu with every word kept as written, set in the style of
    recommended.html: a brand-blue strip for Pay Bill Online, Special Offers
    and the phone; a quiet white bar with the logo on the left, the tabs
    centred on the page and Book Your Free Consultation as the one button.
-   The two mega panels keep their columns, their Learn More list and their
-   footer prompt; About, Patients and Contact are plain tabs.
+   Vision Correction splits into Keep Your Lens and Lens Replacement; the
+   lenses we use hang under RLE as a compact indented list, and LASIK FAQ
+   and See all lens options are blue "see all" links. About, Patients and
+   Contact are plain tabs.
 
    Poppins for titles and controls, Inter for what is read, blue for the
    brand, purple for the group headings and the actions. Scoped to
@@ -277,8 +279,41 @@
   color: var(--grey-700);
 }
 
-/* the third line under Lens Replacement: the lens names, a step quieter */
-.sv-note--brands { margin-top: 1px; font-size: 12.5px; color: var(--grey-500); }
+/* Lenses We Use: a compact list that hangs under RLE, held by a soft rule on
+   its left so it reads as part of the procedure above it, not a new group */
+.sv-list--sub {
+  margin: 2px 0 0 12px;
+  padding-left: 8px;
+  border-left: 2px solid var(--tile);
+}
+.sv-list--sub a { padding: 7px 12px; }
+.sv-list--sub .sv-item { font-size: 14.5px; }
+.sv-list--sub .sv-note { margin-top: 1px; font-size: 12.5px; color: var(--grey-500); }
+
+/* See all: a blue text link closing a list; its arrow steps out on hover */
+/* row direction is set here so the touch-screen rule that stacks every row
+   into a column does not drop the arrow onto a line of its own */
+.sv-list a.sv-see-all {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  padding: 8px 12px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--blue-500);
+}
+.sv-see-all .sv-arrow { display: inline-block; transition: transform .35s var(--spring); }
+.sv-list a.sv-see-all:hover,
+.sv-list a.sv-see-all:focus-visible { background: var(--paper); color: var(--plum-500); }
+.sv-list a.sv-see-all:hover .sv-arrow,
+.sv-list a.sv-see-all:focus-visible .sv-arrow { transform: translateX(4px); }
+/* a resource link set off from the procedures above it by a hairline */
+.sv-list--resource { margin: 10px 12px 0; padding-top: 8px; border-top: 1px solid var(--hairline); }
+.sv-list--resource a.sv-see-all { margin-left: -12px; }
 
 /* Learn More: a smaller heading inside a column, with a hairline after it */
 .sv-sub-label {
@@ -523,36 +558,41 @@ html.sv-lock { overflow: hidden; }
 				<div class="sv-panel sv-panel--mega" id="sv-panel-vision">
 					<div class="sv-panel-cols">
 						<div class="sv-col">
-							<p class="sv-group-label">Reshape the Cornea</p>
+							<p class="sv-group-label">Keep Your Lens</p>
 							<ul class="sv-list">
 							<li><a href="https://www.silkvision.net/silk-vision-lasik-eye-surgery-center">
-								<span class="sv-item">LASIK Surgery</span></a></li>
+								<span class="sv-item">LASIK</span>
+								<span class="sv-note">Reshapes the cornea with a laser</span></a></li>
 							<li><a href="https://www.silkvision.net/photorefractive-keratectomy-prk">
 								<span class="sv-item">PRK</span>
 								<span class="sv-note">Photorefractive Keratectomy</span></a></li>
+							<li><a href="https://www.silkvision.net/evo-icl-welcome-future-vision">
+								<span class="sv-item">EVO ICL</span>
+								<span class="sv-note">An implanted lens, cornea untouched</span></a></li>
 							</ul>
-							<p class="sv-sub-label">Learn More</p>
-							<ul class="sv-list">
-							<li><a href="https://www.silkvision.net/vision-doesnt-depend-glasses-or-contacts">
-								<span class="sv-item">Is LASIK Right for You?</span></a></li>
-							<li><a href="https://www.silkvision.net/visual-rejuvenation">
-								<span class="sv-item">LASIK Touch-Ups</span></a></li>
-							<li><a href="https://www.silkvision.net/cost-lasik-surgery-explained">
-								<span class="sv-item">LASIK Cost</span></a></li>
-							<li><a href="https://www.silkvision.net/lasik-resources">
-								<span class="sv-item">LASIK Resources</span></a></li>
+							<ul class="sv-list sv-list--resource">
+							<li><a class="sv-see-all" href="https://www.silkvision.net/lasik-resources">LASIK FAQ <span class="sv-arrow" aria-hidden="true">&rarr;</span></a></li>
 							</ul>
 						</div>
 						<div class="sv-col">
-							<p class="sv-group-label">Work with the Lens</p>
+							<p class="sv-group-label">Lens Replacement</p>
 							<ul class="sv-list">
-							<li><a href="https://www.silkvision.net/evo-icl-welcome-future-vision">
-								<span class="sv-item">EVO ICL</span>
-								<span class="sv-note">Keep Your Natural Lens</span></a></li>
 							<li><a href="https://www.silkvision.net/refractive-lens-surgery-alternative-lasik">
-								<span class="sv-item">Lens Replacement (RLE)</span>
-								<span class="sv-note">Replace Your Natural Lens</span>
-								<span class="sv-note sv-note--brands">LAL, PanOptix, Vivity, and more</span></a></li>
+								<span class="sv-item">Refractive Lens Exchange</span>
+								<span class="sv-note">RLE &mdash; the procedure that replaces your lens</span></a></li>
+							</ul>
+							<p class="sv-sub-label">Lenses We Use</p>
+							<ul class="sv-list sv-list--sub">
+							<li><a href="https://www.silkvision.net/adjust-your-lens-your-lifestyle-after-cataract-surgery">
+								<span class="sv-item">LAL</span>
+								<span class="sv-note">Light Adjustable Lens</span></a></li>
+							<li><a href="https://www.silkvision.net/refractive-lens-surgery-alternative-lasik">
+								<span class="sv-item">PanOptix</span></a></li>
+							<li><a href="https://www.silkvision.net/refractive-lens-surgery-alternative-lasik">
+								<span class="sv-item">Vivity</span></a></li>
+							<li><a href="https://www.silkvision.net/refractive-lens-surgery-alternative-lasik">
+								<span class="sv-item">PureSee</span></a></li>
+							<li><a class="sv-see-all" href="https://www.silkvision.net/refractive-lens-surgery-alternative-lasik">See all lens options <span class="sv-arrow" aria-hidden="true">&rarr;</span></a></li>
 							</ul>
 						</div>
 					</div>
