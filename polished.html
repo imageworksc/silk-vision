@@ -235,6 +235,10 @@
   right: -12px;
   height: 28px;
 }
+/* while a panel is open the strip runs the full width of the panel, not just
+   the tab: a pointer heading diagonally for the far column used to leave the
+   strip, the panel shut, then opened again on arrival, a visible flicker */
+.sv-trigger.sv-open::after { left: -700px; right: -700px; }
 /* every panel is a row of columns, one per group, set off by hairlines */
 /* a mega panel: two columns over a footer prompt that runs edge to edge */
 .sv-panel--mega { width: 640px; padding: 0; overflow: hidden; }
