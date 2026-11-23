@@ -19,7 +19,8 @@
    Vision Correction splits into Keep Your Lens and Lens Replacement; the
    lenses we use hang under RLE as a compact indented list, and LASIK FAQ
    and See all lens options are blue "see all" links. About, Patients and
-   Contact are plain tabs.
+   Contact are plain tabs. Inside the panels the colours and dividers are
+   those of the 11-11 menu (--line, --blue-tint, --plum-tint).
 
    Poppins for titles and controls, Inter for what is read, blue for the
    brand, purple for the group headings and the actions. Scoped to
@@ -36,6 +37,13 @@
   --grey-700: #45575b;
   --grey-900: #2a3538;
   --hairline: rgb(1 53 89 / .1);
+  /* panel colours and dividers as in the 11-11 menu */
+  --line: #ececec;
+  --blue-tint: #eaf3fb;
+  --plum-tint: #f8ecf8;
+  --row-ink: #2d4255;
+  --row-note: #5a6675;
+  --muted: #767676;
   --font-ui: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-copy: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --r-sm: 6px;
@@ -230,17 +238,21 @@
 /* every panel is a row of columns, one per group, set off by hairlines */
 /* a mega panel: two columns over a footer prompt that runs edge to edge */
 .sv-panel--mega { width: 640px; padding: 0; overflow: hidden; }
-.sv-panel-cols { display: grid; grid-template-columns: 1fr 1fr; padding: 14px 12px 10px; }
-.sv-col + .sv-col { border-left: 1px solid var(--hairline); padding-left: 10px; margin-left: 10px; }
+.sv-panel-cols { display: grid; grid-template-columns: 1fr 1fr; padding: 24px 20px 8px; }
+.sv-col + .sv-col { border-left: 1px solid var(--line); padding-left: 20px; margin-left: 20px; }
 /* a second group in the same column starts a little clear of the first */
 .sv-list + .sv-group-label { margin-top: 16px; }
 
+/* group heading: purple on a soft purple tint, as in the 11-11 menu */
 .sv-group-label {
-  padding: 10px 12px 8px;
+  margin-bottom: 10px;
+  padding: 9px 12px;
+  border-radius: var(--r-sm);
+  background: var(--plum-tint);
   font-family: var(--font-ui);
   font-size: 13px;
-  font-weight: 600;
-  letter-spacing: .08em;
+  font-weight: 700;
+  letter-spacing: .06em;
   text-transform: uppercase;
   color: var(--plum-500);
 }
@@ -248,12 +260,12 @@
 /* Rows: a name and one line under it */
 .sv-list a {
   display: block;
-  padding: 12px;
-  border-radius: var(--r-md);
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
   transition: background-color var(--t-fast) var(--ease);
 }
 .sv-list a:hover,
-.sv-list a:focus-visible { background: var(--paper); }
+.sv-list a:focus-visible { background: var(--blue-tint); }
 /* the words step 4px to the right as the row is pointed at; the note follows
    a beat later, so the pair moves as one soft motion rather than a jump */
 .sv-item,
@@ -262,29 +274,33 @@
 .sv-list a:hover :is(.sv-item, .sv-note),
 .sv-list a:focus-visible :is(.sv-item, .sv-note) { transform: translateX(4px); }
 .sv-list a:hover .sv-item,
-.sv-list a:focus-visible .sv-item { color: var(--plum-500); }
+.sv-list a:focus-visible .sv-item { color: var(--blue-500); }
 .sv-item {
   display: block;
   font-family: var(--font-ui);
   font-size: 15px;
   font-weight: 500;
   line-height: 1.3;
-  color: var(--ink-700);
+  color: var(--row-ink);
 }
 .sv-note {
   display: block;
-  margin-top: 3px;
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--grey-700);
+  margin-top: 2px;
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--row-note);
 }
 
-/* Lenses We Use: a compact list under RLE, lined up with the rest of the
-   column; the hairline after its label is the only rule it needs */
-.sv-list--sub { margin-top: 2px; }
+/* Lenses We Use: a compact list under RLE, set in from the column with a
+   light blue rule down its left edge, as in the 11-11 menu */
+.sv-list--sub {
+  margin-left: 12px;
+  padding-left: 12px;
+  border-left: 2px solid var(--blue-tint);
+}
 .sv-list--sub a { padding: 7px 12px; }
 .sv-list--sub .sv-item { font-size: 14.5px; }
-.sv-list--sub .sv-note { margin-top: 1px; font-size: 12.5px; color: var(--grey-500); }
+.sv-list--sub .sv-note { margin-top: 1px; }
 
 /* See all: a blue text link closing a list; its arrow steps out on hover */
 /* row direction is set here so the touch-screen rule that stacks every row
@@ -304,27 +320,26 @@
 }
 .sv-see-all .sv-arrow { display: inline-block; transition: transform .35s var(--spring); }
 .sv-list a.sv-see-all:hover,
-.sv-list a.sv-see-all:focus-visible { background: var(--paper); color: var(--plum-500); }
+.sv-list a.sv-see-all:focus-visible { background: var(--blue-tint); color: var(--blue-500); }
 .sv-list a.sv-see-all:hover .sv-arrow,
 .sv-list a.sv-see-all:focus-visible .sv-arrow { transform: translateX(4px); }
-/* a resource link set off from the procedures above it by a hairline */
-.sv-list--resource { margin: 10px 12px 0; padding-top: 8px; border-top: 1px solid var(--hairline); }
-.sv-list--resource a.sv-see-all { margin-left: -12px; }
+/* a resource link set off from the procedures above it by a grey divider */
+.sv-list--resource { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
 
-/* Learn More: a smaller heading inside a column, with a hairline after it */
+/* Lenses We Use: a small blue heading inside a column, with a divider after it */
 .sv-sub-label {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin: 14px 12px 4px;
+  gap: 12px;
+  margin: 20px 12px 8px;
   font-family: var(--font-ui);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .08em;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .07em;
   text-transform: uppercase;
-  color: var(--grey-500);
+  color: var(--blue-500);
 }
-.sv-sub-label::after { content: ''; flex: 1; height: 1px; background: var(--hairline); }
+.sv-sub-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
 
 /* The footer prompt: a question and one outlined action. The whole strip is
    the target (the link's ::after covers it), so pointing anywhere on it fills
@@ -337,10 +352,10 @@
   flex-wrap: wrap;
   gap: 8px 14px;
   padding: 14px 20px;
-  border-top: 1px solid var(--hairline);
-  background: var(--paper);
-  font-size: 14px;
-  color: var(--grey-700);
+  border-top: 1px solid var(--line);
+  background: #fff;
+  font-size: 13.5px;
+  color: var(--muted);
   cursor: pointer;
   transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
 }
