@@ -235,13 +235,22 @@
   right: -12px;
   height: 28px;
 }
-/* while a panel is open the strip runs the full width of the panel, not just
-   the tab: a pointer heading diagonally for the far column used to leave the
-   strip, the panel shut, then opened again on arrival, a visible flicker */
-.sv-trigger.sv-open::after { left: -700px; right: -700px; }
-/* every panel is a row of columns, one per group, set off by hairlines */
-/* a mega panel: two columns over a footer prompt that runs edge to edge */
-.sv-panel--mega { width: 640px; padding: 0; overflow: hidden; }
+/* and a second strip across the whole width of an open panel, carried by the
+   panel itself so it is exactly as wide and follows it when it is slid back
+   into view: a pointer heading diagonally for the far column used to leave
+   the narrow strip under the tab, and the panel shut and opened again */
+.sv-panel::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 26px;
+}
+/* a mega panel: two columns over a footer prompt that runs edge to edge.
+   No overflow: hidden here, or it would clip the strip above; the footer
+   rounds its own lower corners instead */
+.sv-panel--mega { width: 640px; padding: 0; }
 .sv-panel-cols { display: grid; grid-template-columns: 1fr 1fr; padding: 24px 20px 8px; }
 .sv-col + .sv-col { border-left: 1px solid var(--line); padding-left: 20px; margin-left: 20px; }
 /* a second group in the same column starts a little clear of the first */
@@ -357,6 +366,8 @@
   gap: 8px 14px;
   padding: 14px 20px;
   border-top: 1px solid var(--line);
+  /* the panel's corner radius less its 1px border */
+  border-radius: 0 0 calc(var(--r-lg) - 1px) calc(var(--r-lg) - 1px);
   background: #fff;
   font-size: 13.5px;
   color: var(--muted);
@@ -406,8 +417,6 @@
   .sv-list a { display: flex; flex-direction: column; justify-content: center; min-height: var(--tap); }
 }
 
-@media screen and (max-width: 1279px) {
-}
 @media screen and (max-width: 1120px) {
   .sv-logo img { width: 140px; }
   .sv-nav-btn { padding: 0 9px; }
@@ -442,7 +451,8 @@
   }
   .sv-nav.sv-nav-open { display: flex; }
 
-  .sv-trigger::after { display: none; }
+  .sv-trigger::after,
+  .sv-panel::before { display: none; }
   .sv-nav-btn {
     width: 100%;
     justify-content: space-between;
